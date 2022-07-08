@@ -9,3 +9,13 @@
     width: 100%;
     height: 100%;
   }
+
+  /* Change the cursor to a pointer on hover so the user knows it's clickable */
+  .maplibregl-marker:hover {
+    cursor: pointer;
+  }
+
+  /* darken the marker on hover */
+  .maplibregl-marker:hover svg > g > g:nth-child(2){
+    fill: #ad1717;
+  }
