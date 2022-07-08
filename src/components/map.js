@@ -24,6 +24,10 @@ export default function Map(){
     new maplibregl.Marker({color: "#FF0000"})
         .setLngLat([-2.99,53.41])
         .addTo(map.current);
+
+    new maplibregl.Marker({color: "#FF0000"})
+    .setLngLat([-2.24,53.48])
+    .addTo(map.current);
   });
   
   return (
