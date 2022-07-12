@@ -19,7 +19,7 @@ def run_sql(sql):
         cur.execute(sql)
         conn.commit()
         results = cur.fetchall()
-        print(results)
+        #print(results)
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -37,9 +37,34 @@ def get_origin_airports():
 
     # Create dictionary of airport ids and lat/lng
     origin_dict = {}
-    for i in range(len(list_airports)):
-        origin_dict['iata_code'] = list_airports[i][0]
-        origin_dict['lat'] = list_airports[i][1]
-        origin_dict['lng'] = list_airports[i][2]
 
+    for i in range(len(list_airports)):
+        coords = {}
+        coords['lat'] = list_airports[i][1]
+        coords['lng'] = list_airports[i][2]
+        origin_dict[list_airports[i][0]] = coords
+
+    print(origin_dict)
     return origin_dict
+
+@app.route('/application/outwards/<iata_code>')
+def get_outward_airports(iata_code):
+    print("Origin airport selected: " + iata_code)
+    # Get list of outward airports from DB
+    sql = "SELECT DISTINCT destination_id, latitude_decimal_degrees, longitude_decimal_degrees FROM airport_routes JOIN airports ON airport_routes.destination_id = airports.iata_code WHERE origin_id = '" + iata_code + "'"
+    list_airports = run_sql(sql)
+
+    # Create dictionary of airport ids and lat/lng
+    outward_dict = {}
+
+    for i in range(len(list_airports)):
+        coords = {}
+        coords['lat'] = list_airports[i][1]
+        coords['lng'] = list_airports[i][2]
+        outward_dict[list_airports[i][0]] = coords
+
+    print(outward_dict)
+    return outward_dict
+
+
+    

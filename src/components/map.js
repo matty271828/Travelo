@@ -5,11 +5,12 @@ import './map.css';
 import { Marker } from 'react-map-gl';
 
 export default function Map(){
+  // variables used in rendering map
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng] = useState(-2.99);
-  const [lat] = useState(53.41);
-  const [zoom] = useState(3);
+  const [lng] = useState(20);
+  const [lat] = useState(48.41);
+  const [zoom] = useState(4);
   const [API_KEY] = useState('auR6Ih8HukHj8NgLxBk9');
 
   useEffect(() => {
@@ -27,60 +28,45 @@ export default function Map(){
     // For use in removing markers from page
     var outwardMarkers=[];
 
-    // TODO read in all origin airports from DB and loop to create markers
-    fetch('/application/origins');
-
-    // Create marker
-    const origin_marker1 = new maplibregl.Marker({color: "#FF0000"})
-        .setLngLat([-2.99,53.41])
+    // Make request to DB for origin airports
+    fetch('application/origins').then(origin_res => origin_res.json()).then(origin_data => {
+      // BEGIN PRIMARY LOOP - through origin airports
+      for (let key in origin_data){
+        // Create markers
+        const origin_marker = new maplibregl.Marker({color: "#FF0000"})
+        .setLngLat([origin_data[key]['lng'], origin_data[key]['lat']])
         .addTo(map.current);
 
-    // Create marker
-    const origin_marker2 = new maplibregl.Marker({color: "#FF0000"})
-        .setLngLat([-0.461,51.48])
-        .addTo(map.current);
+        // Add EventListener for marker being clicked
+        origin_marker.getElement().addEventListener('click', function onClick(event) {
+          // Change colour of marker on selection
+          event.target.style.fill = 'ad1717';
 
-    // use GetElement to get HTML Element from marker and add event
-    origin_marker1.getElement().addEventListener('click', function onClick(event) {
-        // Change colour of marker
-        event.target.style.fill = 'ad1717';
-
-        if (outwardMarkers!==null) {
-          for (var i = outwardMarkers.length - 1; i >= 0; i--) {
-            outwardMarkers[i].remove();
+          // Clear outward markers already present on map
+          if (outwardMarkers!==null) {
+            for (var i = outwardMarkers.length - 1; i >= 0; i--) {
+              outwardMarkers[i].remove();
+            }
           }
-        }
 
-        // TODO read in destinations matching origin from DB and add event
-        const outward_marker1 = new maplibregl.Marker({color: "#FF0000"})
-            .setLngLat([12.49,41.90])
-            .addTo(map.current);
-        
-        // Add to currentMarkers array
-        outwardMarkers.push(outward_marker1);
-    });
+          // Request outward airports from DB
+          fetch('/application/outwards/' + key).then(outward_res => outward_res.json()).then(outward_data => {
+            // BEGIN SECONDARY LOOP - through response and add markers
+            for (let outward_key in outward_data){
+              // Create markers
+              const outward_marker = new maplibregl.Marker({color: "#00FFFF"})
+              // TODO - figure out why this line isnt working
+              .setLngLat([outward_data[outward_key]['lng'], outward_data[outward_key]['lat']])
+              .addTo(map.current);
 
-    // TODO put all marker loading into a loop
-    // use GetElement to get HTML Element from marker and add event
-    origin_marker2.getElement().addEventListener('click', function onClick(event) {
-      // Change colour of marker
-      event.target.style.fill = 'ad1717';
-
-      if (outwardMarkers!==null) {
-        for (var i = outwardMarkers.length - 1; i >= 0; i--) {
-          outwardMarkers[i].remove();
-        }
+              // Add to outwardMarkers array
+              outwardMarkers.push(outward_marker);
+            }
+            
+          });
+        });
       }
-
-      // TODO read in destinations matching origin from DB and add event
-      const outward_marker2 = new maplibregl.Marker({color: "#FF0000"})
-          .setLngLat([2.55,49.01])
-          .addTo(map.current);
-      
-      // Add to currentMarkers array
-      outwardMarkers.push(outward_marker2);
     });
-
   });
   
   return (
