@@ -8,9 +8,9 @@ export default function Map(){
   // variables used in rendering map
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng] = useState(20);
+  const [lng] = useState(18);
   const [lat] = useState(48.41);
-  const [zoom] = useState(4);
+  const [zoom] = useState(3);
   const [API_KEY] = useState('auR6Ih8HukHj8NgLxBk9');
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function Map(){
             // BEGIN SECONDARY LOOP - through response and add markers
             for (let outward_key in outward_data){
               // Create markers
-              const outward_marker = new maplibregl.Marker({color: "#00FFFF"})
+              const outward_marker = new maplibregl.Marker({color: "#10078a"})
               // TODO - figure out why this line isnt working
               .setLngLat([outward_data[outward_key]['lng'], outward_data[outward_key]['lat']])
               .addTo(map.current);
