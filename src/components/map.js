@@ -28,6 +28,7 @@ export default function Map(){
     var outwardMarkers=[];
 
     // TODO read in all origin airports from DB and loop to create markers
+    fetch('/application/origins');
 
     // Create marker
     const origin_marker1 = new maplibregl.Marker({color: "#FF0000"})
@@ -59,6 +60,7 @@ export default function Map(){
         outwardMarkers.push(outward_marker1);
     });
 
+    // TODO put all marker loading into a loop
     // use GetElement to get HTML Element from marker and add event
     origin_marker2.getElement().addEventListener('click', function onClick(event) {
       // Change colour of marker
