@@ -9,7 +9,7 @@ export default function Map(){
   const map = useRef(null);
   const [lng] = useState(-2.99);
   const [lat] = useState(53.41);
-  const [zoom] = useState(4);
+  const [zoom] = useState(3);
   const [API_KEY] = useState('auR6Ih8HukHj8NgLxBk9');
 
   useEffect(() => {
@@ -21,24 +21,62 @@ export default function Map(){
       zoom: zoom
     });
 
+    // Add zoom controls to map
     map.current.addControl(new maplibregl.NavigationControl(), 'top-right');
 
-    // TODO read in all origin airports and loop to create markers
+    // For use in removing markers from page
+    var outwardMarkers=[];
+
+    // TODO read in all origin airports from DB and loop to create markers
 
     // Create marker
-    const marker1 = new maplibregl.Marker({color: "#FF0000"})
+    const origin_marker1 = new maplibregl.Marker({color: "#FF0000"})
         .setLngLat([-2.99,53.41])
         .addTo(map.current);
 
+    // Create marker
+    const origin_marker2 = new maplibregl.Marker({color: "#FF0000"})
+        .setLngLat([-0.461,51.48])
+        .addTo(map.current);
+
     // use GetElement to get HTML Element from marker and add event
-    marker1.getElement().addEventListener('click', function onClick(event) {
+    origin_marker1.getElement().addEventListener('click', function onClick(event) {
         // Change colour of marker
         event.target.style.fill = 'ad1717';
 
-        // Add secondary marker
-        const marker2 = new maplibregl.Marker({color: "#FF0000"})
-            .setLngLat([-2.24,53.48])
+        if (outwardMarkers!==null) {
+          for (var i = outwardMarkers.length - 1; i >= 0; i--) {
+            outwardMarkers[i].remove();
+          }
+        }
+
+        // TODO read in destinations matching origin from DB and add event
+        const outward_marker1 = new maplibregl.Marker({color: "#FF0000"})
+            .setLngLat([12.49,41.90])
             .addTo(map.current);
+        
+        // Add to currentMarkers array
+        outwardMarkers.push(outward_marker1);
+    });
+
+    // use GetElement to get HTML Element from marker and add event
+    origin_marker2.getElement().addEventListener('click', function onClick(event) {
+      // Change colour of marker
+      event.target.style.fill = 'ad1717';
+
+      if (outwardMarkers!==null) {
+        for (var i = outwardMarkers.length - 1; i >= 0; i--) {
+          outwardMarkers[i].remove();
+        }
+      }
+
+      // TODO read in destinations matching origin from DB and add event
+      const outward_marker2 = new maplibregl.Marker({color: "#FF0000"})
+          .setLngLat([2.55,49.01])
+          .addTo(map.current);
+      
+      // Add to currentMarkers array
+      outwardMarkers.push(outward_marker2);
     });
 
   });
