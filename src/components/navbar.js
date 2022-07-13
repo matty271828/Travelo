@@ -1,10 +1,13 @@
 import React from 'react';
+import * as FaIcons from "react-icons/fa";
+import { Link } from 'react-router-dom'
 import './navbar.css';
 
 export default function Navbar(){
  return (
-  <div className="heading">
-   <h1>Travelo</h1>
+  <div class = "topnav">
+    <span class="title">Travelo</span>
+    <span class = "menu-bars"><FaIcons.FaBars/></span>
   </div>
  );
 }

@@ -23,7 +23,7 @@ export default function Map(){
     });
 
     // Add zoom controls to map
-    map.current.addControl(new maplibregl.NavigationControl(), 'top-right');
+    map.current.addControl(new maplibregl.NavigationControl(), 'top-left');
 
     // For use in removing markers from page
     var outwardMarkers=[];
@@ -37,7 +37,7 @@ export default function Map(){
         .setLngLat([origin_data[key]['lng'], origin_data[key]['lat']])
         .addTo(map.current);
 
-        // Add EventListener for marker being clicked
+        // Add EventListener for each origin marker being clicked
         origin_marker.getElement().addEventListener('click', function onClick(event) {
           // Change colour of marker on selection
           event.target.style.fill = 'ad1717';
