@@ -26,10 +26,11 @@ export default function Map(){
     map.current.addControl(new maplibregl.NavigationControl(), 'top-left');
 
     // For use in removing markers from page
+    var originMarkers=[];
     var outwardMarkers=[];
 
     // Make request to DB for origin airports
-    fetch('application/origins').then(origin_res => origin_res.json()).then(origin_data => {
+    fetch('/application/origins').then(origin_res => origin_res.json()).then(origin_data => {
       // BEGIN PRIMARY LOOP - through origin airports
       for (let key in origin_data){
         // Create markers
@@ -37,10 +38,21 @@ export default function Map(){
         .setLngLat([origin_data[key]['lng'], origin_data[key]['lat']])
         .addTo(map.current);
 
+        // Add to outwardMarkers array
+        originMarkers.push(origin_marker);
+
         // Add EventListener for each origin marker being clicked
         origin_marker.getElement().addEventListener('click', function onClick(event) {
           // Change colour of marker on selection
           event.target.style.fill = 'ad1717';
+
+          // Clear origin markers already present on map
+          if (originMarkers!==null) {
+            for (var i = originMarkers.length - 1; i >= 0; i--) {
+              if (origin_marker.getElement() != originMarkers[i].getElement())
+              originMarkers[i].remove();
+            }
+          }
 
           // Clear outward markers already present on map
           if (outwardMarkers!==null) {
@@ -55,14 +67,37 @@ export default function Map(){
             for (let outward_key in outward_data){
               // Create markers
               const outward_marker = new maplibregl.Marker({color: "#10078a"})
-              // TODO - figure out why this line isnt working
               .setLngLat([outward_data[outward_key]['lng'], outward_data[outward_key]['lat']])
               .addTo(map.current);
 
               // Add to outwardMarkers array
               outwardMarkers.push(outward_marker);
+
+              // Add EventListener for return marker being clicked
+              outward_marker.getElement().addEventListener('click', function onClick(event) {
+                // Change colour of marker on selection
+                event.target.style.fill = 'ad1717';
+
+                // clear other outward markers on map
+                if (outwardMarkers!==null) {
+                  for (var i = outwardMarkers.length - 1; i >= 0; i--) {
+                    if (outward_marker.getElement() != outwardMarkers[i].getElement())
+                    outwardMarkers[i].remove();
+                  }
+                }
+
+                // TODO - Request return airports from DB
+                fetch('/application/return/' + outward_key + '/' + key).then(return_res => return_res.json()).then(return_data => {
+                  // BEGIN TERTIARY LOOP - add markers
+                  for (let return_key in return_data){
+                    // Create markers
+                    const return_marker = new maplibregl.Marker({color: "#10078a"})
+                    .setLngLat([return_data[return_key]['lng'], return_data[return_key]['lat']])
+                    .addTo(map.current);
+                  }
+                });
+              });
             }
-            
           });
         });
       }

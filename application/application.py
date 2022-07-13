@@ -66,5 +66,26 @@ def get_outward_airports(iata_code):
     print(outward_dict)
     return outward_dict
 
+@app.route('/application/return/<outward_iata_code>/<return_to_iata_code>')
+def get_return_airports(outward_iata_code, return_to_iata_code):
+    print("Outward airport selected: " + outward_iata_code)
+    # Get list of outward airports from DB
+    # TODO add filtering of return journeys to be selected by price and distance from outward airport
+    sql = "SELECT DISTINCT origin_id, latitude_decimal_degrees, longitude_decimal_degrees FROM airport_routes JOIN airports ON airport_routes.origin_id = airports.iata_code WHERE destination_id = '" + return_to_iata_code + "'"
+    list_airports = run_sql(sql)
+
+    # Create dictionary of airport ids and lat/lng
+    return_dict = {}
+
+    for i in range(len(list_airports)):
+        coords = {}
+        coords['lat'] = list_airports[i][1]
+        coords['lng'] = list_airports[i][2]
+        return_dict[list_airports[i][0]] = coords
+
+    print(return_dict)
+    return return_dict
+
+
 
     
