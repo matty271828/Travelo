@@ -10,7 +10,7 @@ export default function Map(){
   const map = useRef(null);
   const [lng] = useState(18);
   const [lat] = useState(48.41);
-  const [zoom] = useState(3);
+  const [zoom] = useState(4.25);
   const [API_KEY] = useState('auR6Ih8HukHj8NgLxBk9');
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function Map(){
     });
 
     // Add zoom controls to map
-    map.current.addControl(new maplibregl.NavigationControl(), 'top-right');
+    map.current.addControl(new maplibregl.NavigationControl(), 'top-left');
 
     // For use in removing markers from page
     var outwardMarkers=[];
