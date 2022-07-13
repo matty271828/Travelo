@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import maplibregl from 'maplibre-gl';
+import maplibregl, { Layout } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './map.css';
 import { Marker } from 'react-map-gl';
@@ -14,6 +14,15 @@ export default function Map(){
   const [API_KEY] = useState('auR6Ih8HukHj8NgLxBk9');
 
   useEffect(() => {
+    // Functions
+    function create_marker(map, color, lng, lat){
+      const marker = new maplibregl.Marker({color: color})
+      .setLngLat([lng, lat])
+      .addTo(map.current)
+      return marker
+    }
+
+    // Create Map
     if (map.current) return;
     map.current = new maplibregl.Map({
       container: mapContainer.current,
@@ -34,11 +43,7 @@ export default function Map(){
       // BEGIN PRIMARY LOOP - through origin airports
       for (let key in origin_data){
         // Create markers
-        const origin_marker = new maplibregl.Marker({color: "#FF0000"})
-        .setLngLat([origin_data[key]['lng'], origin_data[key]['lat']])
-        .addTo(map.current);
-
-        // Add to outwardMarkers array
+        const origin_marker = create_marker(map, "#FF0000", origin_data[key]['lng'], origin_data[key]['lat'])
         originMarkers.push(origin_marker);
 
         // Add EventListener for each origin marker being clicked
@@ -65,12 +70,8 @@ export default function Map(){
           fetch('/application/outwards/' + key).then(outward_res => outward_res.json()).then(outward_data => {
             // BEGIN SECONDARY LOOP - through response and add markers
             for (let outward_key in outward_data){
-              // Create markers
-              const outward_marker = new maplibregl.Marker({color: "#10078a"})
-              .setLngLat([outward_data[outward_key]['lng'], outward_data[outward_key]['lat']])
-              .addTo(map.current);
-
-              // Add to outwardMarkers array
+              // Create outward markers
+              const outward_marker = create_marker(map, "#10078a", outward_data[outward_key]['lng'], outward_data[outward_key]['lat'])
               outwardMarkers.push(outward_marker);
 
               // Add EventListener for return marker being clicked
@@ -91,9 +92,7 @@ export default function Map(){
                   // BEGIN TERTIARY LOOP - add markers
                   for (let return_key in return_data){
                     // Create markers
-                    const return_marker = new maplibregl.Marker({color: "#10078a"})
-                    .setLngLat([return_data[return_key]['lng'], return_data[return_key]['lat']])
-                    .addTo(map.current);
+                    const return_marker = create_marker(map, "#10078a", return_data[return_key]['lng'], return_data[return_key]['lat'])
                   }
                 });
               });
