@@ -12,7 +12,7 @@ export default function Navbar(){
 
  return (
     <>
-        <IconContext.Provider value={{ color: '#fff', size: '25px' }}>
+        <IconContext.Provider value={{color: '#fff'}}>
         <div class = "topnav">
             <span class="title">Travelo</span>
             <Link to="#" class="menu-bars"><FaIcons.FaBars onClick={showSidebar}/></Link>
@@ -21,7 +21,7 @@ export default function Navbar(){
             <ul className='nav-menu-items' onClick={showSidebar}>
                 <li className="navbar-toggle">
                     <Link to="#" className='menu-bars'>
-                        <AiIcons.AiOutlineRight />
+                        <AiIcons.AiOutlineClose />
                     </Link>
                 </li>
                 {SidebarData.map((item, index) => {
