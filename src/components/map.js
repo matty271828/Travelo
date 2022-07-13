@@ -23,7 +23,7 @@ export default function Map(){
     });
 
     // Add zoom controls to map
-    map.current.addControl(new maplibregl.NavigationControl(), 'top-left');
+    map.current.addControl(new maplibregl.NavigationControl(), 'top-right');
 
     // For use in removing markers from page
     var outwardMarkers=[];
