@@ -7,7 +7,7 @@ export default function Navbar(){
  return (
   <div class = "topnav">
     <span class="title">Travelo</span>
-    <span class = "menu-bars"><FaIcons.FaBars/></span>
+    <Link to="#" class="menu-bars"><FaIcons.FaBars/></Link>
   </div>
  );
 }
