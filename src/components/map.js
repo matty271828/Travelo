@@ -22,6 +22,8 @@ export default function Map(){
       return marker
     }
 
+    // TODO - add function to clear markers
+
     // Create Map
     if (map.current) return;
     map.current = new maplibregl.Map({
@@ -70,11 +72,13 @@ export default function Map(){
           fetch('/application/outwards/' + key).then(outward_res => outward_res.json()).then(outward_data => {
             // BEGIN SECONDARY LOOP - through response and add markers
             for (let outward_key in outward_data){
+              // For use in next loop
+              var returnMarkers=[];
               // Create outward markers
               const outward_marker = create_marker(map, "#10078a", outward_data[outward_key]['lng'], outward_data[outward_key]['lat'])
               outwardMarkers.push(outward_marker);
 
-              // Add EventListener for return marker being clicked
+              // Add EventListener for outward marker being clicked
               outward_marker.getElement().addEventListener('click', function onClick(event) {
                 // Change colour of marker on selection
                 event.target.style.fill = 'ad1717';
@@ -93,6 +97,22 @@ export default function Map(){
                   for (let return_key in return_data){
                     // Create markers
                     const return_marker = create_marker(map, "#10078a", return_data[return_key]['lng'], return_data[return_key]['lat'])
+                    returnMarkers.push(return_marker);
+                    
+                    // Add EventListener for return marker being clicked
+                    return_marker.getElement().addEventListener('click', function onClick(event) {
+                      // Change colour of marker on selection
+                      event.target.style.fill = 'ad1717';
+
+                      // TODO - clear return markers from map
+                      // clear other outward markers on map
+                      if (returnMarkers!==null) {
+                        for (var i = returnMarkers.length - 1; i >= 0; i--) {
+                          if (return_marker.getElement() != returnMarkers[i].getElement())
+                          returnMarkers[i].remove();
+                        }
+                      }
+                    });
                   }
                 });
               });
