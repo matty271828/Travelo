@@ -27,8 +27,9 @@ export default function Navbar(){
                 </li>
 
                 <TripSummary/>
+                <br/>
+                <TripSummary/>
                      
-                
                 {SidebarData.map((item, index) => {
                     return (
                         <li key={index} className={item.cName}>

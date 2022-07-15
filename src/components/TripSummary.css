@@ -13,8 +13,8 @@ td {
     color: black;
 }
 
-td.align-center {
-    text-align: center;
+td.align-left {
+    text-align: left;
 }
 
 th {
