@@ -6,6 +6,7 @@ import { SidebarData } from './SidebarData';
 import { IconContext } from 'react-icons';
 import './navbar.css';
 import TripSummary from './TripSummary';
+import OutwardCalendar from './OutwardCalendar';
 
 export default function Navbar(){
  const [sidebar, setSidebar] = useState(true)
@@ -28,8 +29,10 @@ export default function Navbar(){
 
                 <TripSummary/>
                 <br/>
-                <TripSummary/>
-                     
+                <OutwardCalendar/>
+                <br />
+                <OutwardCalendar/>
+                
                 {SidebarData.map((item, index) => {
                     return (
                         <li key={index} className={item.cName}>

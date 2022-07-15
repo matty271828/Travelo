@@ -1,0 +1,38 @@
+table.calendar {
+    background-color: white;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+td.calendar {
+    font-size:medium;
+    font-family: monospace;
+    color: black;
+}
+
+td.calendar-align-left {
+    text-align: left;
+}
+
+td.calendar-align-center {
+    text-align: center;
+}
+
+th.calendar {
+    font-size:medium;
+    font-family: monospace;
+    color: black;
+    text-align: left;
+}
+
+th.calendar-align-right {
+    text-align: right;
+}
+
+th.calendar-align-center {
+    text-align: right;
+}
+
+tr.top-line {
+    background-color: pink;
+}
