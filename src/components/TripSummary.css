@@ -1,16 +1,19 @@
 table {
-    border: 1px solid;
-    border-collapse: collapse;
+    border: solid;
     border-color: black;
     border-width: 3px;
     background-color: white;
     width: 100%;
+    border-radius: 5px;
   }
 
 td {
     font-size:medium;
     font-family: monospace;
     color: black;
+}
+
+td.align-center {
     text-align: center;
 }
 
@@ -19,4 +22,8 @@ th {
     font-family: monospace;
     color: black;
     text-align: left;
+}
+
+th.align-right {
+    text-align: right;
 }

@@ -5,15 +5,22 @@ export default function TripSummary (){
     return (
         <table>
             <tr>
-                <th>Trip Summary:</th>
+                <th>Trip Summary</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
                 <tr>
                     <th>Outward: </th>
                     <td>20/06/2022</td>
                     <td> - </td>
-                    <td>Manchester (MAN)</td>
+                    <td class='align-left'>Manchester (MAN)</td>
                     <td> - </td>
-                    <td>Berlin (BER)</td>
+                    <td class='align-left'>Berlin (BER)</td>
                     <td> - </td>
                     <td>£25</td>
                 </tr>
@@ -22,9 +29,9 @@ export default function TripSummary (){
                     <th>Return: </th>
                     <td>25/06/2022</td>
                     <td> - </td>
-                    <td>Prague (PRG)</td>
+                    <td class='align-left'>Prague (PRG)</td>
                     <td> - </td>
-                    <td>Manchester (MAN)</td>
+                    <td class='align-left'>Manchester (MAN)</td>
                     <td> - </td>
                     <td>£20</td>
                 </tr>
@@ -34,7 +41,16 @@ export default function TripSummary (){
                     <td>175 miles</td>
                 </tr>
 
-                
+                <tr>
+                    <th></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th class='align-right'>Total</th>
+                    <td> - </td>
+                    <td>£45</td>
+                </tr>
             </table>
     );
 }
