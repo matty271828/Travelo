@@ -8,9 +8,9 @@ export default function Map(){
   // variables used in rendering map
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng] = useState(18);
+  const [lng] = useState(25);
   const [lat] = useState(48.41);
-  const [zoom] = useState(4.25);
+  const [zoom] = useState(3.5);
   const [API_KEY] = useState('auR6Ih8HukHj8NgLxBk9');
 
   useEffect(() => {

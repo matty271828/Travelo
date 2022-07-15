@@ -18,6 +18,10 @@ td.calendar-align-center {
     text-align: center;
 }
 
+td.calendar-align-right {
+    text-align: right;
+}
+
 th.calendar {
     font-size:medium;
     font-family: monospace;
@@ -26,10 +30,6 @@ th.calendar {
 }
 
 th.calendar-align-right {
-    text-align: right;
-}
-
-th.calendar-align-center {
     text-align: right;
 }
 

@@ -7,10 +7,20 @@ export default function OutwardCalendar (){
         <table class='calendar'>
             <tr class='top-line'>
                 <th class='calendar'>Outward Journey: </th>
-                <td class='calendar'>Manchester</td>
-                <td class='calendar'>-</td>
+                <td class='calendar-align-right'></td>
+                <td class='calendar-align-right'>Manchester</td>
+                <td class='calendar-align-center'>-</td>
                 <td class='calendar-align-left'>Berlin</td>
             </tr>
+
+            <tr class='top-line'>
+                <th class='calendar-align-right'>&lt;</th>
+                <td class='calendar-align-right'>September 2022</td>
+                <td class='calendar-align-center'>&gt;</td>
+                <td class='calendar-align-center'></td>
+                <td class='calendar-align-left'></td>
+            </tr>
+
         </table>
 
         <table class='calendar'>
@@ -98,20 +108,20 @@ export default function OutwardCalendar (){
                 <td class='calendar-align-center'>29</td>
                 <td class='calendar-align-center'>30</td>
                 <td class='calendar-align-center'>31</td>
-                <td class='calendar-align-center'>1</td>
-                <td class='calendar-align-center'>2</td>
-                <td class='calendar-align-center'>3</td>
-                <td class='calendar-align-center'>4</td>
+                <td class='calendar-align-center'></td>
+                <td class='calendar-align-center'></td>
+                <td class='calendar-align-center'></td>
+                <td class='calendar-align-center'></td>
             </tr>
 
             <tr>
                 <td class='calendar-align-center'>-</td>
                 <td class='calendar-align-center'>-</td>
                 <td class='calendar-align-center'>-</td>
-                <td class='calendar-align-center'>-</td>
-                <td class='calendar-align-center'>-</td>
-                <td class='calendar-align-center'>-</td>
-                <td class='calendar-align-center'>-</td>
+                <td class='calendar-align-center'></td>
+                <td class='calendar-align-center'></td>
+                <td class='calendar-align-center'></td>
+                <td class='calendar-align-center'></td>
             </tr>  
         </table>
     </div>
