@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import { IconContext } from 'react-icons';
 import './navbar.css';
+import TripSummary from './TripSummary';
 
 export default function Navbar(){
  const [sidebar, setSidebar] = useState(true)
@@ -24,6 +25,10 @@ export default function Navbar(){
                         <AiIcons.AiOutlineCaretRight />
                     </Link>
                 </li>
+
+                <TripSummary/>
+                     
+                
                 {SidebarData.map((item, index) => {
                     return (
                         <li key={index} className={item.cName}>

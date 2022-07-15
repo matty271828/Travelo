@@ -21,7 +21,7 @@
 
 .nav-menu {
     background-color: rgba(35, 55, 75, 0.9);
-    width: 250px;
+    width: 45%;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -30,6 +30,7 @@
     right: -100%;
     transition: 850ms;
     z-index: 15;
+    color: white;
 }
 
 .nav-menu.active {
