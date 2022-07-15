@@ -1,4 +1,5 @@
 import React from "react";
+import './TripSummary.css';
 
 export default function TripSummary (){
     return (
@@ -8,34 +9,32 @@ export default function TripSummary (){
             </tr>
                 <tr>
                     <th>Outward: </th>
-                    <th>20/06/2022</th>
-                    <th> - </th>
-                    <th>Manchester (MAN)</th>
-                    <th> - </th>
-                    <th>Berlin (BER)</th>
-                    <th> - </th>
-                    <th>£25</th>
+                    <td>20/06/2022</td>
+                    <td> - </td>
+                    <td>Manchester (MAN)</td>
+                    <td> - </td>
+                    <td>Berlin (BER)</td>
+                    <td> - </td>
+                    <td>£25</td>
                 </tr>
 
                 <tr>
                     <th>Return: </th>
-                    <th>25/06/2022</th>
-                    <th> - </th>
-                    <th>Prague (PRG)</th>
-                    <th> - </th>
-                    <th>Manchester (MAN)</th>
-                    <th> - </th>
-                    <th>£20</th>
+                    <td>25/06/2022</td>
+                    <td> - </td>
+                    <td>Prague (PRG)</td>
+                    <td> - </td>
+                    <td>Manchester (MAN)</td>
+                    <td> - </td>
+                    <td>£20</td>
                 </tr>
 
                 <tr>
                     <th>Overland distance: </th>
-                    <th>175 miles</th>
+                    <td>175 miles</td>
                 </tr>
 
-                <tr>
-                    <th>Go to booking</th>
-                </tr>
+                
             </table>
     );
 }
