@@ -4,7 +4,7 @@
     height: calc(100vh - 77px); /* calculate height of the screen minus the heading */
   }
 
-  #marker {
+  #origin-marker {
     background-image: url('circle.png');
     background-size: cover;
     width: 10px;
@@ -12,6 +12,15 @@
     border-radius: 50%;
     cursor: pointer;
     }
+
+    #outward-marker {
+      background-image: url('bluecircle.png');
+      background-size: cover;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      }
   
   .map {
     position: absolute;
