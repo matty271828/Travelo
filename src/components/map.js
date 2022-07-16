@@ -16,7 +16,11 @@ export default function Map(){
   useEffect(() => {
     // Functions
     function create_marker(map, color, lng, lat){
-      const marker = new maplibregl.Marker({color: color})
+      // Create a DOM element for each marker.
+      var el = document.createElement('div');
+      el.id = 'marker';
+
+      const marker = new maplibregl.Marker(el)
       .setLngLat([lng, lat])
       .addTo(map.current)
       return marker
