@@ -44,7 +44,82 @@ export default function Map(){
       return marker
     }
 
-    // TODO - add function to clear markers
+    // Function to clear origin markers, boolean keepSelected indicates whether to completely reset
+    function clearOriginMarkers(keepSelected, selectedMarker) {
+      // Clear origin markers already present on map
+      if (keepSelected == true){
+        if (clearOriginMarkers == true && originMarkers!==null) {
+          for (var i = originMarkers.length - 1; i >= 0; i--) {
+            if (selectedMarker.getElement() != originMarkers[i].getElement())
+            originMarkers[i].remove();
+          }
+        }
+      } else {
+        if (originMarkers!==null) {
+          for (var i = originMarkers.length - 1; i >= 0; i--) {
+            if (selectedMarker.getElement() != originMarkers[i].getElement())
+            originMarkers[i].remove();
+          }
+        }
+      }
+    }
+
+    function clearOutwardMarkers(keepSelected, selectedMarker) {
+      // Clear origin markers already present on map
+      if (keepSelected == true){
+        if (clearOutwardMarkers == true && outwardMarkers!==null) {
+          for (var i = originMarkers.length - 1; i >= 0; i--) {
+            if (selectedMarker.getElement() != outwardMarkers[i].getElement())
+            outwardMarkers[i].remove();
+          }
+        }
+      } else {
+        if (outwardMarkers!==null) {
+          for (var i = outwardMarkers.length - 1; i >= 0; i--) {
+            if (selectedMarker.getElement() != outwardMarkers[i].getElement())
+            outwardMarkers[i].remove();
+          }
+        }
+      }
+    }
+
+    function clearOutwardMarkers(keepSelected, selectedMarker) {
+      // Clear origin markers already present on map
+      if (keepSelected == true){
+        if (clearOutwardMarkers == true && outwardMarkers!==null) {
+          for (var i = originMarkers.length - 1; i >= 0; i--) {
+            if (selectedMarker.getElement() != outwardMarkers[i].getElement())
+            outwardMarkers[i].remove();
+          }
+        }
+      } else {
+        if (outwardMarkers!==null) {
+          for (var i = outwardMarkers.length - 1; i >= 0; i--) {
+            if (selectedMarker.getElement() != outwardMarkers[i].getElement())
+            outwardMarkers[i].remove();
+          }
+        }
+      }
+    }
+
+    function clearReturnMarkers(keepSelected, selectedMarker) {
+      // Clear origin markers already present on map
+      if (keepSelected == true){
+        if (clearReturnMarkers == true && returnMarkers!==null) {
+          for (var i = returnMarkers.length - 1; i >= 0; i--) {
+            if (selectedMarker.getElement() != returnMarkers[i].getElement())
+            returnMarkers[i].remove();
+          }
+        }
+      } else {
+        if (returnMarkers!==null) {
+          for (var i = returnMarkers.length - 1; i >= 0; i--) {
+            if (selectedMarker.getElement() != returnMarkers[i].getElement())
+            returnMarkers[i].remove();
+          }
+        }
+      }
+    }
 
     // Create Map
     if (map.current) return;
@@ -83,27 +158,10 @@ export default function Map(){
           // Ensures map click listener is not triggered
           event.stopPropagation();
 
-          // Clear origin markers already present on map
-          if (originMarkers!==null) {
-            for (var i = originMarkers.length - 1; i >= 0; i--) {
-              if (origin_marker.getElement() != originMarkers[i].getElement())
-              originMarkers[i].remove();
-            }
-          }
-
-          // Clear outward markers already present on map
-          if (outwardMarkers!==null) {
-            for (var i = outwardMarkers.length - 1; i >= 0; i--) {
-              outwardMarkers[i].remove();
-            }
-          }
-
-          // Clear return markers already present on map
-          if (returnMarkers!==null) {
-            for (var i = returnMarkers.length - 1; i >= 0; i--) {
-              returnMarkers[i].remove();
-            }
-          }
+          // Clear all markers on map apart from the selected marker
+          clearOriginMarkers(true, origin_marker);
+          clearOutwardMarkers(false, origin_marker);
+          clearReturnMarkers(false, origin_marker);
 
           // Request outward airports from DB
           fetch('/application/outwards/' + key).then(outward_res => outward_res.json()).then(outward_data => {
@@ -117,13 +175,9 @@ export default function Map(){
               outward_marker.getElement().addEventListener('click', function onClick(event) {
                 // Ensures map click listener is not triggered
                 event.stopPropagation();
+
                 // clear other outward markers on map
-                if (outwardMarkers!==null) {
-                  for (var i = outwardMarkers.length - 1; i >= 0; i--) {
-                    if (outward_marker.getElement() != outwardMarkers[i].getElement())
-                    outwardMarkers[i].remove();
-                  }
-                }
+                clearOutwardMarkers(true, outward_marker);
 
                 // TODO - Request return airports from DB
                 fetch('/application/return/' + outward_key + '/' + key).then(return_res => return_res.json()).then(return_data => {
@@ -139,13 +193,7 @@ export default function Map(){
                       event.stopPropagation();
 
                       // TODO - clear return markers from map
-                      // clear other outward markers on map
-                      if (returnMarkers!==null) {
-                        for (var i = returnMarkers.length - 1; i >= 0; i--) {
-                          if (return_marker.getElement() != returnMarkers[i].getElement())
-                          returnMarkers[i].remove();
-                        }
-                      }
+                      clearReturnMarkers(true, return_marker);
                     });
                   }
                 });
