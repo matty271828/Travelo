@@ -106,13 +106,20 @@ export default function Map(){
       zoom: zoom
     });
 
-    // Add zoom controls to map
-    map.current.addControl(new maplibregl.NavigationControl(), 'top-left');
-
     // For use in removing markers from page
     var originMarkers=[];
     var outwardMarkers=[];
     var returnMarkers=[];
+
+    // Add listener to reset when clicking on map
+      map.current.on('click', (e) => {
+        clearMarkers('originMarker', false, null);
+        clearMarkers('outwardMarker', false, null);
+        clearMarkers('returnMarker', false, null);
+        });
+
+    // Add zoom controls to map
+    map.current.addControl(new maplibregl.NavigationControl(), 'top-left');
 
     // Make request to DB for origin airports
     fetch('/application/origins').then(origin_res => origin_res.json()).then(origin_data => {
@@ -124,6 +131,9 @@ export default function Map(){
 
         // Add EventListener for each origin marker being clicked
         origin_marker.getElement().addEventListener('click', function onClick(event) {
+          // Ensures map click listener is not triggered
+          event.stopPropagation();
+
           // Clear all markers apart from the currently selected marker
           clearMarkers('originMarker', true, origin_marker);
           clearMarkers('outwardMarker', false, null);
@@ -139,6 +149,9 @@ export default function Map(){
 
               // Add EventListener for outward marker being clicked
               outward_marker.getElement().addEventListener('click', function onClick(event) {
+                // Ensures map click listener is not triggered
+                event.stopPropagation();
+
                 // clear other outward markers on map
                 clearMarkers('outwardMarker', true, outward_marker);
 
@@ -152,8 +165,8 @@ export default function Map(){
                     
                     // Add EventListener for return marker being clicked
                     return_marker.getElement().addEventListener('click', function onClick(event) {
-                      // Change colour of marker on selection
-                      event.target.style.fill = 'ad1717';
+                      // Ensures map click listener is not triggered
+                      event.stopPropagation();
 
                       // clear return markers from map
                       clearMarkers('returnMarker', true, return_marker);
