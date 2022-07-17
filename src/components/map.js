@@ -43,7 +43,59 @@ export default function Map(){
       return marker
     }
 
-    // TODO - add function to clear markers
+    // Function to clear markers from map
+    function clearMarkers(markerType, keepSelected, selectedMarker){
+      switch (markerType) {
+        case 'originMarker':
+          if (originMarkers != null){
+            // Retain the currently selected origin marker
+            if (keepSelected == true){
+              for (var i = originMarkers.length - 1; i >= 0; i--) {
+                if (selectedMarker.getElement() != originMarkers[i].getElement())
+                originMarkers[i].remove();
+                // TODO review whether the marker is being removed from the array
+              }
+            } else {
+              // Delete all origin markers from the map
+              for (var i = originMarkers.length - 1; i >= 0; i--) {
+                originMarkers[i].remove();
+              }
+            }
+          }
+        
+        case 'outwardMarker':
+          if (outwardMarkers != null){
+            // Retain the currently selected origin marker
+            if (keepSelected == true){
+              for (var i = outwardMarkers.length - 1; i >= 0; i--) {
+                if (selectedMarker.getElement() != outwardMarkers[i].getElement())
+                outwardMarkers[i].remove();
+              }
+            } else {
+              // Delete all origin markers from the map
+              for (var i = outwardMarkers.length - 1; i >= 0; i--) {
+                outwardMarkers[i].remove();
+              }
+            }
+          }
+
+        case 'returnMarker':
+          if (returnMarkers != null){
+            // Retain the currently selected origin marker
+            if (keepSelected == true){
+              for (var i = returnMarkers.length - 1; i >= 0; i--) {
+                if (selectedMarker.getElement() != returnMarkers[i].getElement())
+                returnMarkers[i].remove();
+              }
+            } else {
+              // Delete all origin markers from the map
+              for (var i = returnMarkers.length - 1; i >= 0; i--) {
+                returnMarkers[i].remove();
+              }
+            }
+          }          
+      }
+    }
 
     // Create Map
     if (map.current) return;
@@ -72,27 +124,10 @@ export default function Map(){
 
         // Add EventListener for each origin marker being clicked
         origin_marker.getElement().addEventListener('click', function onClick(event) {
-          // Clear origin markers already present on map
-          if (originMarkers!==null) {
-            for (var i = originMarkers.length - 1; i >= 0; i--) {
-              if (origin_marker.getElement() != originMarkers[i].getElement())
-              originMarkers[i].remove();
-            }
-          }
-
-          // Clear outward markers already present on map
-          if (outwardMarkers!==null) {
-            for (var i = outwardMarkers.length - 1; i >= 0; i--) {
-              outwardMarkers[i].remove();
-            }
-          }
-
-          // clear return markers from map
-          if (returnMarkers!==null) {
-            for (var i = returnMarkers.length - 1; i >= 0; i--) {
-              returnMarkers[i].remove();
-            }
-          }
+          // Clear all markers apart from the currently selected marker
+          clearMarkers('originMarker', true, origin_marker);
+          clearMarkers('outwardMarker', false, null);
+          clearMarkers('returnMarker', false, null);
 
           // Request outward airports from DB
           fetch('/application/outwards/' + key).then(outward_res => outward_res.json()).then(outward_data => {
@@ -105,14 +140,9 @@ export default function Map(){
               // Add EventListener for outward marker being clicked
               outward_marker.getElement().addEventListener('click', function onClick(event) {
                 // clear other outward markers on map
-                if (outwardMarkers!==null) {
-                  for (var i = outwardMarkers.length - 1; i >= 0; i--) {
-                    if (outward_marker.getElement() != outwardMarkers[i].getElement())
-                    outwardMarkers[i].remove();
-                  }
-                }
+                clearMarkers('outwardMarker', true, outward_marker);
 
-                // TODO - Request return airports from DB
+                // Request return airports from DB
                 fetch('/application/return/' + outward_key + '/' + key).then(return_res => return_res.json()).then(return_data => {
                   // BEGIN TERTIARY LOOP - add markers
                   for (let return_key in return_data){
@@ -126,12 +156,7 @@ export default function Map(){
                       event.target.style.fill = 'ad1717';
 
                       // clear return markers from map
-                      if (returnMarkers!==null) {
-                        for (var i = returnMarkers.length - 1; i >= 0; i--) {
-                          if (return_marker.getElement() != returnMarkers[i].getElement())
-                          returnMarkers[i].remove();
-                        }
-                      }
+                      clearMarkers('returnMarker', true, return_marker);
                     });
                   }
                 });
