@@ -32,7 +32,7 @@ def run_sql(sql):
 @app.route('/application/origins')
 def get_origin_airports():
     # Get list of valid origin airports from DB
-    sql = "SELECT DISTINCT origin_id, latitude_decimal_degrees, longitude_decimal_degrees FROM airport_routes JOIN airports ON airport_routes.origin_id = airports.iata_code WHERE country = 'ENGLAND'"
+    sql = "SELECT DISTINCT origin_id, place_name, latitude_decimal_degrees, longitude_decimal_degrees FROM airport_routes JOIN airports ON airport_routes.origin_id = airports.iata_code WHERE country = 'ENGLAND'"
     list_airports = run_sql(sql)
 
     # Create dictionary of airport ids and lat/lng
@@ -40,8 +40,9 @@ def get_origin_airports():
 
     for i in range(len(list_airports)):
         coords = {}
-        coords['lat'] = list_airports[i][1]
-        coords['lng'] = list_airports[i][2]
+        coords['place_name'] = list_airports[i][1]
+        coords['lat'] = list_airports[i][2]
+        coords['lng'] = list_airports[i][3]
         origin_dict[list_airports[i][0]] = coords
 
     print(origin_dict)
@@ -51,7 +52,7 @@ def get_origin_airports():
 def get_outward_airports(iata_code):
     print("Origin airport selected: " + iata_code)
     # Get list of outward airports from DB
-    sql = "SELECT DISTINCT destination_id, latitude_decimal_degrees, longitude_decimal_degrees FROM airport_routes JOIN airports ON airport_routes.destination_id = airports.iata_code WHERE origin_id = '" + iata_code + "'"
+    sql = "SELECT DISTINCT destination_id, place_name, latitude_decimal_degrees, longitude_decimal_degrees FROM airport_routes JOIN airports ON airport_routes.destination_id = airports.iata_code WHERE origin_id = '" + iata_code + "'"
     list_airports = run_sql(sql)
 
     # Create dictionary of airport ids and lat/lng
@@ -59,8 +60,9 @@ def get_outward_airports(iata_code):
 
     for i in range(len(list_airports)):
         coords = {}
-        coords['lat'] = list_airports[i][1]
-        coords['lng'] = list_airports[i][2]
+        coords['place_name'] = list_airports[i][1]
+        coords['lat'] = list_airports[i][2]
+        coords['lng'] = list_airports[i][3]
         outward_dict[list_airports[i][0]] = coords
 
     print(outward_dict)
@@ -71,7 +73,7 @@ def get_return_airports(outward_iata_code, return_to_iata_code):
     print("Outward airport selected: " + outward_iata_code)
     # Get list of outward airports from DB
     # TODO add filtering of return journeys to be selected by price and distance from outward airport
-    sql = "SELECT DISTINCT origin_id, latitude_decimal_degrees, longitude_decimal_degrees FROM airport_routes JOIN airports ON airport_routes.origin_id = airports.iata_code WHERE destination_id = '" + return_to_iata_code + "'"
+    sql = "SELECT DISTINCT origin_id, place_name, latitude_decimal_degrees, longitude_decimal_degrees FROM airport_routes JOIN airports ON airport_routes.origin_id = airports.iata_code WHERE destination_id = '" + return_to_iata_code + "'"
     list_airports = run_sql(sql)
 
     # Create dictionary of airport ids and lat/lng
@@ -79,8 +81,9 @@ def get_return_airports(outward_iata_code, return_to_iata_code):
 
     for i in range(len(list_airports)):
         coords = {}
-        coords['lat'] = list_airports[i][1]
-        coords['lng'] = list_airports[i][2]
+        coords['place_name'] = list_airports[i][1]
+        coords['lat'] = list_airports[i][2]
+        coords['lng'] = list_airports[i][3]
         return_dict[list_airports[i][0]] = coords
 
     print(return_dict)

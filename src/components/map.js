@@ -15,7 +15,7 @@ export default function Map(){
 
   useEffect(() => {
     // Functions
-    function create_marker(map, type, lng, lat){
+    function create_marker(map, type, place_name ,lng, lat){
       // Create a DOM element for each marker.
       var el = document.createElement('div');
       if (type == 'origin'){
@@ -24,8 +24,14 @@ export default function Map(){
         el.id = 'outward-marker';
       }
 
+      // create a popup
+      var popup = new maplibregl.Popup({ offset: 5 }).setText(
+        place_name
+        );
+
       const marker = new maplibregl.Marker(el)
       .setLngLat([lng, lat])
+      .setPopup(popup) // sets a popup on this marker
       .addTo(map.current)
       return marker
     }
@@ -53,7 +59,7 @@ export default function Map(){
       // BEGIN PRIMARY LOOP - through origin airports
       for (let key in origin_data){
         // Create markers
-        const origin_marker = create_marker(map, "origin", origin_data[key]['lng'], origin_data[key]['lat'])
+        const origin_marker = create_marker(map, "origin", origin_data[key]['place_name'], origin_data[key]['lng'], origin_data[key]['lat'])
         originMarkers.push(origin_marker);
 
         // Add EventListener for each origin marker being clicked
@@ -83,7 +89,7 @@ export default function Map(){
               // For use in next loop
               var returnMarkers=[];
               // Create outward markers
-              const outward_marker = create_marker(map, "#outward", outward_data[outward_key]['lng'], outward_data[outward_key]['lat'])
+              const outward_marker = create_marker(map, "#outward", outward_data[outward_key]['place_name'], outward_data[outward_key]['lng'], outward_data[outward_key]['lat'])
               outwardMarkers.push(outward_marker);
 
               // Add EventListener for outward marker being clicked
@@ -104,7 +110,7 @@ export default function Map(){
                   // BEGIN TERTIARY LOOP - add markers
                   for (let return_key in return_data){
                     // Create markers
-                    const return_marker = create_marker(map, "return", return_data[return_key]['lng'], return_data[return_key]['lat'])
+                    const return_marker = create_marker(map, "return", return_data[return_key]['place_name'], return_data[return_key]['lng'], return_data[return_key]['lat'])
                     returnMarkers.push(return_marker);
                     
                     // Add EventListener for return marker being clicked
