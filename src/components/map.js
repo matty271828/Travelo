@@ -14,7 +14,7 @@ export default function Map(){
   const [API_KEY] = useState('auR6Ih8HukHj8NgLxBk9');
 
   useEffect(() => {
-    // Functions
+    // Function to create and place a marker on the map
     function create_marker(map, type, place_name ,lng, lat){
       // Create a DOM element for each marker.
       var el = document.createElement('div');
@@ -97,8 +97,8 @@ export default function Map(){
       }
     }
 
-    // Function places markers on the map and controls them
-    function controlMarkers() {
+    // Function to run the main program
+    function controller() {
       // Make request to DB for origin airports
       fetch('/application/origins').then(origin_res => origin_res.json()).then(origin_data => {
         // BEGIN PRIMARY LOOP - through origin airports
@@ -181,14 +181,14 @@ export default function Map(){
         clearMarkers('returnMarker', false, null);
 
         // Revert map markers to initial state
-        controlMarkers();
+        controller();
         });
 
     // Add zoom controls to map
     map.current.addControl(new maplibregl.NavigationControl(), 'top-left');
 
     // Initialise map markers
-    controlMarkers();
+    controller();
 
   });
   
