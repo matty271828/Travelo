@@ -29,10 +29,17 @@ export default function Map(){
         place_name
         );
 
+      // Create the marker
       const marker = new maplibregl.Marker(el)
       .setLngLat([lng, lat])
       .setPopup(popup) // sets a popup on this marker
       .addTo(map.current)
+
+      // Make marker viewable on hover
+      const markerDiv = marker.getElement();
+      markerDiv.addEventListener('mouseenter', () => marker.togglePopup());
+      markerDiv.addEventListener('mouseleave', () => marker.togglePopup());
+
       return marker
     }
 
