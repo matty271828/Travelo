@@ -68,6 +68,7 @@ export default function Map(){
     // For use in removing markers from page
     var originMarkers=[];
     var outwardMarkers=[];
+    var returnMarkers = [];
 
     // Make request to DB for origin airports
     fetch('/application/origins').then(origin_res => origin_res.json()).then(origin_data => {
@@ -97,12 +98,17 @@ export default function Map(){
             }
           }
 
+          // Clear return markers already present on map
+          if (returnMarkers!==null) {
+            for (var i = returnMarkers.length - 1; i >= 0; i--) {
+              returnMarkers[i].remove();
+            }
+          }
+
           // Request outward airports from DB
           fetch('/application/outwards/' + key).then(outward_res => outward_res.json()).then(outward_data => {
             // BEGIN SECONDARY LOOP - through response and add markers
             for (let outward_key in outward_data){
-              // For use in next loop
-              var returnMarkers=[];
               // Create outward markers
               const outward_marker = create_marker(map, "#outward", outward_data[outward_key]['place_name'], outward_data[outward_key]['lng'], outward_data[outward_key]['lat'])
               outwardMarkers.push(outward_marker);
@@ -111,7 +117,6 @@ export default function Map(){
               outward_marker.getElement().addEventListener('click', function onClick(event) {
                 // Ensures map click listener is not triggered
                 event.stopPropagation();
-                
                 // clear other outward markers on map
                 if (outwardMarkers!==null) {
                   for (var i = outwardMarkers.length - 1; i >= 0; i--) {
