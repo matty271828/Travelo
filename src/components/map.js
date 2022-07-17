@@ -29,10 +29,18 @@ export default function Map(){
         place_name
         );
 
+      // Create the marker
       const marker = new maplibregl.Marker(el)
       .setLngLat([lng, lat])
       .setPopup(popup) // sets a popup on this marker
       .addTo(map.current)
+
+      const markerDiv = marker.getElement();
+
+      markerDiv.addEventListener('mouseenter', () => marker.togglePopup());
+      markerDiv.addEventListener('mouseleave', () => marker.togglePopup());
+
+      // Return statement
       return marker
     }
 
@@ -46,6 +54,13 @@ export default function Map(){
       center: [lng, lat],
       zoom: zoom
     });
+
+    // Add listener to reset when clicking on map
+    map.current.on('click', (e) => {
+      const marker = new maplibregl.Marker()
+      .setLngLat([2, 52])
+      .addTo(map.current)
+      });
 
     // Add zoom controls to map
     map.current.addControl(new maplibregl.NavigationControl(), 'top-left');
@@ -64,8 +79,8 @@ export default function Map(){
 
         // Add EventListener for each origin marker being clicked
         origin_marker.getElement().addEventListener('click', function onClick(event) {
-          // Change colour of marker on selection
-          event.target.style.fill = 'ad1717';
+          // Ensures map click listener is not triggered
+          event.stopPropagation();
 
           // Clear origin markers already present on map
           if (originMarkers!==null) {
@@ -94,9 +109,9 @@ export default function Map(){
 
               // Add EventListener for outward marker being clicked
               outward_marker.getElement().addEventListener('click', function onClick(event) {
-                // Change colour of marker on selection
-                event.target.style.fill = 'ad1717';
-
+                // Ensures map click listener is not triggered
+                event.stopPropagation();
+                
                 // clear other outward markers on map
                 if (outwardMarkers!==null) {
                   for (var i = outwardMarkers.length - 1; i >= 0; i--) {
@@ -115,8 +130,8 @@ export default function Map(){
                     
                     // Add EventListener for return marker being clicked
                     return_marker.getElement().addEventListener('click', function onClick(event) {
-                      // Change colour of marker on selection
-                      event.target.style.fill = 'ad1717';
+                      // Ensures map click listener is not triggered
+                      event.stopPropagation();
 
                       // TODO - clear return markers from map
                       // clear other outward markers on map
