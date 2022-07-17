@@ -7,8 +7,8 @@
   #origin-marker {
     background-image: url('redplane.png');
     background-size: cover;
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     cursor: pointer;
     }
@@ -20,8 +20,8 @@
   #outward-marker {
     background-image: url('blueplane.png');
     background-size: cover;
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     cursor: pointer;
     }

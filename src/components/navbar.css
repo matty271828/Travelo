@@ -15,13 +15,13 @@
 }
 
 .topnav .menu-bars {
-    float: right;
+    float: left;
     color: white;
 }
 
 .nav-menu {
-    background-color: rgba(35, 55, 75, 0.9);
-    width: 50%;
+    background-color: rgba(35, 55, 75, 0);
+    width: 35%;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -59,7 +59,8 @@
 
 .nav-menu-items {
     width: 100%;
-    padding-right: 40px;
+    padding-left: 0px;
+    padding-right: 20px;
 }
 
 .navbar-toggle {

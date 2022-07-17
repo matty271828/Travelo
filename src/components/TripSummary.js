@@ -18,9 +18,9 @@ export default function TripSummary (){
                     <th>Outward: </th>
                     <td>20/06/2022</td>
                     <td> - </td>
-                    <td class='align-left'>Manchester (MAN)</td>
+                    <td class='align-center'>Manchester (MAN)</td>
                     <td> - </td>
-                    <td class='align-left'>Berlin (BER)</td>
+                    <td class='align-center'>Berlin (BER)</td>
                     <td> - </td>
                     <td>£25</td>
                 </tr>
@@ -29,9 +29,9 @@ export default function TripSummary (){
                     <th>Return: </th>
                     <td>25/06/2022</td>
                     <td> - </td>
-                    <td class='align-left'>Prague (PRG)</td>
+                    <td class='align-center'>Prague (PRG)</td>
                     <td> - </td>
-                    <td class='align-left'>Manchester (MAN)</td>
+                    <td class='align-center'>Manchester (MAN)</td>
                     <td> - </td>
                     <td>£20</td>
                 </tr>
