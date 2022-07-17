@@ -65,9 +65,6 @@ export default function Map(){
 
         // Add EventListener for each origin marker being clicked
         origin_marker.getElement().addEventListener('click', function onClick(event) {
-          // Change colour of marker on selection
-          event.target.style.fill = 'ad1717';
-
           // Clear origin markers already present on map
           if (originMarkers!==null) {
             for (var i = originMarkers.length - 1; i >= 0; i--) {
@@ -100,9 +97,6 @@ export default function Map(){
 
               // Add EventListener for outward marker being clicked
               outward_marker.getElement().addEventListener('click', function onClick(event) {
-                // Change colour of marker on selection
-                event.target.style.fill = 'ad1717';
-
                 // clear other outward markers on map
                 if (outwardMarkers!==null) {
                   for (var i = outwardMarkers.length - 1; i >= 0; i--) {
