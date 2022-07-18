@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 function App() {
   // Callback function to pass data from map.js to app.js
-  const [mapData, setMapData] = useState('          ');
+  const [mapData, setMapData] = useState('...');
   const mapToApp = (mapData) => {
     setMapData(mapData);
   }
