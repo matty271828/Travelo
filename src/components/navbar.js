@@ -15,9 +15,9 @@ export default function Navbar({appToNavbar}){
  return (
     <>
         <IconContext.Provider value={{color: '#fff'}}>
-        <div class = "topnav">
-            <span class="title">FlightSearchApp</span>
-            <Link to="#" class="menu-bars"><FaIcons.FaBars onClick={showSidebar}/></Link>
+        <div className = "topnav">
+            <span className="title">FlightSearchApp</span>
+            <Link to="#" className="menu-bars"><FaIcons.FaBars onClick={showSidebar}/></Link>
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
             <ul className='nav-menu-items' onClick={showSidebar}>

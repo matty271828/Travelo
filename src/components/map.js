@@ -100,6 +100,7 @@ export default function Map({mapToApp}){
     // Function places markers on the map and controls them
     function controlMarkers() {
       // Object to hold currently selected markers
+      // Outside of all loops, keys will be overwritten on selection
       const selectedMarkers = {}
 
       // Make request to DB for origin airports
@@ -117,6 +118,10 @@ export default function Map({mapToApp}){
 
             // Update trip summary box with name of origin (first by passing to app and then through navbar to TripSummary)
             const data =  origin_data[key]['place_name'] + '\n' + '(' + key + ')'
+            selectedMarkers["place_name"] = data
+
+            console.log(selectedMarkers);
+
             mapToApp(data);
 
             // Clear all markers apart from the currently selected marker

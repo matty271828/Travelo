@@ -2,6 +2,8 @@ import React from "react";
 import './TripSummary.css';
 
 export default function TripSummary ({navbarToTripSummary}){
+
+    console
     return (
         <table>
             <tr>
@@ -18,9 +20,9 @@ export default function TripSummary ({navbarToTripSummary}){
                     <th>Outward: </th>
                     <td>20/06/2022</td>
                     <td> - </td>
-                    <td class='align-center'>{navbarToTripSummary}</td>
+                    <td className='align-center'>{navbarToTripSummary}</td>
                     <td> - </td>
-                    <td class='align-center'>Berlin (BER)</td>
+                    <td className='align-center'>Berlin (BER)</td>
                     <td> - </td>
                     <td>£25</td>
                 </tr>
@@ -29,9 +31,9 @@ export default function TripSummary ({navbarToTripSummary}){
                     <th>Return: </th>
                     <td>25/06/2022</td>
                     <td> - </td>
-                    <td class='align-center'>Prague (PRG)</td>
+                    <td className='align-center'>Prague (PRG)</td>
                     <td> - </td>
-                    <td class='align-center'>Manchester (MAN)</td>
+                    <td className='align-center'>Manchester (MAN)</td>
                     <td> - </td>
                     <td>£20</td>
                 </tr>
@@ -47,7 +49,7 @@ export default function TripSummary ({navbarToTripSummary}){
                     <td></td>
                     <td></td>
                     <td></td>
-                    <th class='align-right'>Total</th>
+                    <th className='align-right'>Total</th>
                     <td> - </td>
                     <td>£45</td>
                 </tr>
