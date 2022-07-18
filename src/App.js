@@ -7,7 +7,7 @@ import { useState } from 'react';
 function App() {
 
   const [data, setData] = useState('');
-  const childToParent = (childdata) => {
+  const mapToApp = (childdata) => {
     setData(childdata);
   }
 
@@ -22,7 +22,7 @@ function App() {
 
       <span>{data}</span>
 
-      <Map childToParent={childToParent}/>
+      <Map mapToApp={mapToApp}/>
     </div>
   );
 }

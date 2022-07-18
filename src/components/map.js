@@ -4,7 +4,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import './map.css';
 import { Marker } from 'react-map-gl';
 
-export default function Map({childToParent}){
+export default function Map({mapToApp}){
   // variables used in rendering map
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -114,7 +114,7 @@ export default function Map({childToParent}){
 
             // TODO - Update trip summary box with name of origin
             const data =  origin_data[key]['place_name']
-            childToParent(data);
+            mapToApp(data);
 
             // Clear all markers apart from the currently selected marker
             clearMarkers('originMarker', true, origin_marker);
