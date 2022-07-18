@@ -14,7 +14,6 @@ export default function Navbar({appToNavbar}){
 
  return (
     <>
-        <div>{appToNavbar}</div>
         <IconContext.Provider value={{color: '#fff'}}>
         <div class = "topnav">
             <span class="title">FlightSearchApp</span>
@@ -22,7 +21,7 @@ export default function Navbar({appToNavbar}){
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
             <ul className='nav-menu-items' onClick={showSidebar}>
-                <TripSummary/>
+                <TripSummary parentToChild={appToNavbar}/>
                 <br/>
                 <OutwardCalendar/>
                 <br />

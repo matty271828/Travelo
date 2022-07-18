@@ -186,6 +186,10 @@ export default function Map({mapToApp}){
 
         // Revert map markers to initial state
         controlMarkers();
+
+        // Clear trip summary box
+        mapToApp('...');
+
         });
 
     // Add zoom controls to map
