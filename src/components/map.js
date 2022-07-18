@@ -99,6 +99,9 @@ export default function Map({mapToApp}){
 
     // Function places markers on the map and controls them
     function controlMarkers() {
+      // Object to hold currently selected markers
+      const selectedMarkers = {}
+
       // Make request to DB for origin airports
       fetch('/application/origins').then(origin_res => origin_res.json()).then(origin_data => {
         // BEGIN PRIMARY LOOP - through origin airports
@@ -112,7 +115,7 @@ export default function Map({mapToApp}){
             // Ensures map click listener is not triggered
             event.stopPropagation();
 
-            // Update trip summary box with name of origin
+            // Update trip summary box with name of origin (first by passing to app and then through navbar to TripSummary)
             const data =  origin_data[key]['place_name'] + '\n' + '(' + key + ')'
             mapToApp(data);
 

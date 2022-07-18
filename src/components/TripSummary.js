@@ -1,7 +1,7 @@
 import React from "react";
 import './TripSummary.css';
 
-export default function TripSummary ({parentToChild}){
+export default function TripSummary ({navbarToTripSummary}){
     return (
         <table>
             <tr>
@@ -18,7 +18,7 @@ export default function TripSummary ({parentToChild}){
                     <th>Outward: </th>
                     <td>20/06/2022</td>
                     <td> - </td>
-                    <td class='align-center'>{parentToChild}</td>
+                    <td class='align-center'>{navbarToTripSummary}</td>
                     <td> - </td>
                     <td class='align-center'>Berlin (BER)</td>
                     <td> - </td>

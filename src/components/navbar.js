@@ -21,7 +21,7 @@ export default function Navbar({appToNavbar}){
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
             <ul className='nav-menu-items' onClick={showSidebar}>
-                <TripSummary parentToChild={appToNavbar}/>
+                <TripSummary navbarToTripSummary={appToNavbar}/>
                 <br/>
                 <OutwardCalendar/>
                 <br />
