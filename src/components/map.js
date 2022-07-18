@@ -112,8 +112,8 @@ export default function Map({mapToApp}){
             // Ensures map click listener is not triggered
             event.stopPropagation();
 
-            // TODO - Update trip summary box with name of origin
-            const data =  origin_data[key]['place_name']
+            // Update trip summary box with name of origin
+            const data =  origin_data[key]['place_name'] + '\n' + '(' + key + ')'
             mapToApp(data);
 
             // Clear all markers apart from the currently selected marker
