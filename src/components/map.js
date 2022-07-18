@@ -4,7 +4,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import './map.css';
 import { Marker } from 'react-map-gl';
 
-export default function Map(){
+export default function Map({childToParent}){
   // variables used in rendering map
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -97,8 +97,8 @@ export default function Map(){
       }
     }
 
-    // Function to run the main program
-    function controller() {
+    // Function places markers on the map and controls them
+    function controlMarkers() {
       // Make request to DB for origin airports
       fetch('/application/origins').then(origin_res => origin_res.json()).then(origin_data => {
         // BEGIN PRIMARY LOOP - through origin airports
@@ -111,6 +111,10 @@ export default function Map(){
           origin_marker.getElement().addEventListener('click', function onClick(event) {
             // Ensures map click listener is not triggered
             event.stopPropagation();
+
+            // TODO - Update trip summary box with name of origin
+            const data =  origin_data[key]['place_name']
+            childToParent(data);
 
             // Clear all markers apart from the currently selected marker
             clearMarkers('originMarker', true, origin_marker);
@@ -181,14 +185,14 @@ export default function Map(){
         clearMarkers('returnMarker', false, null);
 
         // Revert map markers to initial state
-        controller();
+        controlMarkers();
         });
 
     // Add zoom controls to map
     map.current.addControl(new maplibregl.NavigationControl(), 'top-left');
 
     // Initialise map markers
-    controller();
+    controlMarkers();
 
   });
   
