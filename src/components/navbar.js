@@ -8,12 +8,13 @@ import './navbar.css';
 import TripSummary from './TripSummary';
 import OutwardCalendar from './OutwardCalendar';
 
-export default function Navbar(){
+export default function Navbar({appToNavbar}){
  const [sidebar, setSidebar] = useState(true)
  const showSidebar = () => setSidebar(!sidebar)
 
  return (
     <>
+        <div>{appToNavbar}</div>
         <IconContext.Provider value={{color: '#fff'}}>
         <div class = "topnav">
             <span class="title">FlightSearchApp</span>

@@ -5,22 +5,22 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 
 function App() {
-
-  const [data, setData] = useState('');
-  const mapToApp = (childdata) => {
-    setData(childdata);
+  // Callback function to pass data from map.js to app.js
+  const [mapData, setMapData] = useState('');
+  const mapToApp = (mapData) => {
+    setMapData(mapData);
   }
 
   return (
     <div className="App">
       <Router>
-        <Navbar/>
+        <Navbar appToNavbar={mapData}/>
         <Routes>
           <Route path='/' />
         </Routes>
       </Router>
 
-      <span>{data}</span>
+      <span>{mapData}</span>
 
       <Map mapToApp={mapToApp}/>
     </div>
