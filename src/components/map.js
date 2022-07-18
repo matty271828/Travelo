@@ -118,7 +118,7 @@ export default function Map({mapToApp}){
 
             // Update trip summary box with name of origin (first by passing to app and then through navbar to TripSummary)
             const data =  origin_data[key]['place_name'] + '\n' + '(' + key + ')'
-            selectedMarkers["place_name"] = data
+            selectedMarkers["origin_name"] = data
             mapToApp(selectedMarkers);
 
             // Clear all markers apart from the currently selected marker
@@ -193,7 +193,7 @@ export default function Map({mapToApp}){
         controlMarkers();
 
         // Clear trip summary box
-        mapToApp({place_name: '...'});
+        mapToApp({origin_name: '...'});
 
         });
 
