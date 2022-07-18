@@ -188,7 +188,7 @@ export default function Map({mapToApp}){
         controlMarkers();
 
         // Clear trip summary box
-        mapToApp('...');
+        mapToApp('          ');
 
         });
 
