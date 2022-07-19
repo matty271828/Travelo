@@ -2,6 +2,9 @@ import React from "react";
 import './TripSummary.css';
 
 export default function TripSummary ({navbarToTripSummary}){
+
+    console.log(navbarToTripSummary);
+
     return (
         <table>
             <tr>
@@ -20,7 +23,7 @@ export default function TripSummary ({navbarToTripSummary}){
                     <td> - </td>
                     <td className='align-center'>{navbarToTripSummary.origin_name}</td>
                     <td> - </td>
-                    <td className='align-center'>Berlin (BER)</td>
+                    <td className='align-center'>{navbarToTripSummary.outward_name}</td>
                     <td> - </td>
                     <td>£25</td>
                 </tr>
@@ -29,9 +32,9 @@ export default function TripSummary ({navbarToTripSummary}){
                     <th>Return: </th>
                     <td>25/06/2022</td>
                     <td> - </td>
-                    <td className='align-center'>Prague (PRG)</td>
+                    <td className='align-center'>{navbarToTripSummary.return_name}</td>
                     <td> - </td>
-                    <td className='align-center'>Manchester (MAN)</td>
+                    <td className='align-center'>{navbarToTripSummary.origin_name}</td>
                     <td> - </td>
                     <td>£20</td>
                 </tr>

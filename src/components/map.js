@@ -99,10 +99,6 @@ export default function Map({mapToApp}){
 
     // Function places markers on the map and controls them
     function controlMarkers() {
-      // Object to hold currently selected markers
-      // Outside of all loops, keys will be overwritten on selection
-      const selectedMarkers = {}
-
       // Make request to DB for origin airports
       fetch('/application/origins').then(origin_res => origin_res.json()).then(origin_data => {
         // BEGIN PRIMARY LOOP - through origin airports
@@ -117,9 +113,8 @@ export default function Map({mapToApp}){
             event.stopPropagation();
 
             // Update trip summary box with name of origin (first by passing to app and then through navbar to TripSummary)
-            const data =  origin_data[key]['place_name'] + '\n' + '(' + key + ')'
-            selectedMarkers["origin_name"] = data
-            mapToApp(selectedMarkers);
+            const origin =  origin_data[key]['place_name'] + '\n' + '(' + key + ')'
+            mapToApp({origin_name: origin, outward_name: '...', return_name: '...'});
 
             // Clear all markers apart from the currently selected marker
             clearMarkers('originMarker', true, origin_marker);
@@ -138,6 +133,11 @@ export default function Map({mapToApp}){
                 outward_marker.getElement().addEventListener('click', function onClick(event) {
                   // Ensures map click listener is not triggered
                   event.stopPropagation();
+                  console.log("outward element clicked")
+
+                  // Update trip summary box with name of outward airport
+                  const outward =  outward_data[outward_key]['place_name'] + '\n' + '(' + outward_key + ')'
+                  mapToApp({origin_name: origin, outward_name: outward, return_name: '...'});
 
                   // clear other outward markers on map
                   clearMarkers('outwardMarker', true, outward_marker);
@@ -154,6 +154,10 @@ export default function Map({mapToApp}){
                       return_marker.getElement().addEventListener('click', function onClick(event) {
                         // Ensures map click listener is not triggered
                         event.stopPropagation();
+
+                        // Update trip summary box with name of return airport
+                        const returnAirport =  return_data[return_key]['place_name'] + '\n' + '(' + return_key + ')'
+                        mapToApp({origin_name: origin, outward_name: outward, return_name: returnAirport});
 
                         // clear return markers from map
                         clearMarkers('returnMarker', true, return_marker);
@@ -193,7 +197,7 @@ export default function Map({mapToApp}){
         controlMarkers();
 
         // Clear trip summary box
-        mapToApp({origin_name: '...'});
+        mapToApp({origin_name: '...', outward_name: '...', return_name: '...'});
 
         });
 
