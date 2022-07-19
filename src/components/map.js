@@ -93,7 +93,23 @@ export default function Map({mapToApp}){
                 returnMarkers[i].remove();
               }
             }
-          }          
+          }
+
+          case 'terminalMarker':
+            if (terminalMarkers != null){
+              // Retain the currently selected origin marker
+              if (keepSelected == true){
+                for (var i = terminalMarkers.length - 1; i >= 0; i--) {
+                  if (selectedMarker.getElement() != terminalMarkers[i].getElement())
+                  terminalMarkers[i].remove();
+                }
+              } else {
+                // Delete all origin markers from the map
+                for (var i = terminalMarkers.length - 1; i >= 0; i--) {
+                  terminalMarkers[i].remove();
+                }
+              }
+            }          
       }
     }
 
@@ -113,8 +129,8 @@ export default function Map({mapToApp}){
             event.stopPropagation();
 
             // Update trip summary box with name of origin (first by passing to app and then through navbar to TripSummary)
-            const origin =  origin_data[key]['place_name'] + '\n' + '(' + key + ')'
-            mapToApp({origin_name: origin, outward_name: '...', return_name: '...'});
+            const originAirport =  origin_data[key]['place_name'] + '\n' + '(' + key + ')'
+            mapToApp({origin_name: originAirport, outward_name: '...', return_name: '...', terminal_name: "..."});
 
             // Clear all markers apart from the currently selected marker
             clearMarkers('originMarker', true, origin_marker);
@@ -133,11 +149,10 @@ export default function Map({mapToApp}){
                 outward_marker.getElement().addEventListener('click', function onClick(event) {
                   // Ensures map click listener is not triggered
                   event.stopPropagation();
-                  console.log("outward element clicked")
 
                   // Update trip summary box with name of outward airport
-                  const outward =  outward_data[outward_key]['place_name'] + '\n' + '(' + outward_key + ')'
-                  mapToApp({origin_name: origin, outward_name: outward, return_name: '...'});
+                  const outwardAirport =  outward_data[outward_key]['place_name'] + '\n' + '(' + outward_key + ')'
+                  mapToApp({origin_name: originAirport, outward_name: outwardAirport, return_name: '...', terminal_name: '...'});
 
                   // clear other outward markers on map
                   clearMarkers('outwardMarker', true, outward_marker);
@@ -157,10 +172,34 @@ export default function Map({mapToApp}){
 
                         // Update trip summary box with name of return airport
                         const returnAirport =  return_data[return_key]['place_name'] + '\n' + '(' + return_key + ')'
-                        mapToApp({origin_name: origin, outward_name: outward, return_name: returnAirport});
+                        mapToApp({origin_name: originAirport, outward_name: outwardAirport, return_name: returnAirport, terminal_name: '...'});
 
                         // clear return markers from map
                         clearMarkers('returnMarker', true, return_marker);
+
+                        // TODO - Add ability to return to any origin airport
+                        // Rerequest origin airports - now refered to as terminal airports
+                        fetch('/application/origins').then(terminal_res => terminal_res.json()).then(terminal_data => {
+                          // BEGIN QUARTERNARY LOOP through terminal airports
+                          for (let terminal_key in origin_data){
+                            // Create terminal markers
+                            const terminal_marker = create_marker(map, "origin", terminal_data[terminal_key]['place_name'], terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat'])
+                            terminalMarkers.push(terminal_marker);
+  
+                            // Add event listener for terminal marker clicked
+                            terminal_marker.getElement().addEventListener('click', function onClick(event) {
+                              // Ensure map click listener not triggered
+                              event.stopPropagation();
+
+                              // Update trip summary box with name of terminal airport
+                              const terminalAirport =  terminal_data[terminal_key]['place_name'] + '\n' + '(' + terminal_key + ')'
+                              mapToApp({origin_name: originAirport, outward_name: outwardAirport, return_name: returnAirport, terminal_name: terminalAirport});
+  
+                              // Clear unselected terminal airports from map
+                              clearMarkers('terminalMarker', true, terminal_marker);
+                            });
+                          }
+                        });
                       });
                     }
                   });
@@ -185,6 +224,7 @@ export default function Map({mapToApp}){
     var originMarkers=[];
     var outwardMarkers=[];
     var returnMarkers=[];
+    var terminalMarkers = [];
 
     // Add listener to reset when clicking on map
       map.current.on('click', (e) => {
@@ -197,7 +237,7 @@ export default function Map({mapToApp}){
         controlMarkers();
 
         // Clear trip summary box
-        mapToApp({origin_name: '...', outward_name: '...', return_name: '...'});
+        mapToApp({origin_name: '...', outward_name: '...', return_name: '...', terminal_name: '...'});
 
         });
 

@@ -34,7 +34,7 @@ export default function TripSummary ({navbarToTripSummary}){
                     <td className='align-center'>-</td>
                     <td className='align-center'>{navbarToTripSummary.return_name}</td>
                     <td className='align-center'>-</td>
-                    <td className='align-center'>{navbarToTripSummary.origin_name}</td>
+                    <td className='align-center'>{navbarToTripSummary.terminal_name}</td>
                     <td className='align-center'>-</td>
                     <td>£20</td>
                 </tr>
