@@ -197,6 +197,9 @@ export default function Map({mapToApp}){
   
                               // Clear unselected terminal airports from map
                               clearMarkers('terminalMarker', true, terminal_marker);
+
+                              // Change colour of terminal marker to red
+                              terminal_marker.getElement().setAttribute('id', 'origin-marker');
                             });
                           }
                         });
