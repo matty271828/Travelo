@@ -6,42 +6,37 @@ export default function TripSummary ({navbarToTripSummary}){
     console.log(navbarToTripSummary);
 
     return (
-        <table>
-            <tr>
-                <th>Trip Summary</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+        <table height='25%' border='0px'>
+            <tr height='25%'>
+                <th width='10%'>Trip Summary</th>
+                <td width='5%'></td>
+                <td width='3%'></td>
+                <td width='22%'></td>
+                <td width='3%'></td>
+                <td width='22%'></td>
+                <td width='3%'></td>
+                <td width='10%'></td>
             </tr>
-                <tr>
+                <tr height='25%'>
                     <th>Outward: </th>
-                    <td>20/06/2022</td>
-                    <td> - </td>
+                    <td className='align-center'>20/06/2022</td>
+                    <td className='align-center'>-</td>
                     <td className='align-center'>{navbarToTripSummary.origin_name}</td>
-                    <td> - </td>
+                    <td className='align-center'>-</td>
                     <td className='align-center'>{navbarToTripSummary.outward_name}</td>
-                    <td> - </td>
+                    <td className='align-center'>-</td>
                     <td>£25</td>
                 </tr>
 
-                <tr>
+                <tr height='25%'>
                     <th>Return: </th>
-                    <td>25/06/2022</td>
-                    <td> - </td>
+                    <td className='align-center'>25/06/2022</td>
+                    <td className='align-center'>-</td>
                     <td className='align-center'>{navbarToTripSummary.return_name}</td>
-                    <td> - </td>
+                    <td className='align-center'>-</td>
                     <td className='align-center'>{navbarToTripSummary.origin_name}</td>
-                    <td> - </td>
+                    <td className='align-center'>-</td>
                     <td>£20</td>
-                </tr>
-
-                <tr>
-                    <th>Overland distance: </th>
-                    <td>175 miles</td>
                 </tr>
 
                 <tr>
@@ -51,7 +46,7 @@ export default function TripSummary ({navbarToTripSummary}){
                     <td></td>
                     <td></td>
                     <th className='align-right'>Total</th>
-                    <td> - </td>
+                    <td className='align-center'>-</td>
                     <td>£45</td>
                 </tr>
             </table>
