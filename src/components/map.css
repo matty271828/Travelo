@@ -4,7 +4,7 @@
     height: calc(100vh - 77px); /* calculate height of the screen minus the heading */
   }
 
-  #origin-marker {
+  #selected-marker {
     background-image: url('redplane.png');
     background-size: cover;
     width: 15px;
@@ -13,11 +13,11 @@
     cursor: pointer;
     }
 
-    #origin-marker:hover {
+    #selected-marker:hover {
       background-image: url('darkredplane.png');
       }
 
-  #outward-marker {
+  #standard-marker {
     background-image: url('blueplane.png');
     background-size: cover;
     width: 15px;
@@ -26,7 +26,7 @@
     cursor: pointer;
     }
 
-    #outward-marker:hover {
+    #standard-marker:hover {
       background-image: url('darkblueplane.png');
       }
   

@@ -18,10 +18,10 @@ export default function Map({mapToApp}){
     function create_marker(map, type, place_name ,lng, lat){
       // Create a DOM element for each marker.
       var el = document.createElement('div');
-      if (type == 'origin'){
-        el.id = 'origin-marker';
+      if (type == 'selected-marker'){
+        el.id = 'selected-marker';
       } else {
-        el.id = 'outward-marker';
+        el.id = 'standard-marker';
       }
 
       // create a popup
@@ -120,7 +120,7 @@ export default function Map({mapToApp}){
         // BEGIN PRIMARY LOOP - through origin airports
         for (let key in origin_data){
           // Create markers
-          const origin_marker = create_marker(map, "origin", origin_data[key]['place_name'], origin_data[key]['lng'], origin_data[key]['lat'])
+          const origin_marker = create_marker(map, "standard-marker", origin_data[key]['place_name'], origin_data[key]['lng'], origin_data[key]['lat'])
           originMarkers.push(origin_marker);
 
           // Add EventListener for each origin marker being clicked
@@ -138,12 +138,15 @@ export default function Map({mapToApp}){
             clearMarkers('returnMarker', false, null);
             clearMarkers('terminalMarker', false, null);
 
+            // Change colour of return marker to red
+            origin_marker.getElement().setAttribute('id', 'selected-marker');
+
             // Request outward airports from DB
             fetch('/application/outwards/' + key).then(outward_res => outward_res.json()).then(outward_data => {
               // BEGIN SECONDARY LOOP - through response and add markers
               for (let outward_key in outward_data){
                 // Create outward markers
-                const outward_marker = create_marker(map, "#outward", outward_data[outward_key]['place_name'], outward_data[outward_key]['lng'], outward_data[outward_key]['lat'])
+                const outward_marker = create_marker(map, "standard-marker", outward_data[outward_key]['place_name'], outward_data[outward_key]['lng'], outward_data[outward_key]['lat'])
                 outwardMarkers.push(outward_marker);
 
                 // Add EventListener for outward marker being clicked
@@ -159,14 +162,14 @@ export default function Map({mapToApp}){
                   clearMarkers('outwardMarker', true, outward_marker);
 
                   // Change colour of outward marker to red
-                  outward_marker.getElement().setAttribute('id', 'origin-marker');
+                  outward_marker.getElement().setAttribute('id', 'selected-marker');
 
                   // Request airports with routes back to England from DB
                   fetch('/application/return/' + outward_key).then(return_res => return_res.json()).then(return_data => {
                     // BEGIN TERTIARY LOOP - add markers
                     for (let return_key in return_data){
                       // Create markers
-                      const return_marker = create_marker(map, "return", return_data[return_key]['place_name'], return_data[return_key]['lng'], return_data[return_key]['lat'])
+                      const return_marker = create_marker(map, "standard-marker", return_data[return_key]['place_name'], return_data[return_key]['lng'], return_data[return_key]['lat'])
                       returnMarkers.push(return_marker);
                       
                       // Add EventListener for return marker being clicked
@@ -182,14 +185,14 @@ export default function Map({mapToApp}){
                         clearMarkers('returnMarker', true, return_marker);
 
                         // Change colour of return marker to red
-                        return_marker.getElement().setAttribute('id', 'origin-marker');
+                        return_marker.getElement().setAttribute('id', 'selected-marker');
 
                         // TODO - Request airports in England reachable from the selected return airport
                         fetch('/application/outwards/' + return_key).then(terminal_res => terminal_res.json()).then(terminal_data => {
                           // BEGIN QUARTERNARY LOOP through terminal airports
                           for (let terminal_key in terminal_data){
                             // Create terminal markers
-                            const terminal_marker = create_marker(map, "terminal", terminal_data[terminal_key]['place_name'], terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat'])
+                            const terminal_marker = create_marker(map, "standard-marker", terminal_data[terminal_key]['place_name'], terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat'])
                             terminalMarkers.push(terminal_marker);
   
                             // Add event listener for terminal marker clicked
@@ -205,7 +208,7 @@ export default function Map({mapToApp}){
                               clearMarkers('terminalMarker', true, terminal_marker);
 
                               // Change colour of terminal marker to red
-                              terminal_marker.getElement().setAttribute('id', 'origin-marker');
+                              terminal_marker.getElement().setAttribute('id', 'selected-marker');
                             });
                           }
                         });
