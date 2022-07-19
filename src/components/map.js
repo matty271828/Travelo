@@ -158,6 +158,9 @@ export default function Map({mapToApp}){
                   // clear other outward markers on map
                   clearMarkers('outwardMarker', true, outward_marker);
 
+                  // Change colour of outward marker to red
+                  outward_marker.getElement().setAttribute('id', 'origin-marker');
+
                   // Request airports with routes back to England from DB
                   fetch('/application/return/' + outward_key).then(return_res => return_res.json()).then(return_data => {
                     // BEGIN TERTIARY LOOP - add markers
@@ -177,6 +180,9 @@ export default function Map({mapToApp}){
 
                         // clear return markers from map
                         clearMarkers('returnMarker', true, return_marker);
+
+                        // Change colour of return marker to red
+                        return_marker.getElement().setAttribute('id', 'origin-marker');
 
                         // TODO - Request airports in England reachable from the selected return airport
                         fetch('/application/outwards/' + return_key).then(terminal_res => terminal_res.json()).then(terminal_data => {
