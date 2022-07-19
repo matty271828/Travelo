@@ -136,6 +136,7 @@ export default function Map({mapToApp}){
             clearMarkers('originMarker', true, origin_marker);
             clearMarkers('outwardMarker', false, null);
             clearMarkers('returnMarker', false, null);
+            clearMarkers('terminalMarker', false, null);
 
             // Request outward airports from DB
             fetch('/application/outwards/' + key).then(outward_res => outward_res.json()).then(outward_data => {
@@ -157,8 +158,8 @@ export default function Map({mapToApp}){
                   // clear other outward markers on map
                   clearMarkers('outwardMarker', true, outward_marker);
 
-                  // Request return airports from DB
-                  fetch('/application/return/' + outward_key + '/' + key).then(return_res => return_res.json()).then(return_data => {
+                  // Request airports with routes back to England from DB
+                  fetch('/application/return/' + outward_key).then(return_res => return_res.json()).then(return_data => {
                     // BEGIN TERTIARY LOOP - add markers
                     for (let return_key in return_data){
                       // Create markers
@@ -177,13 +178,12 @@ export default function Map({mapToApp}){
                         // clear return markers from map
                         clearMarkers('returnMarker', true, return_marker);
 
-                        // TODO - Add ability to return to any origin airport
-                        // Rerequest origin airports - now refered to as terminal airports
-                        fetch('/application/origins').then(terminal_res => terminal_res.json()).then(terminal_data => {
+                        // TODO - Request airports in England reachable from the selected return airport
+                        fetch('/application/outwards/' + return_key).then(terminal_res => terminal_res.json()).then(terminal_data => {
                           // BEGIN QUARTERNARY LOOP through terminal airports
-                          for (let terminal_key in origin_data){
+                          for (let terminal_key in terminal_data){
                             // Create terminal markers
-                            const terminal_marker = create_marker(map, "origin", terminal_data[terminal_key]['place_name'], terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat'])
+                            const terminal_marker = create_marker(map, "terminal", terminal_data[terminal_key]['place_name'], terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat'])
                             terminalMarkers.push(terminal_marker);
   
                             // Add event listener for terminal marker clicked
