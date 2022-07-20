@@ -130,7 +130,7 @@ export default function Map({mapToApp}){
 
             // Update trip summary box with name of origin (first by passing to app and then through navbar to TripSummary)
             const originAirport =  origin_data[key]['place_name'] + '\n' + '(' + key + ')'
-            mapToApp({origin_name: originAirport, outward_name: '...', return_name: '...', terminal_name: "..."});
+            mapToApp({origin_name: originAirport, outward_name: '...',  cheapest_outward_flight: {date: "...", price: '...'}, return_name: '...', terminal_name: "..."});
 
             // Clear all markers apart from the currently selected marker
             clearMarkers('originMarker', true, origin_marker);
@@ -156,7 +156,7 @@ export default function Map({mapToApp}){
 
                   // Update trip summary box with name of outward airport
                   const outwardAirport =  outward_data[outward_key]['place_name'] + '\n' + '(' + outward_key + ')'
-                  mapToApp({origin_name: originAirport, outward_name: outwardAirport, return_name: '...', terminal_name: '...'});
+                  mapToApp({origin_name: originAirport, outward_name: outwardAirport, cheapest_outward_flight: {date: "...", price: '...'}, return_name: '...', terminal_name: '...'});
 
                   // clear other outward markers on map
                   clearMarkers('outwardMarker', true, outward_marker);
@@ -179,7 +179,7 @@ export default function Map({mapToApp}){
 
                         // Update trip summary box with name of return airport
                         const returnAirport =  return_data[return_key]['place_name'] + '\n' + '(' + return_key + ')'
-                        mapToApp({origin_name: originAirport, outward_name: outwardAirport, return_name: returnAirport, terminal_name: '...'});
+                        mapToApp({origin_name: originAirport, outward_name: outwardAirport, cheapest_outward_flight: {date: "...", price: '...'}, return_name: returnAirport, terminal_name: '...'});
 
                         // clear return markers from map
                         clearMarkers('returnMarker', true, return_marker);
@@ -202,7 +202,7 @@ export default function Map({mapToApp}){
 
                               // Update trip summary box with name of terminal airport
                               const terminalAirport =  terminal_data[terminal_key]['place_name'] + '\n' + '(' + terminal_key + ')'
-                              mapToApp({origin_name: originAirport, outward_name: outwardAirport, return_name: returnAirport, terminal_name: terminalAirport});
+                              mapToApp({origin_name: originAirport, outward_name: outwardAirport, cheapest_outward_flight: {date: "...", price: '...'}, return_name: returnAirport, terminal_name: terminalAirport});
   
                               // Clear unselected terminal airports from map
                               clearMarkers('terminalMarker', true, terminal_marker);
@@ -249,7 +249,7 @@ export default function Map({mapToApp}){
         controlMarkers();
 
         // Clear trip summary box
-        mapToApp({origin_name: '...', outward_name: '...', return_name: '...', terminal_name: '...'});
+        mapToApp({origin_name: '...', outward_name: '...', cheapest_outward_flight: {date: "...", price: '...'}, return_name: '...', terminal_name: '...'});
 
         });
 

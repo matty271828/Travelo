@@ -5,8 +5,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 
 function App() {
-  // Callback function to pass data from map.js to app.js
-  const [mapData, setMapData] = useState({origin_name: "...", outward_name: "...", return_name: "...", terminal_name: "..."});
+  // Callback function to pass data from map.js to app.js, this will then be passed as a prop to Navbar
+  const [mapData, setMapData] = useState({origin_name: "...", outward_name: "...", cheapest_outward_flight: {date: "...", price: '...'}, return_name: "...", terminal_name: "..."});
   const mapToApp = (mapData) => {
     setMapData(mapData);
   }

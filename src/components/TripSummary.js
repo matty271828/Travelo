@@ -19,13 +19,13 @@ export default function TripSummary ({navbarToTripSummary}){
             </tr>
                 <tr height='25%'>
                     <th>Outward: </th>
-                    <td className='align-center'>20/06/2022</td>
+                    <td className='align-center'>{navbarToTripSummary.cheapest_outward_flight.date}</td>
                     <td className='align-center'>-</td>
                     <td className='align-center'>{navbarToTripSummary.origin_name}</td>
                     <td className='align-center'>-</td>
                     <td className='align-center'>{navbarToTripSummary.outward_name}</td>
                     <td className='align-center'>-</td>
-                    <td>£25</td>
+                    <td>{navbarToTripSummary.cheapest_outward_flight.date}</td>
                 </tr>
 
                 <tr height='25%'>
