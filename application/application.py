@@ -32,7 +32,7 @@ def run_sql(sql):
 @app.route('/application/origins')
 def get_origin_airports():
     # Get list of valid origin airports from DB
-    sql = "SELECT DISTINCT origin_id, place_name, latitude_decimal_degrees, longitude_decimal_degrees FROM airport_routes JOIN airports ON airport_routes.origin_id = airports.iata_code WHERE country = 'ENGLAND'"
+    sql = "SELECT DISTINCT origin_id, place_name, latitude_decimal_degrees, longitude_decimal_degrees FROM flights_prototype_data JOIN airports ON flights_prototype_data.origin_id = airports.iata_code WHERE country = 'ENGLAND'"
     list_airports = run_sql(sql)
 
     # Create dictionary of airport ids and lat/lng
@@ -52,7 +52,7 @@ def get_origin_airports():
 def get_outward_airports(iata_code):
     print("Origin airport selected: " + iata_code)
     # Get list of outward airports from DB
-    sql = "SELECT DISTINCT destination_id, place_name, latitude_decimal_degrees, longitude_decimal_degrees FROM airport_routes JOIN airports ON airport_routes.destination_id = airports.iata_code WHERE origin_id = '" + iata_code + "'"
+    sql = "SELECT DISTINCT destination_id, place_name, latitude_decimal_degrees, longitude_decimal_degrees FROM flights_prototype_data JOIN airports ON flights_prototype_data.destination_id = airports.iata_code WHERE origin_id = '" + iata_code + "'"
     list_airports = run_sql(sql)
 
     # Create dictionary of airport ids and lat/lng
