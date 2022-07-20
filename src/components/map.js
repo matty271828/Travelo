@@ -166,9 +166,9 @@ export default function Map({mapToApp}){
                   let outwardPrice = '...'
 
                   // Retrieve date and price of cheapest outward flight
-                  fetch('/application/get_prices/' + key +'/' + outward_key + '/null').then(prices_res => prices_res.json()).then(price_data => {
-                    outwardDate = price_data['cheapest_flight']['date']
-                    outwardPrice = price_data['cheapest_flight']['price']
+                  fetch('/application/get_prices/' + key +'/' + outward_key + '/null').then(outwardPrices_res => outwardPrices_res.json()).then(outwardPrice_data => {
+                    outwardDate = outwardPrice_data['cheapest_flight']['date']
+                    outwardPrice = outwardPrice_data['cheapest_flight']['price']
 
                     // Update trip summary box 
                     mapToApp({origin_name: originAirport,
@@ -217,6 +217,7 @@ export default function Map({mapToApp}){
 
                         // Request airports in England reachable from the selected return airport
                         // TODO - change colour of markers with no direct route to origin airport to green (low priority)
+                        // TODO - only show airports with flights available after the outward date
                         fetch('/application/outwards/' + return_key).then(terminal_res => terminal_res.json()).then(terminal_data => {
                           // BEGIN QUARTERNARY LOOP through terminal airports
                           for (let terminal_key in terminal_data){
@@ -234,17 +235,22 @@ export default function Map({mapToApp}){
                               let returnDate = '...'
                               let returnPrice = '...'
 
-                              // TODO - Retrieve date and price of cheapest return flight after the cutoff date
-
-                              // Update trip summary box
-                              mapToApp({origin_name: originAirport,
-                                outward_name: outwardAirport,
-                                cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
-                                cheapest_return_flight: {date: "...", price: '...'},
-                                return_name: returnAirport,
-                                terminal_name: terminalAirport
+                              // Retrieve date and price of cheapest return flight after the cutoff date
+                              // TODO - replace 'null' with outward date once backend query added
+                              fetch('/application/get_prices/' + return_key +'/' + terminal_key + '/null').then(returnPrices_res => returnPrices_res.json()).then(returnPrice_data => {
+                                returnDate = returnPrice_data['cheapest_flight']['date']
+                                returnPrice = returnPrice_data['cheapest_flight']['price']
+            
+                                // Update trip summary box
+                                mapToApp({origin_name: originAirport,
+                                  outward_name: outwardAirport,
+                                  cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
+                                  cheapest_return_flight: {date: returnDate, price: returnPrice},
+                                  return_name: returnAirport,
+                                  terminal_name: terminalAirport
+                                });
                               });
-  
+
                               // Clear unselected terminal airports from map
                               clearMarkers('terminalMarker', true, terminal_marker);
 

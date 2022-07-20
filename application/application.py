@@ -91,10 +91,18 @@ def get_return_airports(inbound_iata_code):
 @app.route('/application/get_prices/<origin_iata_code>/<destination_iata_code>/<none_before>')
 def get_prices(origin_iata_code, destination_iata_code, none_before):
     print('Prices for route requested: ' + origin_iata_code + '->' + destination_iata_code)
-
     # Return date and price of cheapest flight between the two airports
-    sql = "SELECT day, month, year, price FROM flights_prototype_data WHERE origin_id ='" + origin_iata_code + "' AND destination_id ='" + destination_iata_code + "' ORDER BY price ASC LIMIT 1"
+    if none_before != 'null':
+        # TODO - Query for flights back to origin country after the cutoff date and within reasonable time frame of first flight
+        sql = ''
+    else:
+        # No cutoff date applied
+        sql = "SELECT day, month, year, price FROM flights_prototype_data WHERE origin_id ='" + origin_iata_code + "' AND destination_id ='" + destination_iata_code + "' ORDER BY price ASC LIMIT 1"
+
+    # Run query
     retrieve_cheapest = run_sql(sql)
+
+    print(retrieve_cheapest)
 
     # Create dictionary to store prices
     prices = {}
