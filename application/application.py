@@ -72,7 +72,7 @@ def get_outward_airports(iata_code):
 def get_return_airports(inbound_iata_code):
     print("Outward airport selected: " + inbound_iata_code)
     # Return airports with route destination in England
-    sql = "SELECT DISTINCT t.origin_id, t1.place_name, t1.latitude_decimal_degrees, t1.longitude_decimal_degrees FROM airport_routes t JOIN airports t1 ON t1.iata_code = t.origin_id JOIN airports t2 ON t2.iata_code = t.destination_id WHERE t2.country = 'ENGLAND'"
+    sql = "SELECT DISTINCT t.origin_id, t1.place_name, t1.latitude_decimal_degrees, t1.longitude_decimal_degrees FROM flights_prototype_data t JOIN airports t1 ON t1.iata_code = t.origin_id JOIN airports t2 ON t2.iata_code = t.destination_id WHERE t2.country = 'ENGLAND'"
     list_airports = run_sql(sql)
 
     # Create dictionary of airport ids and lat/lng
