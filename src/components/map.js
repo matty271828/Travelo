@@ -133,6 +133,7 @@ export default function Map({mapToApp}){
             mapToApp({origin_name: originAirport,
               outward_name: '...',
               cheapest_outward_flight: {date: "...", price: '...'},
+              cheapest_return_flight: {date: "...", price: '...'},
               return_name: '...',
               terminal_name: "..."
             });
@@ -161,7 +162,6 @@ export default function Map({mapToApp}){
 
                   // Variables to be passed to trip summary box
                   const outwardAirport =  outward_data[outward_key]['place_name'] + '\n' + '(' + outward_key + ')'
-
                   let outwardDate = '...'
                   let outwardPrice = '...'
 
@@ -174,6 +174,7 @@ export default function Map({mapToApp}){
                     mapToApp({origin_name: originAirport,
                       outward_name: outwardAirport,
                       cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
+                      cheapest_return_flight: {date: "...", price: '...'},
                       return_name: '...',
                       terminal_name: '...'
                     });
@@ -203,6 +204,7 @@ export default function Map({mapToApp}){
                         mapToApp({origin_name: originAirport,
                           outward_name: outwardAirport,
                           cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
+                          cheapest_return_flight: {date: "...", price: '...'},
                           return_name: returnAirport,
                           terminal_name: '...'
                         });
@@ -227,11 +229,18 @@ export default function Map({mapToApp}){
                               // Ensure map click listener not triggered
                               event.stopPropagation();
 
-                              // Update trip summary box with name of terminal airport
+                              // Variables to be passed to trip summary box
                               const terminalAirport =  terminal_data[terminal_key]['place_name'] + '\n' + '(' + terminal_key + ')'
+                              let returnDate = '...'
+                              let returnPrice = '...'
+
+                              // TODO - Retrieve date and price of cheapest return flight after the cutoff date
+
+                              // Update trip summary box
                               mapToApp({origin_name: originAirport,
                                 outward_name: outwardAirport,
                                 cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
+                                cheapest_return_flight: {date: "...", price: '...'},
                                 return_name: returnAirport,
                                 terminal_name: terminalAirport
                               });
@@ -281,7 +290,12 @@ export default function Map({mapToApp}){
         controlMarkers();
 
         // Clear trip summary box
-        mapToApp({origin_name: '...', outward_name: '...', cheapest_outward_flight: {date: "...", price: '...'}, return_name: '...', terminal_name: '...'});
+        mapToApp({origin_name: '...',
+        outward_name: '...',
+        cheapest_outward_flight: {date: "...", price: '...'},
+        cheapest_return_flight: {date: "...", price: '...'},
+        return_name: '...',
+        terminal_name: '...'});
 
         });
 
