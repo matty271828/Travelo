@@ -162,18 +162,18 @@ export default function Map({mapToApp}){
                   // Variables to be passed to trip summary box
                   const outwardAirport =  outward_data[outward_key]['place_name'] + '\n' + '(' + outward_key + ')'
 
-                  let date = '...'
-                  let price = '...'
+                  let outwardDate = '...'
+                  let outwardPrice = '...'
 
                   // Retrieve date and price of cheapest outward flight
                   fetch('/application/get_prices/' + key +'/' + outward_key + '/null').then(prices_res => prices_res.json()).then(price_data => {
-                    date = price_data['cheapest_flight']['date']
-                    price = price_data['cheapest_flight']['price']
+                    outwardDate = price_data['cheapest_flight']['date']
+                    outwardPrice = price_data['cheapest_flight']['price']
 
                     // Update trip summary box 
                     mapToApp({origin_name: originAirport,
                       outward_name: outwardAirport,
-                      cheapest_outward_flight: {date: date, price: price},
+                      cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
                       return_name: '...',
                       terminal_name: '...'
                     });
@@ -202,7 +202,7 @@ export default function Map({mapToApp}){
                         const returnAirport =  return_data[return_key]['place_name'] + '\n' + '(' + return_key + ')'
                         mapToApp({origin_name: originAirport,
                           outward_name: outwardAirport,
-                          cheapest_outward_flight: {date: date, price: price},
+                          cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
                           return_name: returnAirport,
                           terminal_name: '...'
                         });
@@ -231,7 +231,7 @@ export default function Map({mapToApp}){
                               const terminalAirport =  terminal_data[terminal_key]['place_name'] + '\n' + '(' + terminal_key + ')'
                               mapToApp({origin_name: originAirport,
                                 outward_name: outwardAirport,
-                                cheapest_outward_flight: {date: date, price: price},
+                                cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
                                 return_name: returnAirport,
                                 terminal_name: terminalAirport
                               });
