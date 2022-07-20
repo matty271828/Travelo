@@ -25,7 +25,7 @@ export default function TripSummary ({navbarToTripSummary}){
                     <td className='align-center'>-</td>
                     <td className='align-center'>{navbarToTripSummary.outward_name}</td>
                     <td className='align-center'>-</td>
-                    <td>{navbarToTripSummary.cheapest_outward_flight.date}</td>
+                    <td>{navbarToTripSummary.cheapest_outward_flight.price}</td>
                 </tr>
 
                 <tr height='25%'>
