@@ -161,13 +161,15 @@ export default function Map({mapToApp}){
 
                   // Variables to be passed to trip summary box
                   const outwardAirport =  outward_data[outward_key]['place_name'] + '\n' + '(' + outward_key + ')'
-                  const date = '...'
-                  const price = '...'
+
+                  let date = '...'
+                  let price = '...'
 
                   // TODO - Retrieve date and price of cheapest outward flight
                   fetch('/application/get_prices/' + key +'/' + outward_key).then(prices_res => prices_res.json()).then(price_data => {
-                    const date = price_data['cheapest_flight']['date']
-                    const price = price_data['cheapest_flight']['price']
+                    date = price_data['cheapest_flight']['date']
+                    price = price_data['cheapest_flight']['price']
+
                     // Update trip summary box 
                     mapToApp({origin_name: originAirport,
                       outward_name: outwardAirport,
@@ -200,7 +202,7 @@ export default function Map({mapToApp}){
                         const returnAirport =  return_data[return_key]['place_name'] + '\n' + '(' + return_key + ')'
                         mapToApp({origin_name: originAirport,
                           outward_name: outwardAirport,
-                          cheapest_outward_flight: {date: "...", price: '...'},
+                          cheapest_outward_flight: {date: date, price: price},
                           return_name: returnAirport,
                           terminal_name: '...'
                         });
@@ -228,7 +230,7 @@ export default function Map({mapToApp}){
                               const terminalAirport =  terminal_data[terminal_key]['place_name'] + '\n' + '(' + terminal_key + ')'
                               mapToApp({origin_name: originAirport,
                                 outward_name: outwardAirport,
-                                cheapest_outward_flight: {date: "...", price: '...'},
+                                cheapest_outward_flight: {date: date, price: price},
                                 return_name: returnAirport,
                                 terminal_name: terminalAirport
                               });
