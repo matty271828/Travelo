@@ -110,7 +110,7 @@ def get_prices(origin_iata_code, destination_iata_code, none_before):
     # Prepare cheapest flight details and add to prices dictionary
     cheapest_flight = {}
     cheapest_flight['date'] = str(retrieve_cheapest[0][0]) + '/' + str(retrieve_cheapest[0][1]) + '/' + str(retrieve_cheapest[0][2])
-    cheapest_flight['price'] = '£' + str(retrieve_cheapest[0][3])
+    cheapest_flight['price'] = str(retrieve_cheapest[0][3])
     prices['cheapest_flight'] = cheapest_flight
 
     # TODO - add second query retrieving all prices for the route

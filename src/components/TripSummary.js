@@ -2,8 +2,13 @@ import React from "react";
 import './TripSummary.css';
 
 export default function TripSummary ({navbarToTripSummary}){
-
     console.log(navbarToTripSummary);
+    // Calculate total cost
+    if (navbarToTripSummary.cheapest_return_flight.price != '...') {
+        var totalPrice = parseInt(navbarToTripSummary.cheapest_outward_flight.price) + parseInt(navbarToTripSummary.cheapest_return_flight.price)
+    } else {
+        var totalPrice = '...'
+    }
 
     return (
         <table height='25%' border='0px'>
@@ -25,7 +30,7 @@ export default function TripSummary ({navbarToTripSummary}){
                     <td className='align-center'>-</td>
                     <td className='align-center'>{navbarToTripSummary.outward_name}</td>
                     <td className='align-center'>-</td>
-                    <td>{navbarToTripSummary.cheapest_outward_flight.price}</td>
+                    <td>£{navbarToTripSummary.cheapest_outward_flight.price}</td>
                 </tr>
 
                 <tr height='25%'>
@@ -36,7 +41,7 @@ export default function TripSummary ({navbarToTripSummary}){
                     <td className='align-center'>-</td>
                     <td className='align-center'>{navbarToTripSummary.terminal_name}</td>
                     <td className='align-center'>-</td>
-                    <td>{navbarToTripSummary.cheapest_return_flight.price}</td>
+                    <td>£{navbarToTripSummary.cheapest_return_flight.price}</td>
                 </tr>
 
                 <tr>
@@ -47,7 +52,7 @@ export default function TripSummary ({navbarToTripSummary}){
                     <td></td>
                     <th className='align-right'>Total</th>
                     <td className='align-center'>-</td>
-                    <td>£45</td>
+                    <td>£{totalPrice}</td>
                 </tr>
             </table>
     );
