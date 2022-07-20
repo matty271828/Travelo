@@ -14,7 +14,7 @@ export default function TripSummary ({navbarToTripSummary}){
         <table height='25%' border='0px'>
             <tr height='25%'>
                 <th width='10%'>Trip Summary</th>
-                <td width='15%'></td>
+                <td width='22%'></td>
                 <td width='3%'></td>
                 <td width='22%'></td>
                 <td width='3%'></td>
