@@ -165,8 +165,8 @@ export default function Map({mapToApp}){
                   let date = '...'
                   let price = '...'
 
-                  // TODO - Retrieve date and price of cheapest outward flight
-                  fetch('/application/get_prices/' + key +'/' + outward_key).then(prices_res => prices_res.json()).then(price_data => {
+                  // Retrieve date and price of cheapest outward flight
+                  fetch('/application/get_prices/' + key +'/' + outward_key + '/null').then(prices_res => prices_res.json()).then(price_data => {
                     date = price_data['cheapest_flight']['date']
                     price = price_data['cheapest_flight']['price']
 
@@ -213,7 +213,8 @@ export default function Map({mapToApp}){
                         // Change colour of return marker to red
                         return_marker.getElement().setAttribute('id', 'selected-marker');
 
-                        // TODO - Request airports in England reachable from the selected return airport
+                        // Request airports in England reachable from the selected return airport
+                        // TODO - change colour of markers with no direct route to origin airport to green (low priority)
                         fetch('/application/outwards/' + return_key).then(terminal_res => terminal_res.json()).then(terminal_data => {
                           // BEGIN QUARTERNARY LOOP through terminal airports
                           for (let terminal_key in terminal_data){

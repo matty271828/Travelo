@@ -88,8 +88,8 @@ def get_return_airports(inbound_iata_code):
     print(return_dict)
     return return_dict
 
-@app.route('/application/get_prices/<origin_iata_code>/<destination_iata_code>')
-def get_prices(origin_iata_code, destination_iata_code):
+@app.route('/application/get_prices/<origin_iata_code>/<destination_iata_code>/<none_before>')
+def get_prices(origin_iata_code, destination_iata_code, none_before):
     print('Prices for route requested: ' + origin_iata_code + '->' + destination_iata_code)
 
     # Return date and price of cheapest flight between the two airports
