@@ -68,8 +68,8 @@ def get_outward_airports(iata_code):
     print(outward_dict)
     return outward_dict
 
-@app.route('/application/return/<inbound_iata_code>')
-def get_return_airports(inbound_iata_code):
+@app.route('/application/return/<inbound_iata_code>/<outward_day>/<outward_month>/<outward_year>')
+def get_return_airports(inbound_iata_code, outward_day, outward_month, outward_year):
     print("Outward airport selected: " + inbound_iata_code)
     # Return airports with route destination in England
     # TODO - alter query to only return flights after the outward date

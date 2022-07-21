@@ -178,89 +178,89 @@ export default function Map({mapToApp}){
                       return_name: '...',
                       terminal_name: '...'
                     });
-                  });
+                  
+                    // clear other outward markers on map
+                    clearMarkers('outwardMarker', true, outward_marker);
 
-                  // clear other outward markers on map
-                  clearMarkers('outwardMarker', true, outward_marker);
+                    // Change colour of outward marker to red
+                    outward_marker.getElement().setAttribute('id', 'selected-marker');
 
-                  // Change colour of outward marker to red
-                  outward_marker.getElement().setAttribute('id', 'selected-marker');
+                    // Request airports with routes back to England from DB
+                    fetch('/application/return/' + outward_key + '/' + outwardDate).then(return_res => return_res.json()).then(return_data => {
+                      // BEGIN TERTIARY LOOP - add markers
+                      for (let return_key in return_data){
+                        // Create markers
+                        const return_marker = create_marker(map, "standard-marker", return_data[return_key]['place_name'], return_data[return_key]['lng'], return_data[return_key]['lat'])
+                        returnMarkers.push(return_marker);
+                        
+                        // Add EventListener for return marker being clicked
+                        return_marker.getElement().addEventListener('click', function onClick(event) {
+                          // Ensures map click listener is not triggered
+                          event.stopPropagation();
 
-                  // Request airports with routes back to England from DB
-                  fetch('/application/return/' + outward_key).then(return_res => return_res.json()).then(return_data => {
-                    // BEGIN TERTIARY LOOP - add markers
-                    for (let return_key in return_data){
-                      // Create markers
-                      const return_marker = create_marker(map, "standard-marker", return_data[return_key]['place_name'], return_data[return_key]['lng'], return_data[return_key]['lat'])
-                      returnMarkers.push(return_marker);
-                      
-                      // Add EventListener for return marker being clicked
-                      return_marker.getElement().addEventListener('click', function onClick(event) {
-                        // Ensures map click listener is not triggered
-                        event.stopPropagation();
+                          // Update trip summary box with name of return airport
+                          const returnAirport =  return_data[return_key]['place_name'] + '\n' + '(' + return_key + ')'
+                          mapToApp({origin_name: originAirport,
+                            outward_name: outwardAirport,
+                            cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
+                            cheapest_return_flight: {date: "...", price: '...'},
+                            return_name: returnAirport,
+                            terminal_name: '...'
+                          });
 
-                        // Update trip summary box with name of return airport
-                        const returnAirport =  return_data[return_key]['place_name'] + '\n' + '(' + return_key + ')'
-                        mapToApp({origin_name: originAirport,
-                          outward_name: outwardAirport,
-                          cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
-                          cheapest_return_flight: {date: "...", price: '...'},
-                          return_name: returnAirport,
-                          terminal_name: '...'
-                        });
+                          // clear return markers from map
+                          clearMarkers('returnMarker', true, return_marker);
 
-                        // clear return markers from map
-                        clearMarkers('returnMarker', true, return_marker);
+                          // Change colour of return marker to red
+                          return_marker.getElement().setAttribute('id', 'selected-marker');
 
-                        // Change colour of return marker to red
-                        return_marker.getElement().setAttribute('id', 'selected-marker');
+                          // Request airports in England reachable from the selected return airport
+                          // TODO - change colour of markers with no direct route to origin airport to green (low priority)
+                          // TODO - only show airports with flights available after the outward date
+                          fetch('/application/outwards/' + return_key).then(terminal_res => terminal_res.json()).then(terminal_data => {
+                            // BEGIN QUARTERNARY LOOP through terminal airports
+                            for (let terminal_key in terminal_data){
+                              // Create terminal markers
+                              const terminal_marker = create_marker(map, "standard-marker", terminal_data[terminal_key]['place_name'], terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat'])
+                              terminalMarkers.push(terminal_marker);
+    
+                              // Add event listener for terminal marker clicked
+                              terminal_marker.getElement().addEventListener('click', function onClick(event) {
+                                // Ensure map click listener not triggered
+                                event.stopPropagation();
 
-                        // Request airports in England reachable from the selected return airport
-                        // TODO - change colour of markers with no direct route to origin airport to green (low priority)
-                        // TODO - only show airports with flights available after the outward date
-                        fetch('/application/outwards/' + return_key).then(terminal_res => terminal_res.json()).then(terminal_data => {
-                          // BEGIN QUARTERNARY LOOP through terminal airports
-                          for (let terminal_key in terminal_data){
-                            // Create terminal markers
-                            const terminal_marker = create_marker(map, "standard-marker", terminal_data[terminal_key]['place_name'], terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat'])
-                            terminalMarkers.push(terminal_marker);
-  
-                            // Add event listener for terminal marker clicked
-                            terminal_marker.getElement().addEventListener('click', function onClick(event) {
-                              // Ensure map click listener not triggered
-                              event.stopPropagation();
+                                // Variables to be passed to trip summary box
+                                const terminalAirport =  terminal_data[terminal_key]['place_name'] + '\n' + '(' + terminal_key + ')'
+                                let returnDate = '...'
+                                let returnPrice = '...'
 
-                              // Variables to be passed to trip summary box
-                              const terminalAirport =  terminal_data[terminal_key]['place_name'] + '\n' + '(' + terminal_key + ')'
-                              let returnDate = '...'
-                              let returnPrice = '...'
-
-                              // Retrieve date and price of cheapest return flight after the cutoff date
-                              // TODO - replace 'null' with outward date once backend query added
-                              fetch('/application/get_prices/' + return_key +'/' + terminal_key + '/' + outwardDate).then(returnPrices_res => returnPrices_res.json()).then(returnPrice_data => {
-                                returnDate = returnPrice_data['cheapest_flight']['date']
-                                returnPrice = returnPrice_data['cheapest_flight']['price']
-            
-                                // Update trip summary box
-                                mapToApp({origin_name: originAirport,
-                                  outward_name: outwardAirport,
-                                  cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
-                                  cheapest_return_flight: {date: returnDate, price: returnPrice},
-                                  return_name: returnAirport,
-                                  terminal_name: terminalAirport
+                                // Retrieve date and price of cheapest return flight after the cutoff date
+                                // TODO - replace 'null' with outward date once backend query added
+                                fetch('/application/get_prices/' + return_key +'/' + terminal_key + '/' + outwardDate).then(returnPrices_res => returnPrices_res.json()).then(returnPrice_data => {
+                                  returnDate = returnPrice_data['cheapest_flight']['date']
+                                  returnPrice = returnPrice_data['cheapest_flight']['price']
+              
+                                  // Update trip summary box
+                                  mapToApp({origin_name: originAirport,
+                                    outward_name: outwardAirport,
+                                    cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
+                                    cheapest_return_flight: {date: returnDate, price: returnPrice},
+                                    return_name: returnAirport,
+                                    terminal_name: terminalAirport
+                                  });
                                 });
+
+                                // Clear unselected terminal airports from map
+                                clearMarkers('terminalMarker', true, terminal_marker);
+
+                                // Change colour of terminal marker to red
+                                terminal_marker.getElement().setAttribute('id', 'selected-marker');
                               });
-
-                              // Clear unselected terminal airports from map
-                              clearMarkers('terminalMarker', true, terminal_marker);
-
-                              // Change colour of terminal marker to red
-                              terminal_marker.getElement().setAttribute('id', 'selected-marker');
-                            });
-                          }
+                            }
+                          });
                         });
-                      });
-                    }
+                      }
+                    });
                   });
                 });
               }
