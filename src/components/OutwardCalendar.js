@@ -2,21 +2,29 @@ import React from "react";
 import './OutwardCalendar.css';
 
 export default function OutwardCalendar ({navbarToOutwardCalendar}){
+    // Get IATA codes from origin and outward names
+    const originIATA = navbarToOutwardCalendar.origin_name.split("\n")[1];
+    const outwardIATA = navbarToOutwardCalendar.outward_name.split("\n")[1];
+
     return (
         <div>
-        <table class='calendar'>
+        <table class='calendar' border='0px solid' height='50vh'>
             <tr class='top-line'>
-                <th class='calendar'>Outward Journey: </th>
+                <th class='calendar' width='15%'>Outward:</th>
                 <td class='calendar-align-right'></td>
-                <td class='calendar-align-right'>{navbarToOutwardCalendar.origin_name}</td>
+                <td class='calendar-align-right' width='25%'></td>
+                <td class='calendar-align-right'></td>
+                <td class='calendar-align-center' width='25%'>{originIATA}</td>
                 <td class='calendar-align-center'>-</td>
-                <td class='calendar-align-left'>{navbarToOutwardCalendar.outward_name}</td>
+                <td class='calendar-align-center' width='25%'>{outwardIATA}</td>
             </tr>
 
             <tr class='top-line'>
-                <th class='calendar-align-right'>&lt;</th>
+                <td class='calendar-align-right'></td>
+                <td class='calendar-align-right'>&lt;</td>
                 <td class='calendar-align-right'>September 2022</td>
                 <td class='calendar-align-center'>&gt;</td>
+                <td class='calendar-align-right'></td>
                 <td class='calendar-align-center'></td>
                 <td class='calendar-align-left'></td>
             </tr>
