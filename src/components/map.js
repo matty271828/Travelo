@@ -166,7 +166,7 @@ export default function Map({mapToApp}){
                   let outwardPrice = '...'
 
                   // Retrieve date and price of cheapest outward flight
-                  fetch('/application/get_prices/' + key +'/' + outward_key + '/null').then(outwardPrices_res => outwardPrices_res.json()).then(outwardPrice_data => {
+                  fetch('/application/get_prices/' + key +'/' + outward_key + '/null/null/null').then(outwardPrices_res => outwardPrices_res.json()).then(outwardPrice_data => {
                     outwardDate = outwardPrice_data['cheapest_flight']['date']
                     outwardPrice = outwardPrice_data['cheapest_flight']['price']
 
@@ -237,7 +237,7 @@ export default function Map({mapToApp}){
 
                               // Retrieve date and price of cheapest return flight after the cutoff date
                               // TODO - replace 'null' with outward date once backend query added
-                              fetch('/application/get_prices/' + return_key +'/' + terminal_key + '/null').then(returnPrices_res => returnPrices_res.json()).then(returnPrice_data => {
+                              fetch('/application/get_prices/' + return_key +'/' + terminal_key + '/' + outwardDate).then(returnPrices_res => returnPrices_res.json()).then(returnPrice_data => {
                                 returnDate = returnPrice_data['cheapest_flight']['date']
                                 returnPrice = returnPrice_data['cheapest_flight']['price']
             

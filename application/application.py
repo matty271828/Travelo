@@ -72,6 +72,7 @@ def get_outward_airports(iata_code):
 def get_return_airports(inbound_iata_code):
     print("Outward airport selected: " + inbound_iata_code)
     # Return airports with route destination in England
+    # TODO - alter query to only return flights after the outward date
     sql = "SELECT DISTINCT t.origin_id, t1.place_name, t1.latitude_decimal_degrees, t1.longitude_decimal_degrees FROM flights_prototype_data t JOIN airports t1 ON t1.iata_code = t.origin_id JOIN airports t2 ON t2.iata_code = t.destination_id WHERE t2.country = 'ENGLAND'"
     list_airports = run_sql(sql)
 
@@ -88,13 +89,13 @@ def get_return_airports(inbound_iata_code):
     print(return_dict)
     return return_dict
 
-@app.route('/application/get_prices/<origin_iata_code>/<destination_iata_code>/<none_before>')
-def get_prices(origin_iata_code, destination_iata_code, none_before):
+@app.route('/application/get_prices/<origin_iata_code>/<destination_iata_code>/<outward_day>/<outward_month>/<outward_year>')
+def get_prices(origin_iata_code, destination_iata_code, outward_day, outward_month, outward_year):
     print('Prices for route requested: ' + origin_iata_code + '->' + destination_iata_code)
     # Return date and price of cheapest flight between the two airports
-    if none_before != 'null':
-        # TODO - Query for flights back to origin country after the cutoff date and within reasonable time frame of first flight
-        sql = ''
+    if outward_day != 'null':
+        # Query for flights back to origin country after the cutoff date and within reasonable time frame of first flight
+        sql = "SELECT day, month, year, price FROM flights_prototype_data WHERE origin_id ='" + origin_iata_code + "' AND destination_id ='" + destination_iata_code + "'AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "')) ORDER BY price ASC LIMIT 1"
     else:
         # No cutoff date applied
         sql = "SELECT day, month, year, price FROM flights_prototype_data WHERE origin_id ='" + origin_iata_code + "' AND destination_id ='" + destination_iata_code + "' ORDER BY price ASC LIMIT 1"
