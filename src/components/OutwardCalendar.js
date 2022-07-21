@@ -1,16 +1,16 @@
 import React from "react";
 import './OutwardCalendar.css';
 
-export default function OutwardCalendar (){
+export default function OutwardCalendar ({navbarToOutwardCalendar}){
     return (
         <div>
         <table class='calendar'>
             <tr class='top-line'>
                 <th class='calendar'>Outward Journey: </th>
                 <td class='calendar-align-right'></td>
-                <td class='calendar-align-right'>Manchester</td>
+                <td class='calendar-align-right'>{navbarToOutwardCalendar.origin_name}</td>
                 <td class='calendar-align-center'>-</td>
-                <td class='calendar-align-left'>Berlin</td>
+                <td class='calendar-align-left'>{navbarToOutwardCalendar.outward_name}</td>
             </tr>
 
             <tr class='top-line'>

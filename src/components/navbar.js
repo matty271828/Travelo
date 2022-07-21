@@ -23,9 +23,9 @@ export default function Navbar({appToNavbar}){
             <ul className='nav-menu-items' onClick={showSidebar}>
                 <TripSummary navbarToTripSummary={appToNavbar}/>
                 <br/>
-                <OutwardCalendar/>
+                <OutwardCalendar navbarToOutwardCalendar={appToNavbar}/>
                 <br />
-                <OutwardCalendar/>
+                <OutwardCalendar navbarToOutwardCalendar={appToNavbar}/>
                 
                 {SidebarData.map((item, index) => {
                     return (
