@@ -6,6 +6,30 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     const originIATA = navbarToOutwardCalendar.origin_name.split("\n")[1];
     const outwardIATA = navbarToOutwardCalendar.outward_name.split("\n")[1];
 
+    // Objects to convert date to text
+    const months = {
+        '1': 'January',
+        '2': 'February',
+        '3': 'March',
+        '4': 'April', 
+        '5': 'May',
+        '6': 'June',
+        '7': 'July',
+        '8': 'August',
+        '9': 'September',
+        '10': 'October',
+        '11': 'November',
+        '12': 'December'
+    }
+
+    // Prepare month and year string for calendar
+    let calendarPage = '...'
+    if (navbarToOutwardCalendar.outward_name != '...') {
+        let dateArray = navbarToOutwardCalendar.cheapest_outward_flight.date.split('/');
+        calendarPage = months[dateArray[1]] + ' ' + dateArray[2];
+    }
+    
+
     return (
         <div>
         <table class='calendar' border='0px solid' height='50vh'>
@@ -22,7 +46,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             <tr class='top-line'>
                 <td class='calendar-align-right'></td>
                 <td class='calendar-align-right'>&lt;</td>
-                <td class='calendar-align-right'>September 2022</td>
+                <td class='calendar-align-center'>{calendarPage}</td>
                 <td class='calendar-align-center'>&gt;</td>
                 <td class='calendar-align-right'></td>
                 <td class='calendar-align-center'></td>
