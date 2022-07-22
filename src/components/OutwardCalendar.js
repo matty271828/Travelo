@@ -45,9 +45,9 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
 
             <tr class='top-line'>
                 <td class='calendar-align-right'></td>
-                <td class='calendar-align-right'>&lt;</td>
+                <td class='chevron'>&lt;</td>
                 <td class='calendar-align-center'>{calendarPage}</td>
-                <td class='calendar-align-center'>&gt;</td>
+                <td class='chevron'>&gt;</td>
                 <td class='calendar-align-right'></td>
                 <td class='calendar-align-center'></td>
                 <td class='calendar-align-left'></td>

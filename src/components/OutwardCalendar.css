@@ -22,6 +22,15 @@ td.calendar-align-right {
     text-align: right;
 }
 
+td.chevron {
+    text-align: center;
+}
+
+td.chevron:hover {
+    background-color: rgb(245, 149, 165);
+    cursor: pointer;
+}
+
 th.calendar {
     font-size:medium;
     font-family: monospace;
@@ -34,5 +43,5 @@ th.calendar-align-right {
 }
 
 tr.top-line {
-    background-color: pink;
+    background-color:  rgb(255, 192, 193);
 }
