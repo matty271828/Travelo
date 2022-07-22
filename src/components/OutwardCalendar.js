@@ -22,14 +22,22 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
         '12': 'December'
     }
 
-    // Prepare month and year string for calendar
+    // Operate calendar
     let calendarPage = '...'
     if (navbarToOutwardCalendar.outward_name != '...') {
+        // Prepare month and year string for calendar
         let dateArray = navbarToOutwardCalendar.cheapest_outward_flight.date.split('/');
         calendarPage = months[dateArray[1]] + ' ' + dateArray[2];
     }
-    
 
+    // Functions to operate calendar
+    const onClick = () => {
+        // Run only if outward flight present
+        if (navbarToOutwardCalendar.outward_name != '...') {
+            document.getElementById("calendarPage").textContent='test';
+        }
+    } 
+    
     return (
         <div>
         <table class='calendar' border='0px solid' height='50vh'>
@@ -46,8 +54,8 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             <tr class='top-line'>
                 <td class='calendar-align-right'></td>
                 <td class='chevron'>&lt;</td>
-                <td class='calendar-align-center'>{calendarPage}</td>
-                <td class='chevron'>&gt;</td>
+                <td class='calendar-align-center' id="calendarPage">{calendarPage}</td>
+                <td class='chevron' onClick={onClick}>&gt;</td>
                 <td class='calendar-align-right'></td>
                 <td class='calendar-align-center'></td>
                 <td class='calendar-align-left'></td>
