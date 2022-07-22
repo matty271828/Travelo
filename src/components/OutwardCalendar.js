@@ -29,6 +29,12 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     // Placeholder variables
     let calendarPage = '...'
     let dateArray = [];
+    let cell1 = 'n/a'
+
+    // TODO - add and fill placeholder dictionary for prices
+    if (navbarToOutwardCalendar.outward_name != '...') {
+        cell1 = navbarToOutwardCalendar.all_outward_prices['2022']['1']['1'];
+    };
 
     // Enter month and year into calendar
     if (navbarToOutwardCalendar.outward_name != '...') {
@@ -114,7 +120,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center'>-</td>
+                <td class='calendar-align-center'>{cell1}</td>
                 <td class='calendar-align-center'>-</td>
                 <td class='calendar-align-center'>-</td>
                 <td class='calendar-align-center'>-</td>

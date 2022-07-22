@@ -10,6 +10,7 @@ function App() {
     {origin_name: "...",
     outward_name: "...",
     cheapest_outward_flight: {date: "...", price: '...'},
+    all_outward_prices: {},
     cheapest_return_flight: {date: "...", price: '...'},
     return_name: "...", terminal_name: "..."}
   );
