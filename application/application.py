@@ -92,9 +92,26 @@ def get_return_airports(inbound_iata_code, outward_day, outward_month, outward_y
 @app.route('/application/get_prices/<origin_iata_code>/<destination_iata_code>/<outward_day>/<outward_month>/<outward_year>')
 def get_prices(origin_iata_code, destination_iata_code, outward_day, outward_month, outward_year):
     print('Prices for route requested: ' + origin_iata_code + '->' + destination_iata_code)
+    # Create dictionary to store prices and generate key for each month
+    monthly_dict = {}
+    for i in range(1, 13):
+        monthly_dict[str(i)] = {}
+        for j in range(1, 32):
+            monthly_dict[str(i)][str(j)] = {}
+
+    # Add monthly dictionarys to each year in prices
+    prices = {'cheapest_flight':{}, '2022': {}, '2023': {}}
+    for key in prices:
+        if (key != 'cheapest_flight'):
+            prices[key] = monthly_dict
+
+
+
+    # Run first query        
     # Return date and price of cheapest flight between the two airports
     if outward_day != 'null':
-        # Query for flights back to origin country after the cutoff date and within reasonable time frame of first flight
+        # Query for flights back to origin country after the cutoff
+        # TODO - filter return dates by reasonable timeframe
         sql = "SELECT day, month, year, price FROM flights_prototype_data WHERE origin_id ='" + origin_iata_code + "' AND destination_id ='" + destination_iata_code + "'AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "')) ORDER BY price ASC LIMIT 1"
     else:
         # No cutoff date applied
@@ -102,22 +119,38 @@ def get_prices(origin_iata_code, destination_iata_code, outward_day, outward_mon
 
     # Run query
     retrieve_cheapest = run_sql(sql)
-
     print(retrieve_cheapest)
-
-    # Create dictionary to store prices
-    prices = {}
-
+    
     # Prepare cheapest flight details and add to prices dictionary
     cheapest_flight = {}
     cheapest_flight['date'] = str(retrieve_cheapest[0][0]) + '/' + str(retrieve_cheapest[0][1]) + '/' + str(retrieve_cheapest[0][2])
     cheapest_flight['price'] = str(retrieve_cheapest[0][3])
     prices['cheapest_flight'] = cheapest_flight
 
-    # TODO - add second query retrieving all prices for the route
+
+
+    # TODO - Run second query retrieving all prices for the route
+    sql = "SELECT day, month, year, price FROM flights_prototype_data WHERE origin_id = '" + origin_iata_code + "' and destination_id = '" + destination_iata_code + "'"
+
+    # Run query
+    retrieve_allprices = run_sql(sql)
+    print(retrieve_allprices)
+
+    # Prepare prices and add to prices dictionary
+    for i in range(len(retrieve_allprices)):
+        print(retrieve_allprices[i])
+        # Prepare price and date
+        year = str(retrieve_allprices[i][2])
+        month = str(retrieve_allprices[i][1])
+        day = str(retrieve_allprices[i][0])
+        price = str(retrieve_allprices[i][3])
+
+        # Add to prices dictionary
+        prices[year][month][day] = price
 
     print(prices)
     return prices
+
 
 
 

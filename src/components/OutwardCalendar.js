@@ -30,8 +30,8 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     let calendarPage = '...'
     let dateArray = [];
 
+    // Enter month and year into calendar
     if (navbarToOutwardCalendar.outward_name != '...') {
-        // Prepare month and year string for calendar
         dateArray = navbarToOutwardCalendar.cheapest_outward_flight.date.split('/');
         currentMonth = parseInt(dateArray[1]);
         currentYear = dateArray[2];
@@ -54,6 +54,9 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                         currentMonth = currentMonth - 1;
                         document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
                     }
+
+                    // TODO - call function passing prices into calendar
+
                     break;
 
                 case 'right':
@@ -66,6 +69,9 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                         currentMonth = currentMonth + 1;
                         document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
                     }
+
+                    // TODO - call function passing prices into calendar
+
                     break;
             }
         }
