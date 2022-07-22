@@ -42,12 +42,31 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     const chevronClick = (direction) => {
         // Run only if outward flight present
         if (navbarToOutwardCalendar.outward_name != '...') {
-            if (direction == 'left') {
-                currentMonth = currentMonth - 1;
-                document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
-            } else {
-                currentMonth = currentMonth +1;
-                document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
+            // switch statement to read direction
+            switch (direction) {
+                case 'left':
+                    // Current month is january
+                    if (currentMonth == 1) {
+                        currentMonth = 12
+                        currentYear = (parseInt(currentYear) - 1).toString();
+                        document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
+                    } else {
+                        currentMonth = currentMonth - 1;
+                        document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
+                    }
+                    break;
+
+                case 'right':
+                    // Current month is december
+                    if (currentMonth == 12) {
+                        currentMonth = 1
+                        currentYear = (parseInt(currentYear) + 1).toString();
+                        document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
+                    } else {
+                        currentMonth = currentMonth + 1;
+                        document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
+                    }
+                    break;
             }
         }
     } 
