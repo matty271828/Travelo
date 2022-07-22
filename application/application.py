@@ -100,10 +100,9 @@ def get_prices(origin_iata_code, destination_iata_code, outward_day, outward_mon
             monthly_dict[str(i)][str(j)] = {}
 
     # Add monthly dictionarys to each year in prices
-    prices = {'cheapest_flight':{}, '2022': {}, '2023': {}}
-    for key in prices:
-        if (key != 'cheapest_flight'):
-            prices[key] = monthly_dict
+    prices = {'cheapest_flight':{}, 'all_prices':{'2022': {}, '2023': {}}}
+    for key in prices['all_prices']:
+        prices['all_prices'][key] = monthly_dict
 
 
 
@@ -134,11 +133,9 @@ def get_prices(origin_iata_code, destination_iata_code, outward_day, outward_mon
 
     # Run query
     retrieve_allprices = run_sql(sql)
-    print(retrieve_allprices)
 
     # Prepare prices and add to prices dictionary
     for i in range(len(retrieve_allprices)):
-        print(retrieve_allprices[i])
         # Prepare price and date
         year = str(retrieve_allprices[i][2])
         month = str(retrieve_allprices[i][1])
@@ -146,7 +143,7 @@ def get_prices(origin_iata_code, destination_iata_code, outward_day, outward_mon
         price = str(retrieve_allprices[i][3])
 
         # Add to prices dictionary
-        prices[year][month][day] = price
+        prices['all_prices'][year][month][day] = price
 
     print(prices)
     return prices
