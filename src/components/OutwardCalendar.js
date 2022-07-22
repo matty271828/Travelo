@@ -2,39 +2,53 @@ import React from "react";
 import './OutwardCalendar.css';
 
 export default function OutwardCalendar ({navbarToOutwardCalendar}){
+    // Datafields
+    let currentMonth;
+    let currentYear;
+
     // Get IATA codes from origin and outward names
     const originIATA = navbarToOutwardCalendar.origin_name.split("\n")[1];
     const outwardIATA = navbarToOutwardCalendar.outward_name.split("\n")[1];
 
     // Objects to convert date to text
     const months = {
-        '1': 'January',
-        '2': 'February',
-        '3': 'March',
-        '4': 'April', 
-        '5': 'May',
-        '6': 'June',
-        '7': 'July',
-        '8': 'August',
-        '9': 'September',
-        '10': 'October',
-        '11': 'November',
-        '12': 'December'
+        1: 'January',
+        2: 'February',
+        3: 'March',
+        4: 'April', 
+        5: 'May',
+        6: 'June',
+        7: 'July',
+        8: 'August',
+        9: 'September',
+        10: 'October',
+        11: 'November',
+        12: 'December'
     }
 
-    // Operate calendar
+    // Placeholder variables
     let calendarPage = '...'
+    let dateArray = [];
+
     if (navbarToOutwardCalendar.outward_name != '...') {
         // Prepare month and year string for calendar
-        let dateArray = navbarToOutwardCalendar.cheapest_outward_flight.date.split('/');
-        calendarPage = months[dateArray[1]] + ' ' + dateArray[2];
+        dateArray = navbarToOutwardCalendar.cheapest_outward_flight.date.split('/');
+        currentMonth = parseInt(dateArray[1]);
+        currentYear = dateArray[2];
+        calendarPage = months[currentMonth] + ' ' + currentYear;
     }
 
-    // Functions to operate calendar
-    const onClick = () => {
+    // Function to operate calendar after chevron click
+    const chevronClick = (direction) => {
         // Run only if outward flight present
         if (navbarToOutwardCalendar.outward_name != '...') {
-            document.getElementById("calendarPage").textContent='test';
+            if (direction == 'left') {
+                currentMonth = currentMonth - 1;
+                document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
+            } else {
+                currentMonth = currentMonth +1;
+                document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
+            }
         }
     } 
     
@@ -53,9 +67,9 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
 
             <tr class='top-line'>
                 <td class='calendar-align-right'></td>
-                <td class='chevron'>&lt;</td>
+                <td class='chevron' onClick={() => chevronClick('left')}>&lt;</td>
                 <td class='calendar-align-center' id="calendarPage">{calendarPage}</td>
-                <td class='chevron' onClick={onClick}>&gt;</td>
+                <td class='chevron' onClick={() => chevronClick('right')}>&gt;</td>
                 <td class='calendar-align-right'></td>
                 <td class='calendar-align-center'></td>
                 <td class='calendar-align-left'></td>
