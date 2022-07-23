@@ -39,10 +39,19 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     function fillCalendar(month, year){
         // Fill all cells and pass correct date to each one
         for (let i = 1; i <= 31; i++) {
+            // Collect parameters
             let price = navbarToOutwardCalendar.all_outward_prices[year][month][i.toString()];
+            let cellid = 'cell' + i.toString();
+
+            // Prepare cell content
             if (typeof price == 'string'){
                 cell[i] = '£' + price;
+            } else { 
+                cell[i] = '-'
             }
+
+            // Fill cell
+            document.getElementById(cellid).textContent = cell[i];
         }
     }
 
@@ -75,6 +84,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                         document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
                     }
                     // TODO - call function filling calendar with new month
+                    fillCalendar(currentMonth, currentYear);
 
                     break;
 
@@ -90,7 +100,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                     }
 
                     // TODO - call function filling calendar with new month
-
+                    fillCalendar(currentMonth, currentYear);
                     break;
             }
         }
@@ -133,13 +143,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center'>{cell[1]}</td>
-                <td class='calendar-align-center'>{cell[2]}</td>
-                <td class='calendar-align-center'>{cell[3]}</td>
-                <td class='calendar-align-center'>{cell[4]}</td>
-                <td class='calendar-align-center'>{cell[5]}</td>
-                <td class='calendar-align-center'>{cell[6]}</td>
-                <td class='calendar-align-center'>{cell[7]}</td>
+                <td class='calendar-align-center' id='cell1'>{cell[1]}</td>
+                <td class='calendar-align-center' id='cell2'>{cell[2]}</td>
+                <td class='calendar-align-center' id='cell3'>{cell[3]}</td>
+                <td class='calendar-align-center' id='cell4'>{cell[4]}</td>
+                <td class='calendar-align-center' id='cell5'>{cell[5]}</td>
+                <td class='calendar-align-center' id='cell6'>{cell[6]}</td>
+                <td class='calendar-align-center' id='cell7'>{cell[7]}</td>
             </tr>
 
             <tr>
@@ -153,13 +163,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center'>{cell[8]}</td>
-                <td class='calendar-align-center'>{cell[9]}</td>
-                <td class='calendar-align-center'>{cell[10]}</td>
-                <td class='calendar-align-center'>{cell[11]}</td>
-                <td class='calendar-align-center'>{cell[12]}</td>
-                <td class='calendar-align-center'>{cell[13]}</td>
-                <td class='calendar-align-center'>{cell[14]}</td>
+                <td class='calendar-align-center' id='cell8'>{cell[8]}</td>
+                <td class='calendar-align-center' id='cell9'>{cell[9]}</td>
+                <td class='calendar-align-center' id='cell10'>{cell[10]}</td>
+                <td class='calendar-align-center' id='cell11'>{cell[11]}</td>
+                <td class='calendar-align-center' id='cell12'>{cell[12]}</td>
+                <td class='calendar-align-center' id='cell13'>{cell[13]}</td>
+                <td class='calendar-align-center' id='cell14'>{cell[14]}</td>
             </tr>
 
             <tr>
@@ -173,13 +183,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center'>{cell[15]}</td>
-                <td class='calendar-align-center'>{cell[16]}</td>
-                <td class='calendar-align-center'>{cell[17]}</td>
-                <td class='calendar-align-center'>{cell[18]}</td>
-                <td class='calendar-align-center'>{cell[19]}</td>
-                <td class='calendar-align-center'>{cell[20]}</td>
-                <td class='calendar-align-center'>{cell[21]}</td>
+                <td class='calendar-align-center' id='cell15'>{cell[15]}</td>
+                <td class='calendar-align-center' id='cell16'>{cell[16]}</td>
+                <td class='calendar-align-center' id='cell17'>{cell[17]}</td>
+                <td class='calendar-align-center' id='cell18'>{cell[18]}</td>
+                <td class='calendar-align-center' id='cell19'>{cell[19]}</td>
+                <td class='calendar-align-center' id='cell20'>{cell[20]}</td>
+                <td class='calendar-align-center' id='cell21'>{cell[21]}</td>
             </tr>
 
             <tr>
@@ -193,13 +203,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center'>{cell[22]}</td>
-                <td class='calendar-align-center'>{cell[23]}</td>
-                <td class='calendar-align-center'>{cell[24]}</td>
-                <td class='calendar-align-center'>{cell[25]}</td>
-                <td class='calendar-align-center'>{cell[26]}</td>
-                <td class='calendar-align-center'>{cell[27]}</td>
-                <td class='calendar-align-center'>{cell[28]}</td>
+                <td class='calendar-align-center' id='cell22'>{cell[22]}</td>
+                <td class='calendar-align-center' id='cell23'>{cell[23]}</td>
+                <td class='calendar-align-center' id='cell24'>{cell[24]}</td>
+                <td class='calendar-align-center' id='cell25'>{cell[25]}</td>
+                <td class='calendar-align-center' id='cell26'>{cell[26]}</td>
+                <td class='calendar-align-center' id='cell27'>{cell[27]}</td>
+                <td class='calendar-align-center' id='cell28'>{cell[28]}</td>
             </tr>
 
             <tr>
@@ -213,9 +223,9 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center'>{cell[29]}</td>
-                <td class='calendar-align-center'>{cell[30]}</td>
-                <td class='calendar-align-center'>{cell[31]}</td>
+                <td class='calendar-align-center' id='cell29'>{cell[29]}</td>
+                <td class='calendar-align-center' id='cell30'>{cell[30]}</td>
+                <td class='calendar-align-center' id='cell31'>{cell[31]}</td>
                 <td class='calendar-align-center'></td>
                 <td class='calendar-align-center'></td>
                 <td class='calendar-align-center'></td>
