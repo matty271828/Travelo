@@ -34,6 +34,14 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
         cell[i] = '-';
     }
     
+    // Function for filling calendar with dates
+    function fillCalendar(month, year){
+        // Fill all cells and pass correct date to each one
+        for (let i = 1; i <= 31; i++) {
+            cell[i] = '£' + navbarToOutwardCalendar.all_outward_prices[year][month][i.toString()];
+        }
+    }
+
     // Outward flight selected
     if (navbarToOutwardCalendar.outward_name != '...') {
         // Enter month and year into calendar
@@ -43,9 +51,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
         calendarPage = months[currentMonth] + ' ' + currentYear;
     
         // Fill all cells and pass correct date to each one
-        for (let i = 1; i <= 31; i++) {
-            cell[i] = '£' + navbarToOutwardCalendar.all_outward_prices[currentYear][currentMonth][i.toString()];
-        }
+        fillCalendar(currentMonth, currentYear);
     };
 
     // Function to operate calendar after chevron click
@@ -64,6 +70,8 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                         currentMonth = currentMonth - 1;
                         document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
                     }
+                    // TODO - call function filling calendar with new month
+
                     break;
 
                 case 'right':
@@ -76,6 +84,9 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                         currentMonth = currentMonth + 1;
                         document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
                     }
+
+                    // TODO - call function filling calendar with new month
+
                     break;
             }
         }
