@@ -35,10 +35,14 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     }
     
     // Function for filling calendar with dates
+    // Month should be passed as an integer value, year as a string
     function fillCalendar(month, year){
         // Fill all cells and pass correct date to each one
         for (let i = 1; i <= 31; i++) {
-            cell[i] = '£' + navbarToOutwardCalendar.all_outward_prices[year][month][i.toString()];
+            let price = navbarToOutwardCalendar.all_outward_prices[year][month][i.toString()];
+            if (typeof price == 'string'){
+                cell[i] = '£' + price;
+            }
         }
     }
 
