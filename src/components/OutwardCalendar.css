@@ -16,6 +16,14 @@ td.calendar-align-left {
 
 td.calendar-align-center {
     text-align: center;
+    background-color: none;
+}
+
+td.calendar-selected {
+    text-align: center;
+    background-color: rgb(48, 251, 183);
+    border-radius: 20px;
+    font-weight: bold;
 }
 
 td.calendar-date {

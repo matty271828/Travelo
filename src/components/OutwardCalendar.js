@@ -2,9 +2,15 @@ import React from "react";
 import './OutwardCalendar.css';
 
 export default function OutwardCalendar ({navbarToOutwardCalendar}){
-    // Datafields
+    // Datafields for use in scrolling calendar
     let currentMonth;
     let currentYear;
+
+    // Datafields for use in selecting a flight
+    let selectedDay;
+    let selectedMonth;
+    let selectedYear;
+    let selectedCell;
 
     // Get IATA codes from origin and outward names
     const originIATA = navbarToOutwardCalendar.origin_name.split("\n")[1];
@@ -30,8 +36,18 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     let calendarPage = '...'
     let dateArray = [];
     let cell = {};
+
+    // Instantiate calendar
     for (let i = 1; i <= 31; i++) {
+        // Fill prices
         cell[i] = '-';
+
+        // Ensure no highlighting from previous selection remains
+        let cellid = 'cell' + i.toString();
+        if (document.getElementById(cellid) != null){
+            document.getElementById(cellid).className = 'calendar-align-center'
+        }
+        
     }
     
     // Function for filling calendar with dates
@@ -52,20 +68,31 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
 
             // Fill cell
             document.getElementById(cellid).textContent = cell[i];
+            document.getElementById(cellid).classList.remove('calendar-selected');
+            document.getElementById(cellid).classList.add('calendar-align-center');
+
+            // TODO - highlight currently selected day/month if it appears on screen
         }
     }
 
-    // Outward flight selected
+    // Cheapest outward flight selected
     if (navbarToOutwardCalendar.outward_name != '...') {
         // Enter month and year into calendar
         dateArray = navbarToOutwardCalendar.cheapest_outward_flight.date.split('/');
+        selectedDay = dateArray[0];
         currentMonth = parseInt(dateArray[1]);
         currentYear = dateArray[2];
         calendarPage = months[currentMonth] + ' ' + currentYear;
     
         // Fill all cells and pass correct date to each one
         fillCalendar(currentMonth, currentYear);
-    };
+
+        // Highlight cheapest flight in calendar
+        let cellid = 'cell' + selectedDay;
+        selectedCell = document.getElementById(cellid)
+        selectedCell.classList.remove('calendar-align-center');
+        selectedCell.classList.add('calendar-selected');
+    } 
 
     // Function to operate calendar after chevron click
     const chevronClick = (direction) => {
@@ -88,7 +115,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                         currentMonth = currentMonth - 1;
                         document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
                     }
-                    // TODO - call function filling calendar with new month
+                    // Call function filling calendar with new month
                     fillCalendar(currentMonth, currentYear);
 
                     break;
@@ -109,7 +136,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                         document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
                     }
 
-                    // TODO - call function filling calendar with new month
+                    // Call function filling calendar with new month
                     fillCalendar(currentMonth, currentYear);
                     break;
             }
