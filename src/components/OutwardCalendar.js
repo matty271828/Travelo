@@ -72,6 +72,10 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             document.getElementById(cellid).classList.add('calendar-align-center');
 
             // TODO - highlight currently selected day/month if it appears on screen
+            if (i == parseInt(selectedDay) && month == selectedMonth && year == selectedYear) {
+                document.getElementById(cellid).classList.remove('calendar-align-center');
+                document.getElementById(cellid).classList.add('calendar-selected');
+            }
         }
     }
 
@@ -79,7 +83,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     if (navbarToOutwardCalendar.outward_name != '...') {
         // Enter month and year into calendar
         dateArray = navbarToOutwardCalendar.cheapest_outward_flight.date.split('/');
+
+        // For use in highlighting and passing selection
         selectedDay = dateArray[0];
+        selectedMonth = parseInt(dateArray[1])
+        selectedYear = dateArray[2];
+
+        // For use in scrolling calendar
         currentMonth = parseInt(dateArray[1]);
         currentYear = dateArray[2];
         calendarPage = months[currentMonth] + ' ' + currentYear;
