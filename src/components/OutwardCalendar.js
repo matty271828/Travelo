@@ -108,13 +108,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
 
         <table class='calendar' border = '0px solid'>
             <tr>
-                <td class='calendar-align-center' width='10%'>1</td>
-                <td class='calendar-align-center' width='10%'>2</td>
-                <td class='calendar-align-center' width='10%'>3</td>
-                <td class='calendar-align-center' width='10%'>4</td>
-                <td class='calendar-align-center' width='10%'>5</td>
-                <td class='calendar-align-center' width='10%'>6</td>
-                <td class='calendar-align-center' width='10%'>7</td>
+                <td class='calendar-date' width='10%'>1</td>
+                <td class='calendar-date' width='10%'>2</td>
+                <td class='calendar-date' width='10%'>3</td>
+                <td class='calendar-date' width='10%'>4</td>
+                <td class='calendar-date' width='10%'>5</td>
+                <td class='calendar-date' width='10%'>6</td>
+                <td class='calendar-date' width='10%'>7</td>
             </tr>
 
             <tr>
@@ -128,13 +128,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center'>8</td>
-                <td class='calendar-align-center'>9</td>
-                <td class='calendar-align-center'>10</td>
-                <td class='calendar-align-center'>11</td>
-                <td class='calendar-align-center'>12</td>
-                <td class='calendar-align-center'>13</td>
-                <td class='calendar-align-center'>14</td>
+                <td class='calendar-date'>8</td>
+                <td class='calendar-date'>9</td>
+                <td class='calendar-date'>10</td>
+                <td class='calendar-date'>11</td>
+                <td class='calendar-date'>12</td>
+                <td class='calendar-date'>13</td>
+                <td class='calendar-date'>14</td>
             </tr>
 
             <tr>
@@ -148,13 +148,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center'>15</td>
-                <td class='calendar-align-center'>16</td>
-                <td class='calendar-align-center'>17</td>
-                <td class='calendar-align-center'>18</td>
-                <td class='calendar-align-center'>19</td>
-                <td class='calendar-align-center'>20</td>
-                <td class='calendar-align-center'>21</td>
+                <td class='calendar-date'>15</td>
+                <td class='calendar-date'>16</td>
+                <td class='calendar-date'>17</td>
+                <td class='calendar-date'>18</td>
+                <td class='calendar-date'>19</td>
+                <td class='calendar-date'>20</td>
+                <td class='calendar-date'>21</td>
             </tr>
 
             <tr>
@@ -168,13 +168,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center'>22</td>
-                <td class='calendar-align-center'>23</td>
-                <td class='calendar-align-center'>24</td>
-                <td class='calendar-align-center'>25</td>
-                <td class='calendar-align-center'>26</td>
-                <td class='calendar-align-center'>27</td>
-                <td class='calendar-align-center'>28</td>
+                <td class='calendar-date'>22</td>
+                <td class='calendar-date'>23</td>
+                <td class='calendar-date'>24</td>
+                <td class='calendar-date'>25</td>
+                <td class='calendar-date'>26</td>
+                <td class='calendar-date'>27</td>
+                <td class='calendar-date'>28</td>
             </tr>
 
             <tr>
@@ -188,13 +188,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center'>29</td>
-                <td class='calendar-align-center'>30</td>
-                <td class='calendar-align-center'>31</td>
-                <td class='calendar-align-center'></td>
-                <td class='calendar-align-center'></td>
-                <td class='calendar-align-center'></td>
-                <td class='calendar-align-center'></td>
+                <td class='calendar-date'>29</td>
+                <td class='calendar-date'>30</td>
+                <td class='calendar-date'>31</td>
+                <td class='calendar-date'></td>
+                <td class='calendar-date'></td>
+                <td class='calendar-date'></td>
+                <td class='calendar-date'></td>
             </tr>
 
             <tr>

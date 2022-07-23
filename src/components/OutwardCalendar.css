@@ -18,6 +18,11 @@ td.calendar-align-center {
     text-align: center;
 }
 
+td.calendar-date {
+    text-align: center;
+    color: grey;
+}
+
 td.calendar-align-right {
     text-align: right;
 }
