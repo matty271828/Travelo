@@ -74,6 +74,11 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             // switch statement to read direction
             switch (direction) {
                 case 'left':
+                    // Prevent scroll past July 2022
+                    // TODO - update this to determine actual current month and year
+                    if (currentMonth == 7 && currentYear == '2022'){
+                        break;
+                    }
                     // Current month is january
                     if (currentMonth == 1) {
                         currentMonth = 12
@@ -89,6 +94,11 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                     break;
 
                 case 'right':
+                    // Prevent scroll past May 2023
+                    // TODO - update this to determine actual current month + 12 and year + 1
+                    if (currentMonth == 5 && currentYear == '2023'){
+                        break;
+                    }
                     // Current month is december
                     if (currentMonth == 12) {
                         currentMonth = 1
