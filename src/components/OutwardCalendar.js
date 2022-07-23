@@ -71,7 +71,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             document.getElementById(cellid).classList.remove('calendar-selected');
             document.getElementById(cellid).classList.add('calendar-price');
 
-            // TODO - highlight currently selected day/month if it appears on screen
+            // highlight currently selected day/month if it appears on screen
             if (i == parseInt(selectedDay) && month == selectedMonth && year == selectedYear) {
                 document.getElementById(cellid).classList.remove('calendar-price');
                 document.getElementById(cellid).classList.add('calendar-selected');
@@ -152,6 +152,29 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             }
         }
     } 
+
+    // Function to update selected date and pass information to trip summary
+    const selectPrice = (day) => {
+        // Run only if outward flight present
+        if (navbarToOutwardCalendar.outward_name != '...') {
+            // Update date
+            selectedDay = day;
+            selectedMonth = currentMonth;
+            selectedYear = currentYear;
+
+            // Update class of previously selected cell
+            selectedCell.classList.remove('calendar-selected');
+            selectedCell.classList.add('calendar-price');
+
+            // Update class of newly selected cell
+            let cellid = 'cell' + day;
+            selectedCell = document.getElementById(cellid)
+            selectedCell.classList.remove('calendar-price');
+            selectedCell.classList.add('calendar-selected');
+
+            // TODO - pass new selected flight information to trip summary
+        }
+    }
     
     return (
         <div>
@@ -190,13 +213,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-price' id='cell1'>{cell[1]}</td>
-                <td class='calendar-price' id='cell2'>{cell[2]}</td>
-                <td class='calendar-price' id='cell3'>{cell[3]}</td>
-                <td class='calendar-price' id='cell4'>{cell[4]}</td>
-                <td class='calendar-price' id='cell5'>{cell[5]}</td>
-                <td class='calendar-price' id='cell6'>{cell[6]}</td>
-                <td class='calendar-price' id='cell7'>{cell[7]}</td>
+                <td class='calendar-price' id='cell1' onClick={() => selectPrice('1')}>{cell[1]}</td>
+                <td class='calendar-price' id='cell2' onClick={() => selectPrice('2')}>{cell[2]}</td>
+                <td class='calendar-price' id='cell3' onClick={() => selectPrice('3')}>{cell[3]}</td>
+                <td class='calendar-price' id='cell4' onClick={() => selectPrice('4')}>{cell[4]}</td>
+                <td class='calendar-price' id='cell5' onClick={() => selectPrice('5')}>{cell[5]}</td>
+                <td class='calendar-price' id='cell6' onClick={() => selectPrice('6')}>{cell[6]}</td>
+                <td class='calendar-price' id='cell7' onClick={() => selectPrice('7')}>{cell[7]}</td>
             </tr>
 
             <tr>
@@ -210,13 +233,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-price' id='cell8'>{cell[8]}</td>
-                <td class='calendar-price' id='cell9'>{cell[9]}</td>
-                <td class='calendar-price' id='cell10'>{cell[10]}</td>
-                <td class='calendar-price' id='cell11'>{cell[11]}</td>
-                <td class='calendar-price' id='cell12'>{cell[12]}</td>
-                <td class='calendar-price' id='cell13'>{cell[13]}</td>
-                <td class='calendar-price' id='cell14'>{cell[14]}</td>
+                <td class='calendar-price' id='cell8' onClick={() => selectPrice('8')}>{cell[8]}</td>
+                <td class='calendar-price' id='cell9' onClick={() => selectPrice('9')}>{cell[9]}</td>
+                <td class='calendar-price' id='cell10' onClick={() => selectPrice('10')}>{cell[10]}</td>
+                <td class='calendar-price' id='cell11' onClick={() => selectPrice('11')}>{cell[11]}</td>
+                <td class='calendar-price' id='cell12' onClick={() => selectPrice('12')}>{cell[12]}</td>
+                <td class='calendar-price' id='cell13' onClick={() => selectPrice('13')}>{cell[13]}</td>
+                <td class='calendar-price' id='cell14' onClick={() => selectPrice('14')}>{cell[14]}</td>
             </tr>
 
             <tr>
@@ -230,13 +253,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-price' id='cell15'>{cell[15]}</td>
-                <td class='calendar-price' id='cell16'>{cell[16]}</td>
-                <td class='calendar-price' id='cell17'>{cell[17]}</td>
-                <td class='calendar-price' id='cell18'>{cell[18]}</td>
-                <td class='calendar-price' id='cell19'>{cell[19]}</td>
-                <td class='calendar-price' id='cell20'>{cell[20]}</td>
-                <td class='calendar-price' id='cell21'>{cell[21]}</td>
+                <td class='calendar-price' id='cell15' onClick={() => selectPrice('15')}>{cell[15]}</td>
+                <td class='calendar-price' id='cell16' onClick={() => selectPrice('16')}>{cell[16]}</td>
+                <td class='calendar-price' id='cell17' onClick={() => selectPrice('17')}>{cell[17]}</td>
+                <td class='calendar-price' id='cell18' onClick={() => selectPrice('18')}>{cell[18]}</td>
+                <td class='calendar-price' id='cell19' onClick={() => selectPrice('19')}>{cell[19]}</td>
+                <td class='calendar-price' id='cell20' onClick={() => selectPrice('20')}>{cell[20]}</td>
+                <td class='calendar-price' id='cell21' onClick={() => selectPrice('21')}>{cell[21]}</td>
             </tr>
 
             <tr>
@@ -250,13 +273,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-price' id='cell22'>{cell[22]}</td>
-                <td class='calendar-price' id='cell23'>{cell[23]}</td>
-                <td class='calendar-price' id='cell24'>{cell[24]}</td>
-                <td class='calendar-price' id='cell25'>{cell[25]}</td>
-                <td class='calendar-price' id='cell26'>{cell[26]}</td>
-                <td class='calendar-price' id='cell27'>{cell[27]}</td>
-                <td class='calendar-price' id='cell28'>{cell[28]}</td>
+                <td class='calendar-price' id='cell22' onClick={() => selectPrice('22')}>{cell[22]}</td>
+                <td class='calendar-price' id='cell23' onClick={() => selectPrice('23')}>{cell[23]}</td>
+                <td class='calendar-price' id='cell24' onClick={() => selectPrice('24')}>{cell[24]}</td>
+                <td class='calendar-price' id='cell25' onClick={() => selectPrice('25')}>{cell[25]}</td>
+                <td class='calendar-price' id='cell26' onClick={() => selectPrice('26')}>{cell[26]}</td>
+                <td class='calendar-price' id='cell27' onClick={() => selectPrice('27')}>{cell[27]}</td>
+                <td class='calendar-price' id='cell28' onClick={() => selectPrice('28')}>{cell[28]}</td>
             </tr>
 
             <tr>
@@ -270,9 +293,9 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-price' id='cell29'>{cell[29]}</td>
-                <td class='calendar-price' id='cell30'>{cell[30]}</td>
-                <td class='calendar-price' id='cell31'>{cell[31]}</td>
+                <td class='calendar-price' id='cell29' onClick={() => selectPrice('29')}>{cell[29]}</td>
+                <td class='calendar-price' id='cell30' onClick={() => selectPrice('30')}>{cell[30]}</td>
+                <td class='calendar-price' id='cell31' onClick={() => selectPrice('31')}>{cell[31]}</td>
                 <td class='calendar-align-center'></td>
                 <td class='calendar-align-center'></td>
                 <td class='calendar-align-center'></td>

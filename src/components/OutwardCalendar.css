@@ -26,7 +26,6 @@ td.calendar-price {
 
 td.calendar-price:hover {
     text-align: center;
-    background-color: none;
     cursor: pointer;
 }
 
