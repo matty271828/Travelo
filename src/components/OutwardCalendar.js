@@ -157,22 +157,27 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     const selectPrice = (day) => {
         // Run only if outward flight present
         if (navbarToOutwardCalendar.outward_name != '...') {
-            // Update date
-            selectedDay = day;
-            selectedMonth = currentMonth;
-            selectedYear = currentYear;
+            // Determine cellid
+            let clickedCellid = 'cell' + day;
 
-            // Update class of previously selected cell
-            selectedCell.classList.remove('calendar-selected');
-            selectedCell.classList.add('calendar-price');
-
-            // Update class of newly selected cell
-            let cellid = 'cell' + day;
-            selectedCell = document.getElementById(cellid)
-            selectedCell.classList.remove('calendar-price');
-            selectedCell.classList.add('calendar-selected');
-
-            // TODO - pass new selected flight information to trip summary
+            // Check a price is present in desired cell
+            if (document.getElementById(clickedCellid).textContent != '-') {
+                // Update date
+                selectedDay = day;
+                selectedMonth = currentMonth;
+                selectedYear = currentYear;
+    
+                // Update class of previously selected cell
+                selectedCell.classList.remove('calendar-selected');
+                selectedCell.classList.add('calendar-price');
+    
+                // Update class of newly selected cell
+                selectedCell = document.getElementById(clickedCellid)
+                selectedCell.classList.remove('calendar-price');
+                selectedCell.classList.add('calendar-selected');
+    
+                // TODO - pass new selected flight information to trip summary
+            }
         }
     }
     
