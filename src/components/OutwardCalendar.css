@@ -19,6 +19,17 @@ td.calendar-align-center {
     background-color: none;
 }
 
+td.calendar-price {
+    text-align: center;
+    background-color: none;
+}
+
+td.calendar-price:hover {
+    text-align: center;
+    background-color: none;
+    cursor: pointer;
+}
+
 td.calendar-selected {
     text-align: center;
     background-color: rgb(48, 251, 183);

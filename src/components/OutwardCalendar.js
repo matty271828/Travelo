@@ -45,7 +45,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
         // Ensure no highlighting from previous selection remains
         let cellid = 'cell' + i.toString();
         if (document.getElementById(cellid) != null){
-            document.getElementById(cellid).className = 'calendar-align-center'
+            document.getElementById(cellid).className = 'calendar-price'
         }
         
     }
@@ -69,11 +69,11 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             // Fill cell
             document.getElementById(cellid).textContent = cell[i];
             document.getElementById(cellid).classList.remove('calendar-selected');
-            document.getElementById(cellid).classList.add('calendar-align-center');
+            document.getElementById(cellid).classList.add('calendar-price');
 
             // TODO - highlight currently selected day/month if it appears on screen
             if (i == parseInt(selectedDay) && month == selectedMonth && year == selectedYear) {
-                document.getElementById(cellid).classList.remove('calendar-align-center');
+                document.getElementById(cellid).classList.remove('calendar-price');
                 document.getElementById(cellid).classList.add('calendar-selected');
             }
         }
@@ -100,7 +100,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
         // Highlight cheapest flight in calendar
         let cellid = 'cell' + selectedDay;
         selectedCell = document.getElementById(cellid)
-        selectedCell.classList.remove('calendar-align-center');
+        selectedCell.classList.remove('calendar-price');
         selectedCell.classList.add('calendar-selected');
     } 
 
@@ -190,13 +190,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center' id='cell1'>{cell[1]}</td>
-                <td class='calendar-align-center' id='cell2'>{cell[2]}</td>
-                <td class='calendar-align-center' id='cell3'>{cell[3]}</td>
-                <td class='calendar-align-center' id='cell4'>{cell[4]}</td>
-                <td class='calendar-align-center' id='cell5'>{cell[5]}</td>
-                <td class='calendar-align-center' id='cell6'>{cell[6]}</td>
-                <td class='calendar-align-center' id='cell7'>{cell[7]}</td>
+                <td class='calendar-price' id='cell1'>{cell[1]}</td>
+                <td class='calendar-price' id='cell2'>{cell[2]}</td>
+                <td class='calendar-price' id='cell3'>{cell[3]}</td>
+                <td class='calendar-price' id='cell4'>{cell[4]}</td>
+                <td class='calendar-price' id='cell5'>{cell[5]}</td>
+                <td class='calendar-price' id='cell6'>{cell[6]}</td>
+                <td class='calendar-price' id='cell7'>{cell[7]}</td>
             </tr>
 
             <tr>
@@ -210,13 +210,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center' id='cell8'>{cell[8]}</td>
-                <td class='calendar-align-center' id='cell9'>{cell[9]}</td>
-                <td class='calendar-align-center' id='cell10'>{cell[10]}</td>
-                <td class='calendar-align-center' id='cell11'>{cell[11]}</td>
-                <td class='calendar-align-center' id='cell12'>{cell[12]}</td>
-                <td class='calendar-align-center' id='cell13'>{cell[13]}</td>
-                <td class='calendar-align-center' id='cell14'>{cell[14]}</td>
+                <td class='calendar-price' id='cell8'>{cell[8]}</td>
+                <td class='calendar-price' id='cell9'>{cell[9]}</td>
+                <td class='calendar-price' id='cell10'>{cell[10]}</td>
+                <td class='calendar-price' id='cell11'>{cell[11]}</td>
+                <td class='calendar-price' id='cell12'>{cell[12]}</td>
+                <td class='calendar-price' id='cell13'>{cell[13]}</td>
+                <td class='calendar-price' id='cell14'>{cell[14]}</td>
             </tr>
 
             <tr>
@@ -230,13 +230,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center' id='cell15'>{cell[15]}</td>
-                <td class='calendar-align-center' id='cell16'>{cell[16]}</td>
-                <td class='calendar-align-center' id='cell17'>{cell[17]}</td>
-                <td class='calendar-align-center' id='cell18'>{cell[18]}</td>
-                <td class='calendar-align-center' id='cell19'>{cell[19]}</td>
-                <td class='calendar-align-center' id='cell20'>{cell[20]}</td>
-                <td class='calendar-align-center' id='cell21'>{cell[21]}</td>
+                <td class='calendar-price' id='cell15'>{cell[15]}</td>
+                <td class='calendar-price' id='cell16'>{cell[16]}</td>
+                <td class='calendar-price' id='cell17'>{cell[17]}</td>
+                <td class='calendar-price' id='cell18'>{cell[18]}</td>
+                <td class='calendar-price' id='cell19'>{cell[19]}</td>
+                <td class='calendar-price' id='cell20'>{cell[20]}</td>
+                <td class='calendar-price' id='cell21'>{cell[21]}</td>
             </tr>
 
             <tr>
@@ -250,13 +250,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center' id='cell22'>{cell[22]}</td>
-                <td class='calendar-align-center' id='cell23'>{cell[23]}</td>
-                <td class='calendar-align-center' id='cell24'>{cell[24]}</td>
-                <td class='calendar-align-center' id='cell25'>{cell[25]}</td>
-                <td class='calendar-align-center' id='cell26'>{cell[26]}</td>
-                <td class='calendar-align-center' id='cell27'>{cell[27]}</td>
-                <td class='calendar-align-center' id='cell28'>{cell[28]}</td>
+                <td class='calendar-price' id='cell22'>{cell[22]}</td>
+                <td class='calendar-price' id='cell23'>{cell[23]}</td>
+                <td class='calendar-price' id='cell24'>{cell[24]}</td>
+                <td class='calendar-price' id='cell25'>{cell[25]}</td>
+                <td class='calendar-price' id='cell26'>{cell[26]}</td>
+                <td class='calendar-price' id='cell27'>{cell[27]}</td>
+                <td class='calendar-price' id='cell28'>{cell[28]}</td>
             </tr>
 
             <tr>
@@ -270,9 +270,9 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             </tr>
 
             <tr>
-                <td class='calendar-align-center' id='cell29'>{cell[29]}</td>
-                <td class='calendar-align-center' id='cell30'>{cell[30]}</td>
-                <td class='calendar-align-center' id='cell31'>{cell[31]}</td>
+                <td class='calendar-price' id='cell29'>{cell[29]}</td>
+                <td class='calendar-price' id='cell30'>{cell[30]}</td>
+                <td class='calendar-price' id='cell31'>{cell[31]}</td>
                 <td class='calendar-align-center'></td>
                 <td class='calendar-align-center'></td>
                 <td class='calendar-align-center'></td>
