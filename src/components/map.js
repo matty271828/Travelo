@@ -299,7 +299,7 @@ export default function Map({mapToApp}){
         // Revert map markers to initial state
         controlMarkers();
 
-        // Clear trip summary box
+        // Send data to clear trip summary box and calendar
         mapToApp({origin_name: '...',
         outward_name: '...',
         cheapest_outward_flight: {date: "...", price: '...'},
