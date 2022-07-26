@@ -184,7 +184,8 @@ export default function Map({mapToApp}){
                     });
 
                     // Send date directly to trip summary
-                    window.processData(outwardDate);
+                    let selectedFlight = {date: outwardDate, price: outwardPrice}
+                    window.processData(selectedFlight);
                   
                     // clear other outward markers on map
                     clearMarkers('outwardMarker', true, outward_marker);
@@ -312,7 +313,8 @@ export default function Map({mapToApp}){
         terminal_name: '...'});
 
         // Reset selected date in trip summary
-        window.processData('...');
+        let selectedFlight = {date: '...', price: '...'}
+        window.processData(selectedFlight);
 
         });
 

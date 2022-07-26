@@ -177,7 +177,9 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                 selectedCell.classList.add('calendar-selected');
     
                 // TODO - pass new selected flight information to trip summary
-                window.processData(selectedDay + '/' + selectedMonth + '/' + selectedYear);
+                let price = navbarToOutwardCalendar.all_outward_prices[selectedYear][selectedMonth][selectedDay];
+                let selectedFlight = {date: selectedDay + '/' + selectedMonth + '/' + selectedYear, price: price}
+                window.processData(selectedFlight);
             }
         }
     }

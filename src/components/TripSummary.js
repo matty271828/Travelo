@@ -5,7 +5,7 @@ export default function TripSummary ({navbarToTripSummary}){
     console.log(navbarToTripSummary);
 
     let cheapestOutwardDate = navbarToTripSummary.cheapest_outward_flight.date;
-    const [selectedDate, setSelectedDate] = useState(cheapestOutwardDate);
+    const [selectedOutwardFlight, setSelectedOutwardFlight] = useState(cheapestOutwardDate);
 
     // Calculate total cost
     if (navbarToTripSummary.cheapest_return_flight.price != '...') {
@@ -17,7 +17,7 @@ export default function TripSummary ({navbarToTripSummary}){
     window.processData = function(data) {
         // do something with your data like
         console.log("MainComponent received data:", data);
-        setSelectedDate(data);
+        setSelectedOutwardFlight(data);
     }
 
     return (
@@ -34,13 +34,13 @@ export default function TripSummary ({navbarToTripSummary}){
             </tr>
                 <tr height='25%'>
                     <th>Outward: </th>
-                    <td className='align-center'>{selectedDate}</td>
+                    <td className='align-center'>{selectedOutwardFlight.date}</td>
                     <td className='align-center'>-</td>
                     <td className='align-center'>{navbarToTripSummary.origin_name}</td>
                     <td className='align-center'>-</td>
                     <td className='align-center'>{navbarToTripSummary.outward_name}</td>
                     <td className='align-center'>-</td>
-                    <td>£{navbarToTripSummary.cheapest_outward_flight.price}</td>
+                    <td>£{selectedOutwardFlight.price}</td>
                 </tr>
 
                 <tr height='25%'>
