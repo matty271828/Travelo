@@ -1,8 +1,7 @@
 import React from "react";
 import './OutwardCalendar.css';
-import ReturnCalendar from './ReturnCalendar';
 
-export default function OutwardCalendar ({navbarToOutwardCalendar}){
+export default function ReturnCalendar ({outwardToReturnCalendar}){
     // Datafields for use in scrolling calendar
     let currentMonth;
     let currentYear;
@@ -14,8 +13,8 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     let selectedCell;
 
     // Get IATA codes from origin and outward names
-    const originIATA = navbarToOutwardCalendar.origin_name.split("\n")[1];
-    const outwardIATA = navbarToOutwardCalendar.outward_name.split("\n")[1];
+    const originIATA = outwardToReturnCalendar.origin_name.split("\n")[1];
+    const outwardIATA = outwardToReturnCalendar.outward_name.split("\n")[1];
 
     // Objects to convert date to text
     const months = {
@@ -57,7 +56,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
         // Fill all cells and pass correct date to each one
         for (let i = 1; i <= 31; i++) {
             // Collect parameters
-            let price = navbarToOutwardCalendar.all_outward_prices[year][month][i.toString()];
+            let price = outwardToReturnCalendar.all_outward_prices[year][month][i.toString()];
             let cellid = 'cell' + i.toString();
 
             // Prepare cell content
@@ -81,9 +80,9 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     }
 
     // Cheapest outward flight selected
-    if (navbarToOutwardCalendar.outward_name != '...') {
+    if (outwardToReturnCalendar.outward_name != '...') {
         // Enter month and year into calendar
-        dateArray = navbarToOutwardCalendar.cheapest_outward_flight.date.split('/');
+        dateArray = outwardToReturnCalendar.cheapest_outward_flight.date.split('/');
 
         // For use in highlighting and passing selection
         selectedDay = dateArray[0];
@@ -108,7 +107,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     // Function to operate calendar after chevron click
     const chevronClick = (direction) => {
         // Run only if outward flight present
-        if (navbarToOutwardCalendar.outward_name != '...') {
+        if (outwardToReturnCalendar.outward_name != '...') {
             // switch statement to read direction
             switch (direction) {
                 case 'left':
@@ -157,7 +156,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     // Function to update selected date and pass information to trip summary
     const selectPrice = (day) => {
         // Run only if outward flight present
-        if (navbarToOutwardCalendar.outward_name != '...') {
+        if (outwardToReturnCalendar.outward_name != '...') {
             // Determine cellid
             let clickedCellid = 'cell' + day;
 
@@ -184,10 +183,6 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     
     return (
         <div>
-        <ReturnCalendar outwardToReturnCalendar={navbarToOutwardCalendar}/>
-        
-        <br/>
-
         <table class='calendar' border='0px solid' height='50vh'>
             <tr class='top-line'>
                 <th class='calendar' width='15%'>Outward:</th>
