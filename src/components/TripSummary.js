@@ -1,11 +1,11 @@
 import React from "react";
 import './TripSummary.css';
 
-export default function TripSummary ({navbarToTripSummary}){
-    console.log(navbarToTripSummary);
+export default function TripSummary ({returnCalendarToTripSummary}){
+    console.log(returnCalendarToTripSummary);
     // Calculate total cost
-    if (navbarToTripSummary.cheapest_return_flight.price != '...') {
-        var totalPrice = parseInt(navbarToTripSummary.cheapest_outward_flight.price) + parseInt(navbarToTripSummary.cheapest_return_flight.price)
+    if (returnCalendarToTripSummary.cheapest_return_flight.price != '...') {
+        var totalPrice = parseInt(returnCalendarToTripSummary.cheapest_outward_flight.price) + parseInt(returnCalendarToTripSummary.cheapest_return_flight.price)
     } else {
         var totalPrice = '...'
     }
@@ -24,24 +24,24 @@ export default function TripSummary ({navbarToTripSummary}){
             </tr>
                 <tr height='25%'>
                     <th>Outward: </th>
-                    <td className='align-center'>{navbarToTripSummary.cheapest_outward_flight.date}</td>
+                    <td className='align-center'>{returnCalendarToTripSummary.cheapest_outward_flight.date}</td>
                     <td className='align-center'>-</td>
-                    <td className='align-center'>{navbarToTripSummary.origin_name}</td>
+                    <td className='align-center'>{returnCalendarToTripSummary.origin_name}</td>
                     <td className='align-center'>-</td>
-                    <td className='align-center'>{navbarToTripSummary.outward_name}</td>
+                    <td className='align-center'>{returnCalendarToTripSummary.outward_name}</td>
                     <td className='align-center'>-</td>
-                    <td>£{navbarToTripSummary.cheapest_outward_flight.price}</td>
+                    <td>£{returnCalendarToTripSummary.cheapest_outward_flight.price}</td>
                 </tr>
 
                 <tr height='25%'>
                     <th>Return: </th>
-                    <td className='align-center'>{navbarToTripSummary.cheapest_return_flight.date}</td>
+                    <td className='align-center'>{returnCalendarToTripSummary.cheapest_return_flight.date}</td>
                     <td className='align-center'>-</td>
-                    <td className='align-center'>{navbarToTripSummary.return_name}</td>
+                    <td className='align-center'>{returnCalendarToTripSummary.return_name}</td>
                     <td className='align-center'>-</td>
-                    <td className='align-center'>{navbarToTripSummary.terminal_name}</td>
+                    <td className='align-center'>{returnCalendarToTripSummary.terminal_name}</td>
                     <td className='align-center'>-</td>
-                    <td>£{navbarToTripSummary.cheapest_return_flight.price}</td>
+                    <td>£{returnCalendarToTripSummary.cheapest_return_flight.price}</td>
                 </tr>
 
                 <tr>

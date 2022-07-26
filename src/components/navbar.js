@@ -4,7 +4,6 @@ import * as AiIcons from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 import './navbar.css';
-import TripSummary from './TripSummary';
 import OutwardCalendar from './OutwardCalendar';
 
 export default function Navbar({appToNavbar}){
@@ -20,8 +19,6 @@ export default function Navbar({appToNavbar}){
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
             <ul className='nav-menu-items'>
-                <TripSummary navbarToTripSummary={appToNavbar}/>
-                <br/>
                 <OutwardCalendar navbarToOutwardCalendar={appToNavbar}/>
             </ul>
         </nav>

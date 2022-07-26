@@ -1,5 +1,6 @@
 import React from "react";
 import './OutwardCalendar.css';
+import TripSummary from "./TripSummary";
 
 export default function ReturnCalendar ({outwardToReturnCalendar}){
     // Datafields for use in scrolling calendar
@@ -185,7 +186,7 @@ export default function ReturnCalendar ({outwardToReturnCalendar}){
         <div>
         <table class='calendar' border='0px solid' height='50vh'>
             <tr class='top-line'>
-                <th class='calendar' width='15%'>Outward:</th>
+                <th class='calendar' width='15%'>Return:</th>
                 <td class='calendar-align-right'></td>
                 <td class='calendar-align-right' width='25%'></td>
                 <td class='calendar-align-right'></td>
@@ -307,6 +308,9 @@ export default function ReturnCalendar ({outwardToReturnCalendar}){
                 <td class='calendar-align-center'></td>
             </tr>  
         </table>
+
+        <br/>
+        <TripSummary returnCalendarToTripSummary={outwardToReturnCalendar}/>
     </div>
     );
 }

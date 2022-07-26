@@ -184,10 +184,6 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     
     return (
         <div>
-        <ReturnCalendar outwardToReturnCalendar={navbarToOutwardCalendar}/>
-        
-        <br/>
-
         <table class='calendar' border='0px solid' height='50vh'>
             <tr class='top-line'>
                 <th class='calendar' width='15%'>Outward:</th>
@@ -312,6 +308,9 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                 <td class='calendar-align-center'></td>
             </tr>  
         </table>
+
+        <br/>
+        <ReturnCalendar outwardToReturnCalendar={navbarToOutwardCalendar}/>
     </div>
     );
 }
