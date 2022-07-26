@@ -14,7 +14,6 @@ export default function TripSummary ({navbarToTripSummary}){
         var totalPrice = '...'
     }
 
-
     window.processData = function(data) {
         // do something with your data like
         console.log("MainComponent received data:", data);

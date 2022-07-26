@@ -57,7 +57,6 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
         for (let i = 1; i <= 31; i++) {
             // Collect parameters
             let price = navbarToOutwardCalendar.all_outward_prices[year][month][i.toString()];
-            console.log(price)
             let cellid = 'cell' + i.toString();
 
             // Prepare cell content

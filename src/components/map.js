@@ -182,6 +182,9 @@ export default function Map({mapToApp}){
                       return_name: '...',
                       terminal_name: '...'
                     });
+
+                    // Send date directly to trip summary
+                    window.processData(outwardDate);
                   
                     // clear other outward markers on map
                     clearMarkers('outwardMarker', true, outward_marker);
