@@ -308,6 +308,9 @@ export default function Map({mapToApp}){
         return_name: '...',
         terminal_name: '...'});
 
+        // Reset selected date in trip summary
+        window.processData('...');
+
         });
 
     // Add zoom controls to map
