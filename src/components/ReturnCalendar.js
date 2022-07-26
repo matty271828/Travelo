@@ -1,8 +1,9 @@
 import React from "react";
-import './OutwardCalendar.css';
+import './ReturnCalendar.css';
 import TripSummary from "./TripSummary";
 
-export default function ReturnCalendar ({outwardToReturnCalendar}){
+export default function ReturnCalendar ({outwardToReturnCalendar, dateSelection}){
+    console.log('<Recieved by return calendar>: ' + dateSelection);
     // Datafields for use in scrolling calendar
     let currentMonth;
     let currentYear;
@@ -46,7 +47,7 @@ export default function ReturnCalendar ({outwardToReturnCalendar}){
         // Ensure no highlighting from previous selection remains
         let cellid = 'cell' + i.toString();
         if (document.getElementById(cellid) != null){
-            document.getElementById(cellid).className = 'calendar-price'
+            //document.getElementById(cellid).className = 'calendar-price'
         }
         
     }
@@ -69,13 +70,13 @@ export default function ReturnCalendar ({outwardToReturnCalendar}){
 
             // Fill cell
             document.getElementById(cellid).textContent = cell[i];
-            document.getElementById(cellid).classList.remove('calendar-selected');
-            document.getElementById(cellid).classList.add('calendar-price');
+            //document.getElementById(cellid).classList.remove('calendar-selected');
+            //document.getElementById(cellid).classList.add('calendar-price');
 
             // highlight currently selected day/month if it appears on screen
             if (i == parseInt(selectedDay) && month == selectedMonth && year == selectedYear) {
-                document.getElementById(cellid).classList.remove('calendar-price');
-                document.getElementById(cellid).classList.add('calendar-selected');
+                //document.getElementById(cellid).classList.remove('calendar-price');
+                //document.getElementById(cellid).classList.add('calendar-selected');
             }
         }
     }
@@ -101,8 +102,8 @@ export default function ReturnCalendar ({outwardToReturnCalendar}){
         // Highlight cheapest flight in calendar
         let cellid = 'cell' + selectedDay;
         selectedCell = document.getElementById(cellid)
-        selectedCell.classList.remove('calendar-price');
-        selectedCell.classList.add('calendar-selected');
+        //selectedCell.classList.remove('calendar-price');
+        //selectedCell.classList.add('calendar-selected');
     } 
 
     // Function to operate calendar after chevron click
@@ -169,15 +170,13 @@ export default function ReturnCalendar ({outwardToReturnCalendar}){
                 selectedYear = currentYear;
     
                 // Update class of previously selected cell
-                selectedCell.classList.remove('calendar-selected');
-                selectedCell.classList.add('calendar-price');
+                //selectedCell.classList.remove('calendar-selected');
+                //selectedCell.classList.add('calendar-price');
     
                 // Update class of newly selected cell
                 selectedCell = document.getElementById(clickedCellid)
-                selectedCell.classList.remove('calendar-price');
-                selectedCell.classList.add('calendar-selected');
-    
-                // TODO - pass new selected flight information to trip summary
+                //selectedCell.classList.remove('calendar-price');
+                //selectedCell.classList.add('calendar-selected');
             }
         }
     }
@@ -310,7 +309,7 @@ export default function ReturnCalendar ({outwardToReturnCalendar}){
         </table>
 
         <br/>
-        <TripSummary returnCalendarToTripSummary={outwardToReturnCalendar}/>
+        <TripSummary returnCalendarToTripSummary={outwardToReturnCalendar} dateSelection={dateSelection}/>
     </div>
     );
 }

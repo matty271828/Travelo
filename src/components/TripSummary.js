@@ -1,13 +1,20 @@
 import React from "react";
 import './TripSummary.css';
 
-export default function TripSummary ({returnCalendarToTripSummary}){
+export default function TripSummary ({returnCalendarToTripSummary, dateSelection}){
+    console.log('<Recieved by trip summary>: ' + dateSelection);
     console.log(returnCalendarToTripSummary);
     // Calculate total cost
     if (returnCalendarToTripSummary.cheapest_return_flight.price != '...') {
         var totalPrice = parseInt(returnCalendarToTripSummary.cheapest_outward_flight.price) + parseInt(returnCalendarToTripSummary.cheapest_return_flight.price)
     } else {
         var totalPrice = '...'
+    }
+
+    // Set outward date
+    let outwardDate = returnCalendarToTripSummary.cheapest_outward_flight.date;
+    if (dateSelection != 'none') {
+        outwardDate = dateSelection;
     }
 
     return (
@@ -24,7 +31,7 @@ export default function TripSummary ({returnCalendarToTripSummary}){
             </tr>
                 <tr height='25%'>
                     <th>Outward: </th>
-                    <td className='align-center'>{returnCalendarToTripSummary.cheapest_outward_flight.date}</td>
+                    <td className='align-center'>{outwardDate}</td>
                     <td className='align-center'>-</td>
                     <td className='align-center'>{returnCalendarToTripSummary.origin_name}</td>
                     <td className='align-center'>-</td>

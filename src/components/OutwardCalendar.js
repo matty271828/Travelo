@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import './OutwardCalendar.css';
 import ReturnCalendar from './ReturnCalendar';
 
@@ -12,6 +12,15 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     let selectedMonth;
     let selectedYear;
     let selectedCell;
+
+    // For use in passing selected date to return calendar and trip summary
+    const [data, setData] = useState('none');
+    const parentToChild = () => {
+        currentMonth = parseInt(dateArray[1]);
+        currentYear = dateArray[2];
+        calendarPage = months[currentMonth] + ' ' + currentYear;
+        setData(selectedDay + '/' + selectedMonth + '/' + selectedYear);
+    }
 
     // Get IATA codes from origin and outward names
     const originIATA = navbarToOutwardCalendar.origin_name.split("\n")[1];
@@ -46,7 +55,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
         // Ensure no highlighting from previous selection remains
         let cellid = 'cell' + i.toString();
         if (document.getElementById(cellid) != null){
-            document.getElementById(cellid).className = 'calendar-price'
+            //document.getElementById(cellid).className = 'calendar-price'
         }
         
     }
@@ -69,13 +78,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
 
             // Fill cell
             document.getElementById(cellid).textContent = cell[i];
-            document.getElementById(cellid).classList.remove('calendar-selected');
-            document.getElementById(cellid).classList.add('calendar-price');
+            //document.getElementById(cellid).classList.remove('calendar-selected');
+            //document.getElementById(cellid).classList.add('calendar-price');
 
             // highlight currently selected day/month if it appears on screen
             if (i == parseInt(selectedDay) && month == selectedMonth && year == selectedYear) {
-                document.getElementById(cellid).classList.remove('calendar-price');
-                document.getElementById(cellid).classList.add('calendar-selected');
+                //document.getElementById(cellid).classList.remove('calendar-price');
+                //document.getElementById(cellid).classList.add('calendar-selected');
             }
         }
     }
@@ -96,13 +105,14 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
         calendarPage = months[currentMonth] + ' ' + currentYear;
     
         // Fill all cells and pass correct date to each one
+        // TODO - make sure this doesn't wipe selected month on refresh
         fillCalendar(currentMonth, currentYear);
 
         // Highlight cheapest flight in calendar
         let cellid = 'cell' + selectedDay;
         selectedCell = document.getElementById(cellid)
-        selectedCell.classList.remove('calendar-price');
-        selectedCell.classList.add('calendar-selected');
+        //selectedCell.classList.remove('calendar-price');
+        //selectedCell.classList.add('calendar-selected');
     } 
 
     // Function to operate calendar after chevron click
@@ -161,6 +171,8 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             // Determine cellid
             let clickedCellid = 'cell' + day;
 
+            console.log('<OutwardCalendar> user clicked:' + clickedCellid);
+
             // Check a price is present in desired cell
             if (document.getElementById(clickedCellid).textContent != '-') {
                 // Update date
@@ -169,15 +181,16 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                 selectedYear = currentYear;
     
                 // Update class of previously selected cell
-                selectedCell.classList.remove('calendar-selected');
-                selectedCell.classList.add('calendar-price');
+                //selectedCell.classList.remove('calendar-selected');
+                //selectedCell.classList.add('calendar-price');
     
                 // Update class of newly selected cell
                 selectedCell = document.getElementById(clickedCellid)
-                selectedCell.classList.remove('calendar-price');
-                selectedCell.classList.add('calendar-selected');
-    
-                // TODO - pass new selected flight information to trip summary
+                //selectedCell.classList.remove('calendar-price');
+                //selectedCell.classList.add('calendar-selected');
+
+                // Set state of selected price
+                parentToChild();
             }
         }
     }
@@ -310,7 +323,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
         </table>
 
         <br/>
-        <ReturnCalendar outwardToReturnCalendar={navbarToOutwardCalendar}/>
+        <ReturnCalendar outwardToReturnCalendar={navbarToOutwardCalendar} dateSelection={data}/>
     </div>
     );
 }

@@ -1,0 +1,70 @@
+table.calendar {
+    background-color: white;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+td.calendar {
+    font-size:medium;
+    font-family: monospace;
+    color: black;
+}
+
+td.calendar-align-left {
+    text-align: left;
+}
+
+td.calendar-align-center {
+    text-align: center;
+    background-color: none;
+}
+
+td.calendar-price {
+    text-align: center;
+    background-color: none;
+}
+
+td.calendar-price:hover {
+    text-align: center;
+    cursor: pointer;
+}
+
+td.calendar-selected {
+    text-align: center;
+    background-color: rgb(48, 251, 183);
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+td.calendar-date {
+    text-align: center;
+    color: grey;
+}
+
+td.calendar-align-right {
+    text-align: right;
+}
+
+td.chevron {
+    text-align: center;
+}
+
+td.chevron:hover {
+    background-color: rgb(245, 149, 165);
+    cursor: pointer;
+}
+
+th.calendar {
+    font-size:medium;
+    font-family: monospace;
+    color: black;
+    text-align: left;
+}
+
+th.calendar-align-right {
+    text-align: right;
+}
+
+tr.top-line {
+    background-color:  rgb(255, 192, 193);
+}
