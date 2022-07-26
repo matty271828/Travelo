@@ -4,23 +4,13 @@ import ReturnCalendar from './ReturnCalendar';
 
 export default function OutwardCalendar ({navbarToOutwardCalendar}){
     // Datafields for use in scrolling calendar
-    let currentMonth;
-    let currentYear;
+    let calendarMonth;
+    let calendarYear;
 
-    // Datafields for use in selecting a flight
-    let selectedDay;
-    let selectedMonth;
-    let selectedYear;
-    let selectedCell;
-
-    // For use in passing selected date to return calendar and trip summary
-    const [data, setData] = useState('none');
-    const parentToChild = () => {
-        currentMonth = parseInt(dateArray[1]);
-        currentYear = dateArray[2];
-        calendarPage = months[currentMonth] + ' ' + currentYear;
-        setData(selectedDay + '/' + selectedMonth + '/' + selectedYear);
-    }
+    // Placeholder variables
+    let calendarPage = '...'
+    let dateArray = [];
+    let cell = {};
 
     // Get IATA codes from origin and outward names
     const originIATA = navbarToOutwardCalendar.origin_name.split("\n")[1];
@@ -42,11 +32,6 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
         12: 'December'
     }
 
-    // Placeholder variables
-    let calendarPage = '...'
-    let dateArray = [];
-    let cell = {};
-
     // Instantiate calendar
     for (let i = 1; i <= 31; i++) {
         // Fill prices
@@ -63,6 +48,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
     // Function for filling calendar with dates
     // Month should be passed as an integer value, year as a string
     function fillCalendar(month, year){
+        // TODO - fix prices for cheapest month being passed back after a selection has been made
         // Fill all cells and pass correct date to each one
         for (let i = 1; i <= 31; i++) {
             // Collect parameters
@@ -78,15 +64,22 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
 
             // Fill cell
             document.getElementById(cellid).textContent = cell[i];
-            //document.getElementById(cellid).classList.remove('calendar-selected');
-            //document.getElementById(cellid).classList.add('calendar-price');
 
-            // highlight currently selected day/month if it appears on screen
-            if (i == parseInt(selectedDay) && month == selectedMonth && year == selectedYear) {
-                //document.getElementById(cellid).classList.remove('calendar-price');
-                //document.getElementById(cellid).classList.add('calendar-selected');
-            }
+            // TODO - highlight currently selected day/month if it appears on screen
+
+            // TODO - Unhighlight currently selected day/month if it is removed from screen
+ 
         }
+    }
+
+    // For use in passing selected date to return calendar and trip summary
+    const [data, setData] = useState('none');
+    const parentToChild = (day, month, year) => {
+        // TODO - maybe completely rebuild class to use these variables in calendar refreshes
+        // Might need to move some of the calendar functions into here
+        let selectedDate = {day: day, month: month, year: year}
+        calendarMonth = month;
+        setData(selectedDate);
     }
 
     // Cheapest outward flight selected
@@ -94,25 +87,22 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
         // Enter month and year into calendar
         dateArray = navbarToOutwardCalendar.cheapest_outward_flight.date.split('/');
 
-        // For use in highlighting and passing selection
-        selectedDay = dateArray[0];
-        selectedMonth = parseInt(dateArray[1])
-        selectedYear = dateArray[2];
-
         // For use in scrolling calendar
-        currentMonth = parseInt(dateArray[1]);
-        currentYear = dateArray[2];
-        calendarPage = months[currentMonth] + ' ' + currentYear;
+        calendarMonth = parseInt(dateArray[1]);
+        calendarYear = dateArray[2];
+        calendarPage = months[calendarMonth] + ' ' + calendarYear;
+
     
         // Fill all cells and pass correct date to each one
         // TODO - make sure this doesn't wipe selected month on refresh
-        fillCalendar(currentMonth, currentYear);
+        if (data == 'none'){
+            fillCalendar(calendarMonth, calendarYear);
+        } else { 
+            console.log('<OutwardCalendar> Passed to fill calendar: ' + data.month);
+            fillCalendar(data.month, data.year);
+        }
 
-        // Highlight cheapest flight in calendar
-        let cellid = 'cell' + selectedDay;
-        selectedCell = document.getElementById(cellid)
-        //selectedCell.classList.remove('calendar-price');
-        //selectedCell.classList.add('calendar-selected');
+        // TODO - Highlight cheapest flight in calendar
     } 
 
     // Function to operate calendar after chevron click
@@ -124,41 +114,41 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                 case 'left':
                     // Prevent scroll past July 2022
                     // TODO - update this to determine actual current month and year
-                    if (currentMonth == 7 && currentYear == '2022'){
+                    if (calendarMonth == 7 && calendarYear == '2022'){
                         break;
                     }
                     // Current month is january
-                    if (currentMonth == 1) {
-                        currentMonth = 12
-                        currentYear = (parseInt(currentYear) - 1).toString();
-                        document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
+                    if (calendarMonth == 1) {
+                        calendarMonth = 12
+                        calendarYear = (parseInt(calendarYear) - 1).toString();
+                        document.getElementById("calendarPage").textContent = months[calendarMonth] + ' ' + calendarYear;
                     } else {
-                        currentMonth = currentMonth - 1;
-                        document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
+                        calendarMonth = calendarMonth - 1;
+                        document.getElementById("calendarPage").textContent = months[calendarMonth] + ' ' + calendarYear;
                     }
                     // Call function filling calendar with new month
-                    fillCalendar(currentMonth, currentYear);
+                    fillCalendar(calendarMonth, calendarYear);
 
                     break;
 
                 case 'right':
                     // Prevent scroll past May 2023
                     // TODO - update this to determine actual current month + 12 and year + 1
-                    if (currentMonth == 5 && currentYear == '2023'){
+                    if (calendarMonth == 5 && calendarYear == '2023'){
                         break;
                     }
                     // Current month is december
-                    if (currentMonth == 12) {
-                        currentMonth = 1
-                        currentYear = (parseInt(currentYear) + 1).toString();
-                        document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
+                    if (calendarMonth == 12) {
+                        calendarMonth = 1
+                        calendarYear = (parseInt(calendarYear) + 1).toString();
+                        document.getElementById("calendarPage").textContent = months[calendarMonth] + ' ' + calendarYear;
                     } else {
-                        currentMonth = currentMonth + 1;
-                        document.getElementById("calendarPage").textContent = months[currentMonth] + ' ' + currentYear;
+                        calendarMonth = calendarMonth + 1;
+                        document.getElementById("calendarPage").textContent = months[calendarMonth] + ' ' + calendarYear;
                     }
 
                     // Call function filling calendar with new month
-                    fillCalendar(currentMonth, currentYear);
+                    fillCalendar(calendarMonth, calendarYear);
                     break;
             }
         }
@@ -170,27 +160,12 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
         if (navbarToOutwardCalendar.outward_name != '...') {
             // Determine cellid
             let clickedCellid = 'cell' + day;
-
             console.log('<OutwardCalendar> user clicked:' + clickedCellid);
 
             // Check a price is present in desired cell
             if (document.getElementById(clickedCellid).textContent != '-') {
-                // Update date
-                selectedDay = day;
-                selectedMonth = currentMonth;
-                selectedYear = currentYear;
-    
-                // Update class of previously selected cell
-                //selectedCell.classList.remove('calendar-selected');
-                //selectedCell.classList.add('calendar-price');
-    
-                // Update class of newly selected cell
-                selectedCell = document.getElementById(clickedCellid)
-                //selectedCell.classList.remove('calendar-price');
-                //selectedCell.classList.add('calendar-selected');
-
                 // Set state of selected price
-                parentToChild();
+                parentToChild(day, calendarMonth, calendarYear);
             }
         }
     }

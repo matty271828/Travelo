@@ -14,7 +14,7 @@ export default function TripSummary ({returnCalendarToTripSummary, dateSelection
     // Set outward date
     let outwardDate = returnCalendarToTripSummary.cheapest_outward_flight.date;
     if (dateSelection != 'none') {
-        outwardDate = dateSelection;
+        outwardDate = dateSelection.day + '/' + dateSelection.month + '/' + dateSelection.year;
     }
 
     return (
