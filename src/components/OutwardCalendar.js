@@ -178,6 +178,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                 selectedCell.classList.add('calendar-selected');
     
                 // TODO - pass new selected flight information to trip summary
+                window.processData(selectedDay + '/' + selectedMonth + '/' + selectedYear);
             }
         }
     }
