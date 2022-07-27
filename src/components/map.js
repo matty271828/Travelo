@@ -117,6 +117,10 @@ export default function Map({mapToApp}){
     function controlMarkers() {
       // Make request to DB for origin airports
       fetch('/application/origins').then(origin_res => origin_res.json()).then(origin_data => {
+        // Reset selected date in trip summary
+      let selectedFlight = {date: '...', price: '...'}
+      window.processData(selectedFlight);
+      
         // BEGIN PRIMARY LOOP - through origin airports
         for (let key in origin_data){
           // Create markers
