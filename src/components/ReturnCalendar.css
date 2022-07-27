@@ -19,17 +19,17 @@ td.calendar-align-center {
     background-color: none;
 }
 
-td.calendar-price {
+td.calendar-return-price {
     text-align: center;
     background-color: none;
 }
 
-td.calendar-price:hover {
+td.calendar-return-price:hover {
     text-align: center;
     cursor: pointer;
 }
 
-td.calendar-selected {
+td.calendar-return-selected {
     text-align: center;
     background-color: rgb(48, 251, 183);
     border-radius: 20px;

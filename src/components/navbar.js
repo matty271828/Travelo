@@ -25,7 +25,7 @@ export default function Navbar({appToNavbar}){
                 <br/>
                 <OutwardCalendar navbarToOutwardCalendar={appToNavbar}/>
                 <br/>
-                <ReturnCalendar navbarToOutwardCalendar={appToNavbar}/>
+                <ReturnCalendar navbarToReturnCalendar={appToNavbar}/>
             </ul>
         </nav>
         </IconContext.Provider>

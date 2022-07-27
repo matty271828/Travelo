@@ -132,7 +132,7 @@ export default function Map({mapToApp}){
             // Ensures map click listener is not triggered
             event.stopPropagation();
 
-            // Update trip summary box with name of origin (first by passing to app and then through navbar to TripSummary)
+            // Update outward calendar and trip summary box with name of origin (first by passing to app and then through navbar to TripSummary)
             const originAirport =  origin_data[key]['place_name'] + '\n' + '(' + key + ')'
             mapToApp({origin_name: originAirport,
               outward_name: '...',
