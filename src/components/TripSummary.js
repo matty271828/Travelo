@@ -9,7 +9,7 @@ export default function TripSummary ({navbarToTripSummary}){
 
     // Calculate total cost
     if (navbarToTripSummary.cheapest_return_flight.price != '...') {
-        var totalPrice = parseInt(navbarToTripSummary.cheapest_outward_flight.price) + parseInt(navbarToTripSummary.cheapest_return_flight.price)
+        var totalPrice = parseInt(selectedOutwardFlight.price) + parseInt(navbarToTripSummary.cheapest_return_flight.price)
     } else {
         var totalPrice = '...'
     }
