@@ -46,8 +46,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
         let cellid = 'cell' + i.toString();
         if (document.getElementById(cellid) != null){
             document.getElementById(cellid).className = 'calendar-price'
-        }
-        
+        }  
     }
     
     // Function for filling calendar with dates
@@ -81,24 +80,50 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
 
     // Cheapest outward flight selected
     if (navbarToOutwardCalendar.outward_name != '...') {
-        // Enter month and year into calendar
-        dateArray = navbarToOutwardCalendar.cheapest_outward_flight.date.split('/');
-
         // For use in highlighting and passing selection
-        selectedDay = dateArray[0];
-        selectedMonth = parseInt(dateArray[1])
-        selectedYear = dateArray[2];
+        let storedDay = window.localStorage.getItem('selected-day');
+        console.log('<OutwardCalendar>: stored day type ' + typeof(storedDay));
+        let storedMonth = window.localStorage.getItem('selected-month');
+        console.log('<OutwardCalendar>: stored month type ' + typeof(storedDay));
+        let storedYear = window.localStorage.getItem('selected-year');
+        console.log('<OutwardCalendar>: stored year type ' + typeof(storedDay));
 
-        // For use in scrolling calendar
-        currentMonth = parseInt(dateArray[1]);
-        currentYear = dateArray[2];
-        calendarPage = months[currentMonth] + ' ' + currentYear;
+        console.log('<Outward calendar> Retrieved from local storage: ' + storedDay + '/' + storedMonth + '/' + storedYear);
+
+        if (storedDay == 'null') {
+            // Enter month and year into calendar
+            dateArray = navbarToOutwardCalendar.cheapest_outward_flight.date.split('/');
+            selectedDay = dateArray[0];
+            selectedMonth = parseInt(dateArray[1])
+            selectedYear = dateArray[2];
+
+            // For use in scrolling calendar
+            currentMonth = selectedMonth;
+            currentYear = selectedYear
+            calendarPage = months[currentMonth] + ' ' + currentYear;
+
+            // Fill all cells and pass correct date to each one
+            fillCalendar(currentMonth, currentYear);
+
+        } else {
+            selectedDay = storedDay;
+            selectedMonth = parseInt(storedMonth);
+            selectedYear = storedYear;
+
+            // For use in scrolling calendar
+            currentMonth = selectedMonth;
+            currentYear = selectedYear
+            calendarPage = months[currentMonth] + ' ' + currentYear;
+
+            // Fill all cells and pass correct date to each one
+            fillCalendar(currentMonth, currentYear);
+        }
     
-        // Fill all cells and pass correct date to each one
-        fillCalendar(currentMonth, currentYear);
+        
 
         // Highlight cheapest flight in calendar
         let cellid = 'cell' + selectedDay;
+        console.log('<Outward calendar>: Highlighting cellid: ' + cellid);
         selectedCell = document.getElementById(cellid)
         selectedCell.classList.remove('calendar-price');
         selectedCell.classList.add('calendar-selected');
@@ -175,6 +200,13 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                 selectedCell = document.getElementById(clickedCellid)
                 selectedCell.classList.remove('calendar-price');
                 selectedCell.classList.add('calendar-selected');
+
+                // TODO - store selection in local item storage
+                window.localStorage.setItem('selected-day', selectedDay);
+                window.localStorage.setItem('selected-month', selectedMonth);
+                window.localStorage.setItem('selected-year', selectedYear);
+
+                console.log('<Outward calendar> stored in local storage: ' + selectedDay + '/' + selectedMonth + '/' + selectedYear);
     
                 // TODO - pass new selected flight information to trip summary
                 let price = navbarToOutwardCalendar.all_outward_prices[selectedYear][selectedMonth][selectedDay];

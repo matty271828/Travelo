@@ -14,6 +14,11 @@ export default function Map({mapToApp}){
   const [API_KEY] = useState('auR6Ih8HukHj8NgLxBk9');
 
   useEffect(() => {
+    // Reset selected date in local storage
+    window.localStorage.setItem('selected-day', null);
+    window.localStorage.setItem('selected-month', null);
+    window.localStorage.setItem('selected-year', null);
+    
     // Function to create and place a marker on the map
     function create_marker(map, type, place_name ,lng, lat){
       // Create a DOM element for each marker.
@@ -320,6 +325,11 @@ export default function Map({mapToApp}){
         // Reset selected date in trip summary
         let selectedFlight = {date: '...', price: '...'}
         window.processOutward(selectedFlight);
+
+        // Reset selected date in local storage
+        window.localStorage.setItem('selected-day', null);
+        window.localStorage.setItem('selected-month', null);
+        window.localStorage.setItem('selected-year', null);
 
         });
 
