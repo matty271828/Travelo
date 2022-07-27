@@ -1,5 +1,5 @@
 import React from "react";
-import './OutwardCalendar.css';
+import './ReturnCalendar.css';
 
 export default function OutwardCalendar ({navbarToOutwardCalendar}){
     // Datafields for use in scrolling calendar
@@ -182,7 +182,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                 window.processOutward(selectedFlight);
 
                 // Pass selected flight information to the map
-                window.processOutward(selectedFlight);
+                window.processOutwardToMap(selectedFlight);
             }
         }
     }

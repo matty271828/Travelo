@@ -14,9 +14,9 @@ export default function TripSummary ({navbarToTripSummary}){
         var totalPrice = '...'
     }
 
-    window.processData = function(data) {
-        // do something with your data like
-        console.log("MainComponent received data:", data);
+    window.processOutward = function(data) {
+        // Update state of outward flight with date and price sent by calendar click
+        console.log("TripSummary received outward choice:", data);
         setSelectedOutwardFlight(data);
     }
 

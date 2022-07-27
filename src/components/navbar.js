@@ -6,6 +6,7 @@ import { IconContext } from 'react-icons';
 import './navbar.css';
 import TripSummary from './TripSummary';
 import OutwardCalendar from './OutwardCalendar';
+import ReturnCalendar from './ReturnCalendar';
 
 export default function Navbar({appToNavbar}){
  const [sidebar, setSidebar] = useState(true)
@@ -24,7 +25,7 @@ export default function Navbar({appToNavbar}){
                 <br/>
                 <OutwardCalendar navbarToOutwardCalendar={appToNavbar}/>
                 <br/>
-                <OutwardCalendar navbarToOutwardCalendar={appToNavbar}/>
+                <ReturnCalendar navbarToOutwardCalendar={appToNavbar}/>
             </ul>
         </nav>
         </IconContext.Provider>

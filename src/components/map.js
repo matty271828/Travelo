@@ -119,8 +119,8 @@ export default function Map({mapToApp}){
       fetch('/application/origins').then(origin_res => origin_res.json()).then(origin_data => {
         // Reset selected date in trip summary
       let selectedFlight = {date: '...', price: '...'}
-      window.processData(selectedFlight);
-      
+      window.processOutward(selectedFlight);
+
         // BEGIN PRIMARY LOOP - through origin airports
         for (let key in origin_data){
           // Create markers
@@ -187,9 +187,9 @@ export default function Map({mapToApp}){
                       terminal_name: '...'
                     });
 
-                    // Send date directly to trip summary
+                    // Send cheapest date and price directly to trip summary to intialise
                     let selectedFlight = {date: outwardDate, price: outwardPrice}
-                    window.processData(selectedFlight);
+                    window.processOutward(selectedFlight);
                   
                     // clear other outward markers on map
                     clearMarkers('outwardMarker', true, outward_marker);
@@ -199,6 +199,7 @@ export default function Map({mapToApp}){
 
                     // Request airports with routes back to England from DB
                     fetch('/application/return/' + outward_key + '/' + outwardDate).then(return_res => return_res.json()).then(return_data => {
+
                       // BEGIN TERTIARY LOOP - add markers
                       for (let return_key in return_data){
                         // Create markers
@@ -210,7 +211,7 @@ export default function Map({mapToApp}){
                           // Ensures map click listener is not triggered
                           event.stopPropagation();
 
-                          // Update trip summary box with name of return airport
+                          // TODO - if an outward flight has been selected, initialise with this instead of cheapest
                           const returnAirport =  return_data[return_key]['place_name'] + '\n' + '(' + return_key + ')'
                           mapToApp({origin_name: originAirport,
                             outward_name: outwardAirport,
@@ -318,7 +319,7 @@ export default function Map({mapToApp}){
 
         // Reset selected date in trip summary
         let selectedFlight = {date: '...', price: '...'}
-        window.processData(selectedFlight);
+        window.processOutward(selectedFlight);
 
         });
 
