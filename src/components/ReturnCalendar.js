@@ -80,7 +80,7 @@ export default function OutwardCalendar ({navbarToReturnCalendar}){
     }
 
     // Cheapest outward flight selected
-    if (navbarToReturnCalendar.outward_name != '...') {
+    if (navbarToReturnCalendar.terminal_name != '...') {
         // Enter month and year into calendar
         dateArray = navbarToReturnCalendar.cheapest_outward_flight.date.split('/');
 
