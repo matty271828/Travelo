@@ -213,14 +213,14 @@ export default function Map({mapToApp}){
 
                           // TODO - if an outward flight has been selected, initialise with this instead of cheapest
                           const returnAirport =  return_data[return_key]['place_name'] + '\n' + '(' + return_key + ')'
-                          //mapToApp({origin_name: originAirport,
-                            //outward_name: outwardAirport,
-                            //cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
-                            //all_outward_prices: allOutwardPrices,
-                            //cheapest_return_flight: {date: "...", price: '...'},
-                            //return_name: returnAirport,
-                            //terminal_name: '...'
-                          //});
+                          mapToApp({origin_name: originAirport,
+                            outward_name: outwardAirport,
+                            cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
+                            all_outward_prices: allOutwardPrices,
+                            cheapest_return_flight: {date: "...", price: '...'},
+                            return_name: returnAirport,
+                            terminal_name: '...'
+                          });
 
                           // clear return markers from map
                           clearMarkers('returnMarker', true, return_marker);

@@ -1,7 +1,7 @@
 import React from "react";
 import './ReturnCalendar.css';
 
-export default function OutwardCalendar ({navbarToReturnCalendar}){
+export default function ReturnCalendar ({navbarToReturnCalendar}){
     // Datafields for use in scrolling calendar
     let currentMonth;
     let currentYear;
