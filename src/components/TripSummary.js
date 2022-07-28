@@ -10,9 +10,6 @@ export default function TripSummary ({navbarToTripSummary}){
     let cheapestReturnFlight = navbarToTripSummary.cheapest_return_flight;
     const [selectedReturnFlight, setSelectedReturnFlight] = useState({date: cheapestReturnFlight.date, price: cheapestReturnFlight.price});
 
-    console.log(cheapestReturnFlight);
-    console.log('Return flight initial date is ' + selectedReturnFlight.date)
-
     // Calculate total cost
     if (navbarToTripSummary.cheapest_return_flight.price != '...') {
         var totalPrice = parseInt(selectedOutwardFlight.price) + parseInt(selectedReturnFlight.price)

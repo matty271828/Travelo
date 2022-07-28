@@ -90,7 +90,9 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
 
         console.log('<Outward calendar> Retrieved from local storage: ' + storedDay + '/' + storedMonth + '/' + storedYear);
 
+        // TODO - adapt this so that cheapest flight isn't reinstatiated when selecting return flight
         if (storedDay == 'null') {
+            console.log('test1 - stored day is: ' + storedDay)
             // Enter month and year into calendar
             dateArray = navbarToOutwardCalendar.cheapest_outward_flight.date.split('/');
             selectedDay = dateArray[0];
@@ -106,6 +108,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             fillCalendar(currentMonth, currentYear);
 
         } else {
+            console.log('test1 - stored day is: ' + storedDay)
             selectedDay = storedDay;
             selectedMonth = parseInt(storedMonth);
             selectedYear = storedYear;
