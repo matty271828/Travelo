@@ -144,6 +144,7 @@ export default function Map({mapToApp}){
               cheapest_outward_flight: {date: "...", price: '...'},
               all_outward_prices: {},
               cheapest_return_flight: {date: "...", price: '...'},
+              all_return_prices: {},
               return_name: '...',
               terminal_name: "..."
             });
@@ -188,6 +189,7 @@ export default function Map({mapToApp}){
                       cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
                       all_outward_prices: allOutwardPrices,
                       cheapest_return_flight: {date: "...", price: '...'},
+                      all_return_prices: {},
                       return_name: '...',
                       terminal_name: '...'
                     });
@@ -216,13 +218,14 @@ export default function Map({mapToApp}){
                           // Ensures map click listener is not triggered
                           event.stopPropagation();
 
-                          // TODO - if an outward flight has been selected, initialise with this instead of cheapest
+                          // Populate calendars and trip summary
                           const returnAirport =  return_data[return_key]['place_name'] + '\n' + '(' + return_key + ')'
                           mapToApp({origin_name: originAirport,
                             outward_name: outwardAirport,
                             cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
                             all_outward_prices: allOutwardPrices,
                             cheapest_return_flight: {date: "...", price: '...'},
+                            all_return_prices: {},
                             return_name: returnAirport,
                             terminal_name: '...'
                           });
@@ -251,21 +254,24 @@ export default function Map({mapToApp}){
                                 const terminalAirport =  terminal_data[terminal_key]['place_name'] + '\n' + '(' + terminal_key + ')'
                                 let returnDate = '...'
                                 let returnPrice = '...'
+                                let allReturnPrices = {}
 
                                 // Retrieve date and price of cheapest return flight after the cutoff date
                                 fetch('/application/get_prices/' + return_key +'/' + terminal_key + '/' + outwardDate).then(returnPrices_res => returnPrices_res.json()).then(returnPrice_data => {
                                   returnDate = returnPrice_data['cheapest_flight']['date']
                                   returnPrice = returnPrice_data['cheapest_flight']['price']
+                                  allReturnPrices = returnPrice_data['all_prices']
               
-                                  // Update trip summary box
-                                  //mapToApp({origin_name: originAirport,
-                                    //outward_name: outwardAirport,
-                                    //cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
-                                    //all_outward_prices: allOutwardPrices,
-                                    //cheapest_return_flight: {date: returnDate, price: returnPrice},
-                                    //return_name: returnAirport,
-                                    //terminal_name: terminalAirport
-                                  //});
+                                  // Populate calendars and update trip summary box
+                                  mapToApp({origin_name: originAirport,
+                                    outward_name: outwardAirport,
+                                    cheapest_outward_flight: {date: outwardDate, price: outwardPrice},
+                                    all_outward_prices: allOutwardPrices,
+                                    cheapest_return_flight: {date: returnDate, price: returnPrice},
+                                    all_return_prices: allReturnPrices,
+                                    return_name: returnAirport,
+                                    terminal_name: terminalAirport
+                                  });
                                 });
 
                                 // Clear unselected terminal airports from map
@@ -319,6 +325,7 @@ export default function Map({mapToApp}){
         cheapest_outward_flight: {date: "...", price: '...'},
         all_outward_prices: {},
         cheapest_return_flight: {date: "...", price: '...'},
+        all_return_prices: {},
         return_name: '...',
         terminal_name: '...'});
 

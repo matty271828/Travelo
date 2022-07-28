@@ -128,7 +128,7 @@ def get_prices(origin_iata_code, destination_iata_code, outward_day, outward_mon
 
 
 
-    # TODO - Run second query retrieving all prices for the route
+    # Run second query retrieving all prices for the route
     sql = "SELECT day, month, year, price FROM flights_prototype_data WHERE origin_id = '" + origin_iata_code + "' and destination_id = '" + destination_iata_code + "'"
 
     # Run query

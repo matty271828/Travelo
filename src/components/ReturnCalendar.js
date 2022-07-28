@@ -56,7 +56,7 @@ export default function ReturnCalendar ({navbarToReturnCalendar}){
         // Fill all cells and pass correct date to each one
         for (let i = 1; i <= 31; i++) {
             // Collect parameters
-            let price = navbarToReturnCalendar.all_outward_prices[year][month][i.toString()];
+            let price = navbarToReturnCalendar.all_return_prices[year][month][i.toString()];
             let cellid = 'returnCell' + i.toString();
 
             // Prepare cell content
@@ -82,7 +82,7 @@ export default function ReturnCalendar ({navbarToReturnCalendar}){
     // Cheapest outward flight selected
     if (navbarToReturnCalendar.terminal_name != '...') {
         // Enter month and year into calendar
-        dateArray = navbarToReturnCalendar.cheapest_outward_flight.date.split('/');
+        dateArray = navbarToReturnCalendar.cheapest_return_flight.date.split('/');
 
         // For use in highlighting and passing selection
         selectedDay = dateArray[0];
@@ -107,7 +107,7 @@ export default function ReturnCalendar ({navbarToReturnCalendar}){
     // Function to operate calendar after chevron click
     const chevronClick = (direction) => {
         // Run only if outward flight present
-        if (navbarToReturnCalendar.outward_name != '...') {
+        if (navbarToReturnCalendar.terminal_name != '...') {
             // switch statement to read direction
             switch (direction) {
                 case 'left':
@@ -156,7 +156,7 @@ export default function ReturnCalendar ({navbarToReturnCalendar}){
     // Function to update selected date and pass information to trip summary
     const selectPrice = (day) => {
         // Run only if outward flight present
-        if (navbarToReturnCalendar.outward_name != '...') {
+        if (navbarToReturnCalendar.terminal_name != '...') {
             // Determine cellid
             let clickedCellid = 'returnCell' + day;
 
@@ -177,7 +177,7 @@ export default function ReturnCalendar ({navbarToReturnCalendar}){
                 selectedCell.classList.add('calendar-return-selected');
     
                 // TODO - pass new selected flight information to trip summary
-                let price = navbarToReturnCalendar.all_outward_prices[selectedYear][selectedMonth][selectedDay];
+                let price = navbarToReturnCalendar.all_return_prices[selectedYear][selectedMonth][selectedDay];
                 let selectedFlight = {date: selectedDay + '/' + selectedMonth + '/' + selectedYear, price: price}
                 //window.processOutward(selectedFlight);
             }

@@ -12,7 +12,9 @@ function App() {
     cheapest_outward_flight: {date: "...", price: '...'},
     all_outward_prices: {},
     cheapest_return_flight: {date: "...", price: '...'},
-    return_name: "...", terminal_name: "..."}
+    all_return_prices: {},
+    return_name: "...",
+    terminal_name: "..."}
   );
   
   const mapToApp = (mapData) => {
