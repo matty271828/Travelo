@@ -4,12 +4,18 @@ import './TripSummary.css';
 export default function TripSummary ({navbarToTripSummary}){
     console.log(navbarToTripSummary);
 
-    let cheapestOutwardDate = navbarToTripSummary.cheapest_outward_flight.date;
-    const [selectedOutwardFlight, setSelectedOutwardFlight] = useState(cheapestOutwardDate);
+    let cheapestOutwardFlight = navbarToTripSummary.cheapest_outward_flight;
+    const [selectedOutwardFlight, setSelectedOutwardFlight] = useState({date: cheapestOutwardFlight.date, price: cheapestOutwardFlight.date});
+
+    let cheapestReturnFlight = navbarToTripSummary.cheapest_return_flight;
+    const [selectedReturnFlight, setSelectedReturnFlight] = useState({date: cheapestReturnFlight.date, price: cheapestReturnFlight.price});
+
+    console.log(cheapestReturnFlight);
+    console.log('Return flight initial date is ' + selectedReturnFlight.date)
 
     // Calculate total cost
     if (navbarToTripSummary.cheapest_return_flight.price != '...') {
-        var totalPrice = parseInt(selectedOutwardFlight.price) + parseInt(navbarToTripSummary.cheapest_return_flight.price)
+        var totalPrice = parseInt(selectedOutwardFlight.price) + parseInt(selectedReturnFlight.price)
     } else {
         var totalPrice = '...'
     }
@@ -18,6 +24,12 @@ export default function TripSummary ({navbarToTripSummary}){
         // Update state of outward flight with date and price sent by calendar click
         console.log("TripSummary received outward choice:", data);
         setSelectedOutwardFlight(data);
+    }
+
+    window.processReturn = function(data) {
+        // Update state of outward flight with date and price sent by calendar click
+        console.log("TripSummary received return choice:", data);
+        setSelectedReturnFlight(data);
     }
 
     return (
@@ -45,13 +57,13 @@ export default function TripSummary ({navbarToTripSummary}){
 
                 <tr height='25%'>
                     <th>Return: </th>
-                    <td className='align-center'>{navbarToTripSummary.cheapest_return_flight.date}</td>
+                    <td className='align-center'>{selectedReturnFlight.date}</td>
                     <td className='align-center'>-</td>
                     <td className='align-center'>{navbarToTripSummary.return_name}</td>
                     <td className='align-center'>-</td>
                     <td className='align-center'>{navbarToTripSummary.terminal_name}</td>
                     <td className='align-center'>-</td>
-                    <td>£{navbarToTripSummary.cheapest_return_flight.price}</td>
+                    <td>£{selectedReturnFlight.price}</td>
                 </tr>
 
                 <tr>

@@ -201,7 +201,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
                 selectedCell.classList.remove('calendar-price');
                 selectedCell.classList.add('calendar-selected');
 
-                // TODO - store selection in local item storage
+                // Store selection in local item storage
                 window.localStorage.setItem('selected-day', selectedDay);
                 window.localStorage.setItem('selected-month', selectedMonth);
                 window.localStorage.setItem('selected-year', selectedYear);

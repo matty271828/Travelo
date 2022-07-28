@@ -179,7 +179,7 @@ export default function ReturnCalendar ({navbarToReturnCalendar}){
                 // TODO - pass new selected flight information to trip summary
                 let price = navbarToReturnCalendar.all_return_prices[selectedYear][selectedMonth][selectedDay];
                 let selectedFlight = {date: selectedDay + '/' + selectedMonth + '/' + selectedYear, price: price}
-                //window.processOutward(selectedFlight);
+                window.processReturn(selectedFlight);
             }
         }
     }

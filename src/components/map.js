@@ -122,9 +122,10 @@ export default function Map({mapToApp}){
     function controlMarkers() {
       // Make request to DB for origin airports
       fetch('/application/origins').then(origin_res => origin_res.json()).then(origin_data => {
-        // Reset selected date in trip summary
+        // Reset selected dates in trip summary
       let selectedFlight = {date: '...', price: '...'}
       window.processOutward(selectedFlight);
+      window.processReturn(selectedFlight);
 
         // BEGIN PRIMARY LOOP - through origin airports
         for (let key in origin_data){
@@ -194,7 +195,7 @@ export default function Map({mapToApp}){
                       terminal_name: '...'
                     });
 
-                    // Send cheapest date and price directly to trip summary to intialise
+                    // Send cheapest outward date and price directly to trip summary to intialise
                     let selectedFlight = {date: outwardDate, price: outwardPrice}
                     window.processOutward(selectedFlight);
                   
@@ -257,6 +258,7 @@ export default function Map({mapToApp}){
                                 let allReturnPrices = {}
 
                                 // Retrieve date and price of cheapest return flight after the cutoff date
+                                // TODO - if user selected date exists, pass this as cutoff date instead
                                 fetch('/application/get_prices/' + return_key +'/' + terminal_key + '/' + outwardDate).then(returnPrices_res => returnPrices_res.json()).then(returnPrice_data => {
                                   returnDate = returnPrice_data['cheapest_flight']['date']
                                   returnPrice = returnPrice_data['cheapest_flight']['price']
@@ -272,13 +274,17 @@ export default function Map({mapToApp}){
                                     return_name: returnAirport,
                                     terminal_name: terminalAirport
                                   });
+
+                                  // Send cheapest outward date and price directly to trip summary to intialise
+                                  let selectedFlight = {date: returnDate, price: returnPrice}
+                                  window.processReturn(selectedFlight);
+
+                                  // Clear unselected terminal airports from map
+                                  clearMarkers('terminalMarker', true, terminal_marker);
+  
+                                  // Change colour of terminal marker to red
+                                  terminal_marker.getElement().setAttribute('id', 'selected-marker');
                                 });
-
-                                // Clear unselected terminal airports from map
-                                clearMarkers('terminalMarker', true, terminal_marker);
-
-                                // Change colour of terminal marker to red
-                                terminal_marker.getElement().setAttribute('id', 'selected-marker');
                               });
                             }
                           });
@@ -332,6 +338,7 @@ export default function Map({mapToApp}){
         // Reset selected date in trip summary
         let selectedFlight = {date: '...', price: '...'}
         window.processOutward(selectedFlight);
+        window.processReturn(selectedFlight);
 
         // Reset selected date in local storage
         window.localStorage.setItem('selected-day', null);
