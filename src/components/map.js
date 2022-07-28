@@ -1,8 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
-import maplibregl, { Layout } from 'maplibre-gl';
+import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './map.css';
-import { Marker } from 'react-map-gl';
 
 export default function Map({mapToApp}){
   // variables used in rendering map
@@ -156,6 +155,7 @@ export default function Map({mapToApp}){
             origin_marker.getElement().setAttribute('id', 'selected-marker');
 
             // Request outward airports from DB
+            // TODO - add retrieving cheapest price for each marker to the request
             fetch('/application/outwards/' + key).then(outward_res => outward_res.json()).then(outward_data => {
               // BEGIN SECONDARY LOOP - through response and add markers
               for (let outward_key in outward_data){

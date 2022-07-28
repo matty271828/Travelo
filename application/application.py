@@ -65,6 +65,8 @@ def get_outward_airports(iata_code):
         coords['lng'] = list_airports[i][3]
         outward_dict[list_airports[i][0]] = coords
 
+    # TODO - add second query retrieving the cheapest price for each marker
+
     print(outward_dict)
     return outward_dict
 
