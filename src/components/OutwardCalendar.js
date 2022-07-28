@@ -186,7 +186,7 @@ export default function OutwardCalendar ({navbarToOutwardCalendar}){
             let clickedCellid = 'cell' + day;
 
             // Check a price is present in desired cell
-            if (document.getElementById(clickedCellid).textContent != '-') {
+            if (document.getElementById(clickedCellid).textContent != '-' && document.getElementById(clickedCellid).textContent != ' - ') {
                 // Update date
                 selectedDay = day;
                 selectedMonth = currentMonth;
