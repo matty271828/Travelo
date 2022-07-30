@@ -219,7 +219,8 @@ export default function Map({mapToApp}){
                       // BEGIN TERTIARY LOOP - add markers
                       for (let return_key in return_data){
                         // Create markers
-                        const return_marker = create_marker(map, "standard-marker", return_key, return_data[return_key]['place_name'], return_data[return_key]['lng'], return_data[return_key]['lat'], 'null')
+                        // TODO - add price of cheapest flight back to England to marker
+                        const return_marker = create_marker(map, "standard-marker", return_key, return_data[return_key]['place_name'], return_data[return_key]['lng'], return_data[return_key]['lat'], return_data[return_key]['cheapest_price'])
                         returnMarkers.push(return_marker);
                         
                         // Add EventListener for return marker being clicked
@@ -241,6 +242,9 @@ export default function Map({mapToApp}){
 
                           // clear return markers from map
                           clearMarkers('returnMarker', true, return_marker);
+
+                          // Remove price from popup text
+                          return_marker.getPopup().setText(returnAirport);
 
                           // Change colour of return marker to red
                           return_marker.getElement().setAttribute('id', 'selected-marker');
