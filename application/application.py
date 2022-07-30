@@ -1,4 +1,3 @@
-import time
 import psycopg2
 import psycopg2.extras as ext
 from flask import Flask
