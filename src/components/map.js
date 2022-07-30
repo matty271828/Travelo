@@ -165,7 +165,7 @@ export default function Map({mapToApp}){
 
             // Request outward airports from DB
             // TODO - add retrieving cheapest price for each marker to the request
-            fetch('/application/outwards/' + key).then(outward_res => outward_res.json()).then(outward_data => {
+            fetch('/application/outwards/' + key + '/null/null/null').then(outward_res => outward_res.json()).then(outward_data => {
               // BEGIN SECONDARY LOOP - through response and add markers
               for (let outward_key in outward_data){
                 // Create outward markers
@@ -249,9 +249,11 @@ export default function Map({mapToApp}){
                           // Change colour of return marker to red
                           return_marker.getElement().setAttribute('id', 'selected-marker');
 
-                          // Request airports in England reachable from the selected return airport
+                          // Request airports reachable from the selected return airport
                           // TODO - change colour of markers with no direct route to origin airport to green (low priority)
-                          fetch('/application/outwards/' + return_key).then(terminal_res => terminal_res.json()).then(terminal_data => {
+                          // TODO - add filter to this by country (e.g. England)
+                          // TODO - filter by outward date
+                          fetch('/application/outwards/' + return_key + '/' + outwardDate).then(terminal_res => terminal_res.json()).then(terminal_data => {
                             // BEGIN QUARTERNARY LOOP through terminal airports
                             for (let terminal_key in terminal_data){
                               // TODO - add cheapest flight price to each terminal marker popup
