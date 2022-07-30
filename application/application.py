@@ -64,7 +64,10 @@ def get_outward_airports(iata_code):
         coords['lng'] = list_airports[i][3]
         outward_dict[list_airports[i][0]] = coords
 
-    # TODO - add second query retrieving the cheapest price for each marker
+        # TODO - add query retrieving the cheapest price for each marker
+        sql = "SELECT price FROM flights_prototype_data WHERE origin_id = '" + iata_code + "' and destination_id = '" + list_airports[i][0] + "' ORDER BY price ASC LIMIT 1"
+        cheapest_per_airport = run_sql(sql)
+        coords['cheapest_price'] = cheapest_per_airport[0][0]
 
     print(outward_dict)
     return outward_dict

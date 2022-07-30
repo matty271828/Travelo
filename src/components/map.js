@@ -28,7 +28,7 @@ export default function Map({mapToApp}){
 
       // Prepare text
       if (price != 'null'){
-        markerHtml = '<div>' + place_name + '</div><b><center>' + price + '</center></b>' ;
+        markerHtml = '<div>' + place_name + '</div><b><center>£' + price + '</center></b>' ;
       } else {
         markerHtml = '<div>' + place_name + '</div>';
       }
@@ -169,7 +169,7 @@ export default function Map({mapToApp}){
               // BEGIN SECONDARY LOOP - through response and add markers
               for (let outward_key in outward_data){
                 // Create outward markers
-                const outward_marker = create_marker(map, "standard-marker", outward_data[outward_key]['place_name'], outward_data[outward_key]['lng'], outward_data[outward_key]['lat'], '£0')
+                const outward_marker = create_marker(map, "standard-marker", outward_data[outward_key]['place_name'], outward_data[outward_key]['lng'], outward_data[outward_key]['lat'], outward_data[outward_key]['cheapest_price'])
                 outwardMarkers.push(outward_marker);
 
                 // Add EventListener for outward marker being clicked
@@ -216,7 +216,7 @@ export default function Map({mapToApp}){
                       // BEGIN TERTIARY LOOP - add markers
                       for (let return_key in return_data){
                         // Create markers
-                        const return_marker = create_marker(map, "standard-marker", return_data[return_key]['place_name'], return_data[return_key]['lng'], return_data[return_key]['lat'], '£0')
+                        const return_marker = create_marker(map, "standard-marker", return_data[return_key]['place_name'], return_data[return_key]['lng'], return_data[return_key]['lat'], '0')
                         returnMarkers.push(return_marker);
                         
                         // Add EventListener for return marker being clicked
@@ -248,7 +248,7 @@ export default function Map({mapToApp}){
                             // BEGIN QUARTERNARY LOOP through terminal airports
                             for (let terminal_key in terminal_data){
                               // Create terminal markers
-                              const terminal_marker = create_marker(map, "standard-marker", terminal_data[terminal_key]['place_name'], terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat'], '£0')
+                              const terminal_marker = create_marker(map, "standard-marker", terminal_data[terminal_key]['place_name'], terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat'], '0')
                               terminalMarkers.push(terminal_marker);
     
                               // Add event listener for terminal marker clicked
