@@ -216,7 +216,7 @@ export default function Map({mapToApp}){
                       // BEGIN TERTIARY LOOP - add markers
                       for (let return_key in return_data){
                         // Create markers
-                        const return_marker = create_marker(map, "standard-marker", return_data[return_key]['place_name'], return_data[return_key]['lng'], return_data[return_key]['lat'], '0')
+                        const return_marker = create_marker(map, "standard-marker", return_data[return_key]['place_name'], return_data[return_key]['lng'], return_data[return_key]['lat'], 'null')
                         returnMarkers.push(return_marker);
                         
                         // Add EventListener for return marker being clicked
@@ -247,8 +247,10 @@ export default function Map({mapToApp}){
                           fetch('/application/outwards/' + return_key).then(terminal_res => terminal_res.json()).then(terminal_data => {
                             // BEGIN QUARTERNARY LOOP through terminal airports
                             for (let terminal_key in terminal_data){
+                              // TODO - add cheapest flight price to each terminal marker popup
+
                               // Create terminal markers
-                              const terminal_marker = create_marker(map, "standard-marker", terminal_data[terminal_key]['place_name'], terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat'], '0')
+                              const terminal_marker = create_marker(map, "standard-marker", terminal_data[terminal_key]['place_name'], terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat'], terminal_data[terminal_key]['cheapest_price'])
                               terminalMarkers.push(terminal_marker);
     
                               // Add event listener for terminal marker clicked
