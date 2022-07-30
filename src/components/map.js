@@ -207,6 +207,9 @@ export default function Map({mapToApp}){
                     // clear other outward markers on map
                     clearMarkers('outwardMarker', true, outward_marker);
 
+                    // Remove price from popup text
+                    outward_marker.getPopup().setText(outwardAirport);
+
                     // Change colour of outward marker to red
                     outward_marker.getElement().setAttribute('id', 'selected-marker');
 
@@ -288,6 +291,9 @@ export default function Map({mapToApp}){
 
                                   // Clear unselected terminal airports from map
                                   clearMarkers('terminalMarker', true, terminal_marker);
+
+                                  // Remove price from popup text
+                                  terminal_marker.getPopup().setText(terminalAirport);
   
                                   // Change colour of terminal marker to red
                                   terminal_marker.getElement().setAttribute('id', 'selected-marker');
