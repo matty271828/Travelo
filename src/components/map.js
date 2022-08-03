@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './map.css';
+import * as turf from '@turf/turf';
 
 export default function Map({mapToApp}){
   // variables used in rendering map
@@ -122,6 +123,16 @@ export default function Map({mapToApp}){
       }
     }
 
+    // Function to get great circle arcs
+    function getGreatArcFc(point1, point2) {
+      var data = []
+      var start = turf.point(point1)
+      var end = turf.point(point2)
+      data.push(turf.greatCircle(start, end))
+
+      return turf.featureCollection(data);
+    }
+
     // Function places markers on the map and controls them
     function controlMarkers() {
       // Make request to DB for origin airports
@@ -213,6 +224,23 @@ export default function Map({mapToApp}){
 
                       // Change colour of outward marker to red
                       outward_marker.getElement().setAttribute('id', 'selected-marker');
+
+                      // TODO - add route line to map
+                      map.current.addSource('outwardArc', {
+                        "type": "geojson",
+                        "data": getGreatArcFc([origin_data[key]['lng'], origin_data[key]['lat']],[outward_data[outward_key]['lng'], outward_data[outward_key]['lat']])
+                      });
+
+                      map.current.addLayer({
+                        "id": "outwardArc",
+                        "source": "outwardArc",
+                        "type": "line",
+                        "paint": {
+                          "line-width": 2,
+                          "line-color": "#000000"
+                        }
+                      });
+                     
 
                       // Request airports with routes back to England from DB
                       fetch('/application/return/' + outward_key + '/' + outwardDate).then(return_res => return_res.json()).then(return_data => {
@@ -316,9 +344,7 @@ export default function Map({mapToApp}){
                 }
               });
             });
-
-        }
-
+          }
         }
       });
     } 
@@ -344,6 +370,14 @@ export default function Map({mapToApp}){
         clearMarkers('originMarker', false, null);
         clearMarkers('outwardMarker', false, null);
         clearMarkers('returnMarker', false, null);
+
+        // Clear route lines from map
+        if (map.current.getLayer('outwardArc')){
+          map.current.removeLayer('outwardArc');
+        }
+        if (map.current.getSource('outwardArc')){
+          map.current.removeSource('outwardArc');
+        }
 
         // Revert map markers to initial state
         controlMarkers();
