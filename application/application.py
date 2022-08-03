@@ -1,6 +1,7 @@
 import psycopg2
 import psycopg2.extras as ext
 from flask import Flask
+from datetime import date, datetime
 
 app = Flask(__name__)
 
@@ -48,11 +49,15 @@ def get_origin_airports():
     return origin_dict
 
 @app.route('/application/outwards/<iata_code>/<outward_day>/<outward_month>/<outward_year>')
-# TODO - add option to use a cutoff date
+# Retrieve available outward airports and their cheapest prices
 def get_outward_airports(iata_code, outward_day, outward_month, outward_year):
+    start_request_time = datetime.now()
+
     print("Origin airport selected: " + iata_code)
 
     # Get list of outward airports from DB
+    # TODO - rework date filtering to use datetime instead of or to improve performance
+    # TODO - Conduct pre-staging, conduct the join ahead of time?
     if outward_day != 'null':
         # Cut off date applied 
         sql = "SELECT DISTINCT destination_id, place_name, latitude_decimal_degrees, longitude_decimal_degrees FROM flights_data JOIN airports ON flights_data.destination_id = airports.iata_code WHERE origin_id = '" + iata_code + "' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "'))"
@@ -72,24 +77,45 @@ def get_outward_airports(iata_code, outward_day, outward_month, outward_year):
         coords['lng'] = list_airports[i][3]
         outward_dict[list_airports[i][0]] = coords
 
-        # TODO - add query retrieving the cheapest price for each marker
+        # TODO - improve performance of retrieving the cheapest price for each marker
+        # TODO - preprocess a table with the cheapest price for each marker by month?
+        # TODO - improve performance by creating a table for flights to/from each origin airport?
+        # TODO - is there a way to remove query from the loop and have one query? Then loop through the result and add to coords
         if outward_day != 'null':
             # Cutoff date applied
             sql = "SELECT price FROM flights_data WHERE origin_id = '" + iata_code + "' AND destination_id = '" + list_airports[i][0] + "' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "')) ORDER BY price ASC LIMIT 1"
-        else:
-            # No cutoff date applied
-            sql = "SELECT price FROM flights_data WHERE origin_id = '" + iata_code + "' AND destination_id = '" + list_airports[i][0] + "' ORDER BY price ASC LIMIT 1"
 
-        cheapest_per_airport = run_sql(sql)
-        coords['cheapest_price'] = cheapest_per_airport[0][0]
+            # Run query and fill dict
+            cheapest_per_airport = run_sql(sql)
+            coords['cheapest_price'] = cheapest_per_airport[0][0]
+
+    if outward_day == 'null':
+        # Run query
+        sql = "SELECT DISTINCT ON (destination_id) price, destination_id FROM flights_data WHERE origin_id = '" + iata_code + "' ORDER BY destination_id, price ASC"
+        cheapest_flights = run_sql(sql)
+
+        # Loop through result and add prices to outward dict
+        for i in range(len(cheapest_flights)):
+            price = cheapest_flights[i][0]
+            airport_code = cheapest_flights[i][1]
+
+            outward_dict[airport_code]['cheapest_price'] = price
+
+
 
     print(outward_dict)
+
+    # Output time to process request
+    total_request_time = datetime.now() - start_request_time
+    print(f"Outward request completed in: {total_request_time}")
+
     return outward_dict
 
 @app.route('/application/return/<inbound_iata_code>/<outward_day>/<outward_month>/<outward_year>')
 def get_return_airports(inbound_iata_code, outward_day, outward_month, outward_year):
     print("Outward airport selected: " + inbound_iata_code)
     # Return airports with route destination in England after the outward date
+    # TODO - improve performance by restricting geographic range of return airports from outward?
     sql = "SELECT DISTINCT t.origin_id, t1.place_name, t1.latitude_decimal_degrees, t1.longitude_decimal_degrees FROM flights_data t JOIN airports t1 ON t1.iata_code = t.origin_id JOIN airports t2 ON t2.iata_code = t.destination_id WHERE t2.country = 'ENGLAND' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "'))"
     list_airports = run_sql(sql)
 
@@ -103,7 +129,7 @@ def get_return_airports(inbound_iata_code, outward_day, outward_month, outward_y
         coords['lng'] = list_airports[i][3]
         return_dict[list_airports[i][0]] = coords
 
-        # TODO - add second query returning price of cheapest flight back to England for each flight after the outward date
+        # Second query returning price of cheapest flight back to England for each flight after the outward date
         sql = "SELECT day, month, year, origin_id, destination_id, price FROM flights_data t JOIN airports t2 ON t.destination_id = t2.iata_code WHERE t2.country = 'ENGLAND' AND origin_id = '" + list_airports[i][0] + "' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "')) ORDER BY price ASC limit 1"
         cheapest_flight_to_uk = run_sql(sql);
         coords['cheapest_price'] = cheapest_flight_to_uk[0][5]
