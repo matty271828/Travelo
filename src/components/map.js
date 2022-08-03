@@ -225,7 +225,7 @@ export default function Map({mapToApp}){
                       // Change colour of outward marker to red
                       outward_marker.getElement().setAttribute('id', 'selected-marker');
 
-                      // TODO - add route line to map
+                      // Add route line to map
                       map.current.addSource('outwardArc', {
                         "type": "geojson",
                         "data": getGreatArcFc([origin_data[key]['lng'], origin_data[key]['lat']],[outward_data[outward_key]['lng'], outward_data[outward_key]['lat']])
@@ -241,7 +241,6 @@ export default function Map({mapToApp}){
                         }
                       });
                      
-
                       // Request airports with routes back to England from DB
                       fetch('/application/return/' + outward_key + '/' + outwardDate).then(return_res => return_res.json()).then(return_data => {
 
@@ -332,6 +331,22 @@ export default function Map({mapToApp}){
     
                                     // Change colour of terminal marker to red
                                     terminal_marker.getElement().setAttribute('id', 'selected-marker');
+
+                                    // TODO - add route line to map
+                                    map.current.addSource('returnArc', {
+                                      "type": "geojson",
+                                      "data": getGreatArcFc([return_data[return_key]['lng'], return_data[return_key]['lat']],[terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat']])
+                                    });
+
+                                    map.current.addLayer({
+                                      "id": "returnArc",
+                                      "source": "returnArc",
+                                      "type": "line",
+                                      "paint": {
+                                        "line-width": 2,
+                                        "line-color": "#000000"
+                                      }
+                                    });
                                   });
                                 });
                               }
@@ -371,12 +386,20 @@ export default function Map({mapToApp}){
         clearMarkers('outwardMarker', false, null);
         clearMarkers('returnMarker', false, null);
 
-        // Clear route lines from map
+        // Clear outward route lines from map
         if (map.current.getLayer('outwardArc')){
           map.current.removeLayer('outwardArc');
         }
         if (map.current.getSource('outwardArc')){
           map.current.removeSource('outwardArc');
+        }
+
+        // Clear return route lines from map
+        if (map.current.getLayer('returnArc')){
+          map.current.removeLayer('returnArc');
+        }
+        if (map.current.getSource('returnArc')){
+          map.current.removeSource('returnArc');
         }
 
         // Revert map markers to initial state
