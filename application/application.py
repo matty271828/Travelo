@@ -31,7 +31,7 @@ def run_sql(sql):
 @app.route('/application/origins')
 def get_origin_airports():
     # Get list of valid origin airports from DB
-    sql = "SELECT DISTINCT origin_id, place_name, latitude_decimal_degrees, longitude_decimal_degrees FROM flights_prototype_data JOIN airports ON flights_prototype_data.origin_id = airports.iata_code WHERE country = 'ENGLAND'"
+    sql = "SELECT DISTINCT origin_id, place_name, latitude_decimal_degrees, longitude_decimal_degrees FROM flights_data JOIN airports ON flights_data.origin_id = airports.iata_code WHERE country = 'ENGLAND'"
     list_airports = run_sql(sql)
 
     # Create dictionary of airport ids and lat/lng
@@ -55,10 +55,10 @@ def get_outward_airports(iata_code, outward_day, outward_month, outward_year):
     # Get list of outward airports from DB
     if outward_day != 'null':
         # Cut off date applied 
-        sql = "SELECT DISTINCT destination_id, place_name, latitude_decimal_degrees, longitude_decimal_degrees FROM flights_prototype_data JOIN airports ON flights_prototype_data.destination_id = airports.iata_code WHERE origin_id = '" + iata_code + "' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "'))"
+        sql = "SELECT DISTINCT destination_id, place_name, latitude_decimal_degrees, longitude_decimal_degrees FROM flights_data JOIN airports ON flights_data.destination_id = airports.iata_code WHERE origin_id = '" + iata_code + "' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "'))"
     else:
         # No cutoff date applied
-        sql = "SELECT DISTINCT destination_id, place_name, latitude_decimal_degrees, longitude_decimal_degrees FROM flights_prototype_data JOIN airports ON flights_prototype_data.destination_id = airports.iata_code WHERE origin_id = '" + iata_code + "'"
+        sql = "SELECT DISTINCT destination_id, place_name, latitude_decimal_degrees, longitude_decimal_degrees FROM flights_data JOIN airports ON flights_data.destination_id = airports.iata_code WHERE origin_id = '" + iata_code + "'"
         
     list_airports = run_sql(sql)
 
@@ -75,10 +75,10 @@ def get_outward_airports(iata_code, outward_day, outward_month, outward_year):
         # TODO - add query retrieving the cheapest price for each marker
         if outward_day != 'null':
             # Cutoff date applied
-            sql = "SELECT price FROM flights_prototype_data WHERE origin_id = '" + iata_code + "' AND destination_id = '" + list_airports[i][0] + "' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "')) ORDER BY price ASC LIMIT 1"
+            sql = "SELECT price FROM flights_data WHERE origin_id = '" + iata_code + "' AND destination_id = '" + list_airports[i][0] + "' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "')) ORDER BY price ASC LIMIT 1"
         else:
             # No cutoff date applied
-            sql = "SELECT price FROM flights_prototype_data WHERE origin_id = '" + iata_code + "' AND destination_id = '" + list_airports[i][0] + "' ORDER BY price ASC LIMIT 1"
+            sql = "SELECT price FROM flights_data WHERE origin_id = '" + iata_code + "' AND destination_id = '" + list_airports[i][0] + "' ORDER BY price ASC LIMIT 1"
 
         cheapest_per_airport = run_sql(sql)
         coords['cheapest_price'] = cheapest_per_airport[0][0]
@@ -90,7 +90,7 @@ def get_outward_airports(iata_code, outward_day, outward_month, outward_year):
 def get_return_airports(inbound_iata_code, outward_day, outward_month, outward_year):
     print("Outward airport selected: " + inbound_iata_code)
     # Return airports with route destination in England after the outward date
-    sql = "SELECT DISTINCT t.origin_id, t1.place_name, t1.latitude_decimal_degrees, t1.longitude_decimal_degrees FROM flights_prototype_data t JOIN airports t1 ON t1.iata_code = t.origin_id JOIN airports t2 ON t2.iata_code = t.destination_id WHERE t2.country = 'ENGLAND' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "'))"
+    sql = "SELECT DISTINCT t.origin_id, t1.place_name, t1.latitude_decimal_degrees, t1.longitude_decimal_degrees FROM flights_data t JOIN airports t1 ON t1.iata_code = t.origin_id JOIN airports t2 ON t2.iata_code = t.destination_id WHERE t2.country = 'ENGLAND' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "'))"
     list_airports = run_sql(sql)
 
     # Create dictionary of airport ids and lat/lng
@@ -104,7 +104,7 @@ def get_return_airports(inbound_iata_code, outward_day, outward_month, outward_y
         return_dict[list_airports[i][0]] = coords
 
         # TODO - add second query returning price of cheapest flight back to England for each flight after the outward date
-        sql = "SELECT day, month, year, origin_id, destination_id, price FROM flights_prototype_data t JOIN airports t2 ON t.destination_id = t2.iata_code WHERE t2.country = 'ENGLAND' AND origin_id = '" + list_airports[i][0] + "' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "')) ORDER BY price ASC limit 1"
+        sql = "SELECT day, month, year, origin_id, destination_id, price FROM flights_data t JOIN airports t2 ON t.destination_id = t2.iata_code WHERE t2.country = 'ENGLAND' AND origin_id = '" + list_airports[i][0] + "' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "')) ORDER BY price ASC limit 1"
         cheapest_flight_to_uk = run_sql(sql);
         coords['cheapest_price'] = cheapest_flight_to_uk[0][5]
 
@@ -133,10 +133,10 @@ def get_prices(origin_iata_code, destination_iata_code, outward_day, outward_mon
     if outward_day != 'null':
         # Query for flights back to origin country after the cutoff
         # TODO - filter return dates by reasonable timeframe
-        sql = "SELECT day, month, year, price FROM flights_prototype_data WHERE origin_id ='" + origin_iata_code + "' AND destination_id ='" + destination_iata_code + "'AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "')) ORDER BY price ASC LIMIT 1"
+        sql = "SELECT day, month, year, price FROM flights_data WHERE origin_id ='" + origin_iata_code + "' AND destination_id ='" + destination_iata_code + "'AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "')) ORDER BY price ASC LIMIT 1"
     else:
         # No cutoff date applied
-        sql = "SELECT day, month, year, price FROM flights_prototype_data WHERE origin_id ='" + origin_iata_code + "' AND destination_id ='" + destination_iata_code + "' ORDER BY price ASC LIMIT 1"
+        sql = "SELECT day, month, year, price FROM flights_data WHERE origin_id ='" + origin_iata_code + "' AND destination_id ='" + destination_iata_code + "' ORDER BY price ASC LIMIT 1"
 
     # Run query
     retrieve_cheapest = run_sql(sql)
@@ -151,7 +151,7 @@ def get_prices(origin_iata_code, destination_iata_code, outward_day, outward_mon
 
 
     # Run second query retrieving all prices for the route
-    sql = "SELECT day, month, year, price FROM flights_prototype_data WHERE origin_id = '" + origin_iata_code + "' and destination_id = '" + destination_iata_code + "'"
+    sql = "SELECT day, month, year, price FROM flights_data WHERE origin_id = '" + origin_iata_code + "' and destination_id = '" + destination_iata_code + "'"
 
     # Run query
     retrieve_allprices = run_sql(sql)
