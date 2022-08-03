@@ -277,6 +277,23 @@ export default function Map({mapToApp}){
                             // Change colour of return marker to red
                             return_marker.getElement().setAttribute('id', 'selected-marker');
 
+                            // Add overland line to map
+                            map.current.addSource('overlandArc', {
+                              "type": "geojson",
+                              "data": getGreatArcFc([outward_data[outward_key]['lng'], outward_data[outward_key]['lat']],[return_data[return_key]['lng'], return_data[return_key]['lat']])
+                            });
+
+                            map.current.addLayer({
+                              "id": "overlandArc",
+                              "source": "overlandArc",
+                              "type": "line",
+                              "paint": {
+                                "line-width": 2,
+                                "line-color": "#000000",
+                                'line-dasharray': [2, 1],
+                              }
+                            });
+
                             // Request airports reachable from the selected return airport
                             // TODO - change colour of markers with no direct route to origin airport to green (low priority)
                             // TODO - add filter to this by country (e.g. England)
@@ -344,7 +361,7 @@ export default function Map({mapToApp}){
                                       "type": "line",
                                       "paint": {
                                         "line-width": 2,
-                                        "line-color": "#000000"
+                                        "line-color": "#000000",
                                       }
                                     });
                                   });
@@ -400,6 +417,14 @@ export default function Map({mapToApp}){
         }
         if (map.current.getSource('returnArc')){
           map.current.removeSource('returnArc');
+        }
+
+        // Clear overland line from map
+        if (map.current.getLayer('overlandArc')){
+          map.current.removeLayer('overlandArc');
+        }
+        if (map.current.getSource('overlandArc')){
+          map.current.removeSource('overlandArc');
         }
 
         // Revert map markers to initial state
