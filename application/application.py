@@ -59,10 +59,10 @@ def get_outward_airports(iata_code, outward_day, outward_month, outward_year):
     # Get list of outward airports from DB
     if outward_day != 'null':
         # Cut off date applied 
-        sql = "SELECT DISTINCT ON (t.destination_id) t.destination_id, t1.place_name, t1.latitude_decimal_degrees, t1.longitude_decimal_degrees, price FROM flights_data t JOIN airports t1 ON t1.iata_code = t.destination_id WHERE t.origin_id = '" + iata_code + "' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "')) ORDER BY t.destination_id, t.price ASC"
+        sql = "SELECT DISTINCT ON (t.destination_id) t.destination_id, t1.place_name, t1.latitude_decimal_degrees, t1.longitude_decimal_degrees, t.price, t.day, t.month, t.year FROM flights_data t JOIN airports t1 ON t1.iata_code = t.destination_id WHERE t.origin_id = '" + iata_code + "' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "')) ORDER BY t.destination_id, t.price ASC"
     else:
         # No cutoff date applied
-        sql = "SELECT DISTINCT ON (t.destination_id) t.destination_id, t1.place_name, t1.latitude_decimal_degrees, t1.longitude_decimal_degrees, price FROM flights_data t JOIN airports t1 ON t1.iata_code = t.destination_id WHERE t.origin_id = '" + iata_code + "' ORDER BY t.destination_id, t.price ASC"
+        sql = "SELECT DISTINCT ON (t.destination_id) t.destination_id, t1.place_name, t1.latitude_decimal_degrees, t1.longitude_decimal_degrees, t.price, t.day, t.month, t.year FROM flights_data t JOIN airports t1 ON t1.iata_code = t.destination_id WHERE t.origin_id = '" + iata_code + "' ORDER BY t.destination_id, t.price ASC"
         
     list_airports = run_sql(sql)
 
@@ -74,6 +74,7 @@ def get_outward_airports(iata_code, outward_day, outward_month, outward_year):
         coords['lat'] = list_airports[i][2]
         coords['lng'] = list_airports[i][3]
         coords['cheapest_price'] = list_airports[i][4]
+        coords['cheapest_date'] = f"{list_airports[i][5]}/{list_airports[i][6]}/{str(list_airports[i][7])[2]}{str(list_airports[i][7])[3]}"
         outward_dict[list_airports[i][0]] = coords
 
     # Output to terminal
@@ -90,7 +91,7 @@ def get_return_airports(inbound_iata_code, outward_day, outward_month, outward_y
     start_request_time = datetime.now()
     print("Outward airport selected: " + inbound_iata_code)
     # Return airports with route destination in England after the outward date
-    sql = "SELECT DISTINCT ON (t.origin_id) t.origin_id, t1.place_name, t1.latitude_decimal_degrees, t1.longitude_decimal_degrees, price FROM flights_data t JOIN airports t1 ON t1.iata_code = t.origin_id JOIN airports t2 ON t2.iata_code = t.destination_id WHERE t2.country = 'ENGLAND' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "')) ORDER BY t.origin_id, t.price ASC"
+    sql = "SELECT DISTINCT ON (t.origin_id) t.origin_id, t1.place_name, t1.latitude_decimal_degrees, t1.longitude_decimal_degrees, t.price, t.day, t.month, t.year FROM flights_data t JOIN airports t1 ON t1.iata_code = t.origin_id JOIN airports t2 ON t2.iata_code = t.destination_id WHERE t2.country = 'ENGLAND' AND ((year > '" + outward_year + "') OR (year = '" + outward_year + "' AND month > '" + outward_month + "') OR (year = '" + outward_year + "' AND month = '" + outward_month + "' AND day >= '" + outward_day + "')) ORDER BY t.origin_id, t.price ASC"
     list_airports = run_sql(sql)
 
     # Create dictionary of airport ids and lat/lng
@@ -102,6 +103,7 @@ def get_return_airports(inbound_iata_code, outward_day, outward_month, outward_y
         coords['lat'] = list_airports[i][2]
         coords['lng'] = list_airports[i][3]
         coords['cheapest_price'] = list_airports[i][4]
+        coords['cheapest_date'] = f"{list_airports[i][5]}/{list_airports[i][6]}/{str(list_airports[i][7])[2]}{str(list_airports[i][7])[3]}"
         return_dict[list_airports[i][0]] = coords
 
     # Output to terminal

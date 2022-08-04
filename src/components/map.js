@@ -16,7 +16,7 @@ export default function Map({mapToApp}){
   useEffect(() => {
     
     // Function to create and place a marker on the map
-    function create_marker(map, type, iata_code, place_name , lng, lat, price){
+    function create_marker(map, type, iata_code, place_name , lng, lat, price, date){
       // Create a DOM element for each marker.
       var el = document.createElement('div');
       if (type == 'selected-marker'){
@@ -29,7 +29,7 @@ export default function Map({mapToApp}){
 
       // Prepare text
       if (price != 'null'){
-        markerHtml = '<div>' + place_name + ' (' + iata_code + ')</div><b><center>£' + price + '</center></b>' ;
+        markerHtml = '<div>' + place_name + ' (' + iata_code + ')</div><b><center>£' + price + '</center></b><div><center>' + date + '</center></div>' ;
       } else {
         markerHtml = '<div>' + place_name + ' (' + iata_code + ')</div>';
       }
@@ -218,7 +218,7 @@ export default function Map({mapToApp}){
         for (let key in origin_data){
           if (key == 'LPL' || key == 'MAN' || key == 'LHR' || key == 'BHX'){
             // Create markers
-            const origin_marker = create_marker(map, "standard-marker", key, origin_data[key]['place_name'], origin_data[key]['lng'], origin_data[key]['lat'], 'null')
+            const origin_marker = create_marker(map, "standard-marker", key, origin_data[key]['place_name'], origin_data[key]['lng'], origin_data[key]['lat'], 'null', 'null')
             originMarkers.push(origin_marker);
 
             // Add EventListener for each origin marker being clicked
@@ -256,7 +256,7 @@ export default function Map({mapToApp}){
                 // BEGIN SECONDARY LOOP - through response and add markers
                 for (let outward_key in outward_data){
                   // Create outward markers
-                  const outward_marker = create_marker(map, "standard-marker", outward_key, outward_data[outward_key]['place_name'], outward_data[outward_key]['lng'], outward_data[outward_key]['lat'], outward_data[outward_key]['cheapest_price'])
+                  const outward_marker = create_marker(map, "standard-marker", outward_key, outward_data[outward_key]['place_name'], outward_data[outward_key]['lng'], outward_data[outward_key]['lat'], outward_data[outward_key]['cheapest_price'], outward_data[outward_key]['cheapest_date'])
                   outwardMarkers.push(outward_marker);
 
                   // Add EventListener for outward marker being clicked
@@ -313,7 +313,7 @@ export default function Map({mapToApp}){
                         for (let return_key in return_data){
                           // Create markers
                           // TODO - add price of cheapest flight back to England to marker
-                          const return_marker = create_marker(map, "standard-marker", return_key, return_data[return_key]['place_name'], return_data[return_key]['lng'], return_data[return_key]['lat'], return_data[return_key]['cheapest_price'])
+                          const return_marker = create_marker(map, "standard-marker", return_key, return_data[return_key]['place_name'], return_data[return_key]['lng'], return_data[return_key]['lat'], return_data[return_key]['cheapest_price'], return_data[return_key]['cheapest_date'])
                           returnMarkers.push(return_marker);
                           
                           // Add EventListener for return marker being clicked
@@ -358,7 +358,7 @@ export default function Map({mapToApp}){
                                 // TODO - add cheapest flight price to each terminal marker popup
 
                                 // Create terminal markers
-                                const terminal_marker = create_marker(map, "standard-marker", terminal_key, terminal_data[terminal_key]['place_name'], terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat'], terminal_data[terminal_key]['cheapest_price'])
+                                const terminal_marker = create_marker(map, "standard-marker", terminal_key, terminal_data[terminal_key]['place_name'], terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat'], terminal_data[terminal_key]['cheapest_price'], terminal_data[terminal_key]['cheapest_date'])
                                 terminalMarkers.push(terminal_marker);
       
                                 // Add event listener for terminal marker clicked
