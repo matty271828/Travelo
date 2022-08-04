@@ -133,6 +133,40 @@ export default function Map({mapToApp}){
       return turf.featureCollection(data);
     }
 
+    // Function to add route lines to map
+    function addRouteLine(map, id, point1, point2) {
+      // Add route line to map
+      map.addSource(id, {
+        "type": "geojson",
+        "data": getGreatArcFc(point1,point2)
+      });
+
+      if (id == 'overlandArc') {
+        // Use dashed line
+        map.addLayer({
+          "id": id,
+          "source": id,
+          "type": "line",
+          "paint": {
+            "line-width": 2,
+            "line-color": "#000000",
+            "line-dasharray": [3, 2],
+          }
+        });
+      } else {
+        map.addLayer({
+          "id": id,
+          "source": id,
+          "type": "line",
+          "paint": {
+            "line-width": 2,
+            "line-color": "#000000",
+          }
+        });
+      }
+
+    }
+
     // Function places markers on the map and controls them
     function controlMarkers() {
       // Make request to DB for origin airports
@@ -225,21 +259,8 @@ export default function Map({mapToApp}){
                       // Change colour of outward marker to red
                       outward_marker.getElement().setAttribute('id', 'selected-marker');
 
-                      // Add route line to map
-                      map.current.addSource('outwardArc', {
-                        "type": "geojson",
-                        "data": getGreatArcFc([origin_data[key]['lng'], origin_data[key]['lat']],[outward_data[outward_key]['lng'], outward_data[outward_key]['lat']])
-                      });
-
-                      map.current.addLayer({
-                        "id": "outwardArc",
-                        "source": "outwardArc",
-                        "type": "line",
-                        "paint": {
-                          "line-width": 2,
-                          "line-color": "#000000"
-                        }
-                      });
+                      // Add line to map indicating route
+                      addRouteLine(map.current, 'outwardArc' ,[origin_data[key]['lng'], origin_data[key]['lat']], [outward_data[outward_key]['lng'], outward_data[outward_key]['lat']])       
                      
                       // Request airports with routes back to England from DB
                       fetch('/application/return/' + outward_key + '/' + outwardDate).then(return_res => return_res.json()).then(return_data => {
@@ -277,22 +298,8 @@ export default function Map({mapToApp}){
                             // Change colour of return marker to red
                             return_marker.getElement().setAttribute('id', 'selected-marker');
 
-                            // Add overland line to map
-                            map.current.addSource('overlandArc', {
-                              "type": "geojson",
-                              "data": getGreatArcFc([outward_data[outward_key]['lng'], outward_data[outward_key]['lat']],[return_data[return_key]['lng'], return_data[return_key]['lat']])
-                            });
-
-                            map.current.addLayer({
-                              "id": "overlandArc",
-                              "source": "overlandArc",
-                              "type": "line",
-                              "paint": {
-                                "line-width": 2,
-                                "line-color": "#000000",
-                                'line-dasharray': [2, 1],
-                              }
-                            });
+                            // Add line to map indicating route
+                            addRouteLine(map.current, 'overlandArc', [outward_data[outward_key]['lng'], outward_data[outward_key]['lat']], [return_data[return_key]['lng'], return_data[return_key]['lat']]) 
 
                             // Request airports reachable from the selected return airport
                             // TODO - change colour of markers with no direct route to origin airport to green (low priority)
@@ -349,21 +356,8 @@ export default function Map({mapToApp}){
                                     // Change colour of terminal marker to red
                                     terminal_marker.getElement().setAttribute('id', 'selected-marker');
 
-                                    // TODO - add route line to map
-                                    map.current.addSource('returnArc', {
-                                      "type": "geojson",
-                                      "data": getGreatArcFc([return_data[return_key]['lng'], return_data[return_key]['lat']],[terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat']])
-                                    });
-
-                                    map.current.addLayer({
-                                      "id": "returnArc",
-                                      "source": "returnArc",
-                                      "type": "line",
-                                      "paint": {
-                                        "line-width": 2,
-                                        "line-color": "#000000",
-                                      }
-                                    });
+                                    // Add line to map indicating route
+                                    addRouteLine(map.current, 'returnArc', [return_data[return_key]['lng'], return_data[return_key]['lat']], [terminal_data[terminal_key]['lng'], terminal_data[terminal_key]['lat']])
                                   });
                                 });
                               }
