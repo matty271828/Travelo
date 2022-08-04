@@ -135,6 +135,14 @@ export default function Map({mapToApp}){
 
     // Function to add route lines to map
     function addRouteLine(map, id, point1, point2) {
+      // Clear return if already on map
+      if (map.getLayer(id)){
+        map.removeLayer(id);
+      }
+      if (map.getSource(id)){
+        map.removeSource(id);
+      }
+
       // Add route line to map
       map.addSource(id, {
         "type": "geojson",
@@ -230,6 +238,9 @@ export default function Map({mapToApp}){
                 terminal_name: "..."
               });
 
+              // Clear all route lines
+              clearRouteLines(map.current, true, true, true);
+
               // Clear all markers apart from the currently selected marker
               clearMarkers('originMarker', true, origin_marker);
               clearMarkers('outwardMarker', false, null);
@@ -279,6 +290,9 @@ export default function Map({mapToApp}){
                       // Send cheapest outward date and price directly to trip summary to intialise
                       let selectedFlight = {date: outwardDate, price: outwardPrice}
                       window.processOutward(selectedFlight);
+
+                      // Clear outward route lines from map
+                      clearRouteLines(map.current, false, true, true);
                     
                       // clear other outward markers on map
                       clearMarkers('outwardMarker', true, outward_marker);
@@ -318,6 +332,9 @@ export default function Map({mapToApp}){
                               return_name: returnAirport,
                               terminal_name: '...'
                             });
+
+                            // Clear return route line from map
+                            clearRouteLines(map.current, false, false, true);
 
                             // clear return markers from map
                             clearMarkers('returnMarker', true, return_marker);
