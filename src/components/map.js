@@ -164,8 +164,38 @@ export default function Map({mapToApp}){
           }
         });
       }
-
     }
+
+    // Function to clear route lines from page
+    function clearRouteLines(map, outward, overland, terminal) {
+      if (outward == true) {
+        // Clear outward route lines from map
+        if (map.getLayer('outwardArc')){
+          map.removeLayer('outwardArc');
+        }
+        if (map.getSource('outwardArc')){
+          map.removeSource('outwardArc');
+        }
+      }
+      if (overland == true) {
+        // Clear overland route lines from map
+        if (map.getLayer('overlandArc')){
+          map.removeLayer('overlandArc');
+        }
+        if (map.getSource('overlandArc')){
+          map.removeSource('overlandArc');
+        }
+      }
+      if (terminal == true) {
+        // Clear return route lines from map
+        if (map.getLayer('returnArc')){
+          map.removeLayer('returnArc');
+        }
+        if (map.getSource('returnArc')){
+          map.removeSource('returnArc');
+        }
+      }
+    } 
 
     // Function places markers on the map and controls them
     function controlMarkers() {
@@ -398,28 +428,7 @@ export default function Map({mapToApp}){
         clearMarkers('returnMarker', false, null);
 
         // Clear outward route lines from map
-        if (map.current.getLayer('outwardArc')){
-          map.current.removeLayer('outwardArc');
-        }
-        if (map.current.getSource('outwardArc')){
-          map.current.removeSource('outwardArc');
-        }
-
-        // Clear return route lines from map
-        if (map.current.getLayer('returnArc')){
-          map.current.removeLayer('returnArc');
-        }
-        if (map.current.getSource('returnArc')){
-          map.current.removeSource('returnArc');
-        }
-
-        // Clear overland line from map
-        if (map.current.getLayer('overlandArc')){
-          map.current.removeLayer('overlandArc');
-        }
-        if (map.current.getSource('overlandArc')){
-          map.current.removeSource('overlandArc');
-        }
+        clearRouteLines(map.current, true, true, true);
 
         // Revert map markers to initial state
         controlMarkers();
