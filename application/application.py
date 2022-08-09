@@ -45,7 +45,7 @@ def get_origin_airports():
         coords['lng'] = list_airports[i][3]
         origin_dict[list_airports[i][0]] = coords
 
-    print(origin_dict)
+    #print(origin_dict)
     return origin_dict
 
 @app.route('/application/outwards/<iata_code>/<outward_day>/<outward_month>/<outward_year>')
@@ -78,7 +78,7 @@ def get_outward_airports(iata_code, outward_day, outward_month, outward_year):
         outward_dict[list_airports[i][0]] = coords
 
     # Output to terminal
-    print(outward_dict)
+    #print(outward_dict)
 
     # Output time to process request
     total_request_time = datetime.now() - start_request_time
@@ -107,7 +107,7 @@ def get_return_airports(inbound_iata_code, outward_day, outward_month, outward_y
         return_dict[list_airports[i][0]] = coords
 
     # Output to terminal
-    print(return_dict)
+    #print(return_dict)
 
     # Output time to process request
     total_request_time = datetime.now() - start_request_time
@@ -144,7 +144,7 @@ def get_prices(origin_iata_code, destination_iata_code, outward_day, outward_mon
 
     # Run query
     retrieve_cheapest = run_sql(sql)
-    print(retrieve_cheapest)
+    #print(retrieve_cheapest)
     
     # Prepare cheapest flight details and add to prices dictionary
     cheapest_flight = {}
@@ -171,7 +171,7 @@ def get_prices(origin_iata_code, destination_iata_code, outward_day, outward_mon
         # Add to prices dictionary
         prices['all_prices'][year][month][day] = price
 
-    print(prices)
+    #print(prices)
     return prices
 
 
